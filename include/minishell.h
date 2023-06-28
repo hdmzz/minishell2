@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdamitzi <hdamitzi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/28 12:34:18 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:26:28 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_free_shell(t_shell *g_shell);
 t_token	*new_token(char *value, int type, int pos);
 void	token_add_back(t_token **lst, t_token *to_add);
 t_token	*last_token(t_token *token);
-
+void	quotes_neutralizer(t_token *lst);
 
 //src/error/error.c
 void	error_handler(char *error);
