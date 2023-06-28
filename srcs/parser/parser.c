@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: hdamitzi <hdamitzi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/25 00:14:44 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/28 12:33:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ bool	quotes_rules(t_token **token)
 	return (true);
 }
 
+int	check_last_token(t_token *last)
+{
+	int	type;
+
+	type = last->type;
+	if (type != literal && type != white_space && type  != double_quote \
+	&& type != single_quote && type != dollar && type != new_line)
+		return (0);
+	return (1);
+}
+
 /*
 *	grammatical analysis of all the tokens of the list
 *	the first point to verify is i we hae quotes and if 
@@ -66,10 +77,12 @@ int	grammatical_analyzer(t_token **tokens)
 			if (!quotes_rules(tokens))
 				return (0);
 		}
-		*tokens = (*tokens)->next;
+		*tokens = (*tokens)->next;//tokens est mis a null a la fin de tous les tours
 	}
 	*tokens = start;
-	print_lst(*tokens);
+	if (!check_last_token(last_token(*tokens)))
+		return (0);
+	print_lst(start);
 	return (1);
 }
 
