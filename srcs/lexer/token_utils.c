@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/28 14:40:43 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/29 05:26:47 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ void	token_add_back(t_token **lst, t_token *to_add)
 	}
 }
 
+void	token_add_middle(t_token **lst, t_token *to_add)
+{
+	if ((*lst)->value == NULL)
+		(*lst) = to_add;
+	else
+		(*lst)->next = to_add;
+}
+
 void	delone(t_token *to_del)
 {
 	if (to_del)
@@ -60,34 +68,62 @@ void	delone(t_token *to_del)
 	}
 }
 
+void	delfew(t_token *start, int type)
+{
+	t_token	*temp;
+
+	start = start->next;
+	temp = start;
+	while (start->type != type)
+	{
+		delone(temp);
+		temp = NULL;
+		temp = start;
+		start = start->next;
+	}
+	delone(temp);
+	delone(start);
+	
+}
+
 void	concat_token(t_token *to_replace)
 {
 	t_token	*tmp;
-	//t_token	*replace_by;
+	t_token	*buff;
 	char	*value;
 	int		type;
 
 	type = to_replace->type;
 	tmp = to_replace->next;
-	while (tmp && tmp->type != type)//si on arrive sur le mem type de token on sarrete on peut donc recuperer la suite qui nous interresse
+	value = ft_strdup("");
+	buff = tmp->next;
+	while (tmp && buff && buff->type != type)
 	{
-		if (!value)
-			value = ft_strjoin("", tmp->value);
-		else
-			value = ft_strjoin(value, tmp->value);
-		tmp = tmp->next;
-	}//ici on a accumule toute les valeures contenue dans les tokens  entre quotes
-	if (tmp && tmp->next)
-		tmp = tmp->next;
-	printf("tmp next %s\n", tmp->value);
+		value = ft_strjoin(value, tmp->value);
+		delone(tmp);
+		tmp = buff;
+		buff = tmp->next;
+	}
+	value = ft_strjoin(value, tmp->value);
+	delone(tmp);
+	tmp = buff;
+	if (buff && buff->next)
+		buff = tmp->next;
+	else
+		buff = NULL;
+	to_replace->value = value;
+	to_replace->type = literal;
+	to_replace->next = buff;
 }
 
 void	quotes_neutralizer(t_token *lst)
 {
 	while (lst)
 	{
-		if (lst->type == single_quote || lst->type == double_quote)
+		if (lst && (lst->type == single_quote || lst->type == double_quote))
+		{
 			concat_token(lst);
+		}
 		lst = lst->next;
 	}
 }
