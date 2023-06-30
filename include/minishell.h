@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/29 05:01:37 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/30 12:46:34 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_token
 	int				pos;
 	int				type;
 	struct s_token	*next;
+	struct s_token	*prev;
 }				t_token;
 
 typedef struct s_shell
@@ -78,7 +79,7 @@ void	ft_free_shell(t_shell *g_shell);
 t_token	*new_token(char *value, int type, int pos);
 void	token_add_back(t_token **lst, t_token *to_add);
 t_token	*last_token(t_token *token);
-void	quotes_neutralizer(t_token *lst);
+void	quotes_neutralizer(t_token **lst);
 
 //src/error/error.c
 void	error_handler(char *error);

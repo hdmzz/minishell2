@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/30 11:33:17 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:19:19 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	token_add_back(t_token **lst, t_token *to_add)
 	if (start == NULL)
 	{
 		*lst = to_add;
+		(*lst)->prev = NULL;
 		return ;
 	}
 	if (lst && *lst && to_add)
@@ -48,15 +49,8 @@ void	token_add_back(t_token **lst, t_token *to_add)
 		while (start->next != NULL)
 			start = start->next;
 		start->next = to_add;
+		to_add->prev = start;
 	}
-}
-
-void	token_add_middle(t_token **lst, t_token *to_add)
-{
-	if ((*lst)->value == NULL)
-		(*lst) = to_add;
-	else
-		(*lst)->next = to_add;
 }
 
 void	delone(t_token *to_del)
@@ -68,60 +62,104 @@ void	delone(t_token *to_del)
 	}
 }
 
-void	delfew(t_token *start, int type)
+void	delfew(t_token *start, t_token *end)
 {
 	t_token	*temp;
 
-	start = start->next;
-	temp = start;
-	while (start->type != type)
+	temp = start->next;
+	while (temp != end)
 	{
-		delone(temp);
-		temp = NULL;
-		temp = start;
-		start = start->next;
+		delone(start);
+		start = temp;
+		temp = temp->next;
 	}
-	delone(temp);
 	delone(start);
-	
+	delone(temp);
 }
 
-void	concat_token(t_token *to_replace)
+void	replace_token(t_token *start, t_token *end, t_token *new)
+{
+	t_token	*add_back;
+
+	add_back = start->prev;
+	delfew(start, end);
+	if (add_back)
+		add_back->next = new;
+	else
+	{
+		start = new;
+		start->next = NULL;
+		start->prev = NULL;
+	}
+}
+
+t_token	*concat_token(t_token *start)
 {
 	t_token	*tmp;
-	t_token	*buff;
+	t_token	*new;
 	char	*value;
+	char	*buff;
 	int		type;
 
-	type = to_replace->type;
-	tmp = to_replace->next;
 	value = ft_strdup("");
-	buff = tmp->next;
-	while (tmp && buff && buff->type != type)
+	type = start->type;
+	tmp = start->next;
+	while (tmp->type != type)
 	{
+		buff = value;
 		value = ft_strjoin(value, tmp->value);
-		delone(tmp);
-		tmp = buff;
-		buff = tmp->next;
+		free(buff);
+		tmp = tmp->next;
 	}
-	value = ft_strjoin(value, tmp->value);
-	delone(tmp);
-	if (buff && buff->next)
-		buff = tmp->next;
-	else
-		buff = NULL;
-	free(to_replace->value);
-	to_replace->value = value;
-	to_replace->type = literal;
-	to_replace->next = buff;
+	new = new_token(value, literal, start->pos);
+	new->next = tmp->next;
+	new->prev = start->prev;
+	delfew(start, tmp);
+	return (new);
 }
 
-void	quotes_neutralizer(t_token *lst)
+void	quotes_neutralizer(t_token **lst)
 {
-	while (lst)
+	t_token	*prev;
+	t_token	*start;
+
+	start = *lst;
+	while ((*lst))
 	{
-		if (lst && (lst->type == single_quote || lst->type == double_quote))
-			concat_token(lst);
-		lst = lst->next;
+		if ((*lst) && ((*lst)->type == single_quote || (*lst)->type == double_quote))
+		{
+			prev = (*lst)->prev;
+			if (prev)
+			{
+				(*lst) = concat_token(*lst);
+				prev->next = (*lst);
+			}
+			else
+				start = concat_token(*lst);
+		}
+		(*lst) = (*lst)->next;
 	}
+	(*lst) = start;
 }
+
+//type = to_replace->type;
+//	tmp = to_replace->next;
+//	value = ft_strdup("");
+//	buff = tmp->next;
+//	while (tmp && buff && buff->type != type)
+//	{
+//		value = ft_strjoin(value, tmp->value);
+//		delone(tmp);
+//		tmp = buff;
+//		buff = tmp->next;
+//	}
+//	value = ft_strjoin(value, tmp->value);
+//	delone(tmp);
+//	if (buff && buff->next)
+//		buff = tmp->next;
+//	else
+//		buff = NULL;
+//	free(to_replace->value);
+//	to_replace->value = value;
+//	to_replace->type = literal;
+//	to_replace->next = buff;
