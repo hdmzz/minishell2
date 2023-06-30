@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/29 05:02:15 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:37:24 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	grammatical_analyzer(t_token **tokens)
 	if (!check_last_token(last_token(*tokens)))
 		return (0);
 	quotes_neutralizer(*tokens);
+	dollar_
 	print_lst(*tokens);
 	return (1);
 }
@@ -99,3 +100,10 @@ int	parser(t_shell *g_shell)
 	//ft_free_split(g_shell->splitted_cmd);
 	return (1);
 }
+
+//les tokens DOLLAR:
+// On récupère le token DOLLAR + le token suivant qui doit être un token WORD.
+// On cherche le contenu du token WORD dans l'environnement et on récupère la valeur de la variable concernée 
+// ou NULL si la variable concernée n'existe pas. On remplace ces deux tokens par un token WORD avec le contenu
+//  nouvellement récupéré. On fait la même chose lorsqu'on trouve un token DOLLAR entre double quotes,
+//  puisqu'il n'y aucune interprétation à effectuer si le token DOLLAR est entre simple quote.

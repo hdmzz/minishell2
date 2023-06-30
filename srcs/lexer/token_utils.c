@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/29 05:26:47 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/06/30 11:33:17 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ void	concat_token(t_token *to_replace)
 	}
 	value = ft_strjoin(value, tmp->value);
 	delone(tmp);
-	tmp = buff;
 	if (buff && buff->next)
 		buff = tmp->next;
 	else
 		buff = NULL;
+	free(to_replace->value);
 	to_replace->value = value;
 	to_replace->type = literal;
 	to_replace->next = buff;
@@ -121,9 +121,7 @@ void	quotes_neutralizer(t_token *lst)
 	while (lst)
 	{
 		if (lst && (lst->type == single_quote || lst->type == double_quote))
-		{
 			concat_token(lst);
-		}
 		lst = lst->next;
 	}
 }
