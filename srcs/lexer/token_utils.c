@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 16:48:45 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 16:53:23 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	quotes_neutralizer(t_token **lst)
 	start = *lst;
 	while ((*lst))
 	{
-		if ((*lst) && ((*lst)->type == single_quote || (*lst)->type == double_quote))
+		if ((*lst) && ((*lst)->type == single_quote || \
+		(*lst)->type == double_quote))
 		{
 			prev = (*lst)->prev;
 			if (prev)
