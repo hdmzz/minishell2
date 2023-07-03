@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdamitzi <hdamitzi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:52:54 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/27 16:00:24 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:29:00 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void				ft_put_ptr(void *ptr, int *total);
 
 void				ft_free_split(char **tab);
 
-size_t	ft_strnlen(const char *str, size_t n);
-char	*ft_strndup(const char *str, size_t n);
+size_t				ft_strnlen(const char *str, size_t n);
+char				*ft_strndup(const char *str, size_t n);
 
 #endif

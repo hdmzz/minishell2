@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 14:26:52 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:57:05 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_last_token(t_token *last)
 	int	type;
 
 	type = last->type;
-	if (type != literal && type != white_space && type  != double_quote \
+	if (type != literal && type != white_space && type != double_quote \
 	&& type != single_quote && type != dollar && type != new_line)
 		return (0);
 	return (1);
@@ -77,7 +77,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 			if (!quotes_rules(tokens))
 				return (0);
 		}
-		*tokens = (*tokens)->next;//tokens est mis a null a la fin de tous les tours
+		*tokens = (*tokens)->next;
 	}
 	*tokens = start;
 	if (!check_last_token(last_token(*tokens)))
@@ -88,12 +88,6 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 	return (1);
 }
 
-//les tokens DOLLAR: a faire psser avant 
-// On récupère le token DOLLAR + le token suivant qui doit être un token WORD.
-// On cherche le contenu du token WORD dans l'environnement et on récupère la valeur de la variable concernée 
-// ou NULL si la variable concernée n'existe pas. On remplace ces deux tokens par un token WORD avec le contenu
-//  nouvellement récupéré. On fait la même chose lorsqu'on trouve un token DOLLAR entre double quotes,
-//  puisqu'il n'y aucune interprétation à effectuer si le token DOLLAR est entre simple quote.
 void	dollar_rule(t_shell *g_shell)
 {
 	t_token	*lst;
@@ -115,7 +109,8 @@ void	dollar_rule(t_shell *g_shell)
 		{
 			env = getenv(lst->next->value);
 			if (env != NULL)
-				replace_token(lst, lst->next, new_token(env, literal, lst->pos));
+				replace_token(lst, lst->next,\
+				 new_token(env, literal, lst->pos));
 			else
 				replace_token(lst, lst->next, new_token("", literal, lst->pos));
 		}
@@ -131,9 +126,10 @@ int	parser(t_shell *g_shell)
 {
 	g_shell->start_token = lexer(g_shell);
 	print_lst(g_shell->start_token);
-	dollar_rule(g_shell);
+	if (!pipes_conformity(g_shell))
+		printf("error pipes");
+	//dollar_rule(g_shell);
 	print_lst(g_shell->start_token);
-
 	//grammatical_analyzer(&g_shell->list_token);
 	//exec(g_shell);
 	//ft_free_split(g_shell->splitted_cmd);

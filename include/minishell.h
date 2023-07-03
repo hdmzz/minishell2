@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 13:37:28 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:55:17 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	replace_token(t_token *start, t_token *end, t_token *new);
 
 //src/error/error.c
 void	error_handler(char *error);
+
+//pipes_conformity.c
+bool	pipes_conformity(t_shell *g_shell);
 
 //buiding function
 void	print_lst(t_token *token);
