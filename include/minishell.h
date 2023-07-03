@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 16:40:54 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 16:49:22 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	replace_token(t_token *start, t_token *end, t_token *new);
 
 //src/lexer/token_utils2.c
 t_token	*final_concat(t_token *start);
+t_token	*concat_token(t_token *start);
+void	delfew(t_token *start, t_token *end);
+void	delone(t_token *to_del);
 
 //src/error/error.c
 void	error_handler(char *error);
