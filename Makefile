@@ -13,6 +13,7 @@ SRC = $Smain.c \
 		$Sexec/exec.c \
 		$Slexer/lexer.c \
 		$Slexer/token_utils.c \
+		$Slexer/token_utils2.c \
 		$Sparser/parser.c \
 		$Sparser/pipes_conformity.c \
 		$Sutils/utils.c \

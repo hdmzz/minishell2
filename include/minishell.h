@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 15:55:17 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 16:40:54 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ void	token_add_back(t_token **lst, t_token *to_add);
 t_token	*last_token(t_token *token);
 void	quotes_neutralizer(t_token **lst);
 void	replace_token(t_token *start, t_token *end, t_token *new);
+
+//src/lexer/token_utils2.c
+t_token	*final_concat(t_token *start);
 
 //src/error/error.c
 void	error_handler(char *error);
