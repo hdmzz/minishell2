@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/29 04:32:36 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:46:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ t_token	*lexer(t_shell *g_shell)
 	t_token	*token;
 	char	*input;
 
-	token = NULL;
-	i = 0;
+	i = 1;
+	token = new_token("", start_type, 0);
 	input = g_shell->start_buff;
 	if (!input)
 		return (NULL);
@@ -127,5 +127,6 @@ t_token	*lexer(t_shell *g_shell)
 			exit(EXIT_FAILURE);
 		}
 	}
+	g_shell->list_token = token->next;
 	return (token);
 }

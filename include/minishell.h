@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/30 12:46:34 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:37:28 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ enum e_type
 	double_redir_right,
 	dollar,
 	literal,
+	start_type,
 };
 
 typedef struct s_token_trslte
@@ -61,10 +62,12 @@ typedef struct s_shell
 	char	*full_cmd_path;
 	char	**splitted_cmd;
 	t_token	*list_token;
+	t_token	*start_token;
 }				t_shell;
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
+void	dollar_rule(t_shell *g_shell);
 
 //srcs/exec/exec.c
 void	exec(t_shell *g_shell);
@@ -80,6 +83,7 @@ t_token	*new_token(char *value, int type, int pos);
 void	token_add_back(t_token **lst, t_token *to_add);
 t_token	*last_token(t_token *token);
 void	quotes_neutralizer(t_token **lst);
+void	replace_token(t_token *start, t_token *end, t_token *new);
 
 //src/error/error.c
 void	error_handler(char *error);
