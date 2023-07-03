@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 14:01:59 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:29:19 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	replace_token(t_token *start, t_token *end, t_token *new)
 		add_back->next = new;
 		new->next = last_to_save;
 		new->prev = add_back;
-		last_to_save->prev = new;
+		if (last_to_save)
+			last_to_save->prev = new;
 	}
 	else
 	{

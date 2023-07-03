@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 14:03:06 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:26:52 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,25 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 void	dollar_rule(t_shell *g_shell)
 {
 	t_token	*lst;
-	//int		quote;
-	//int		quote_count;
+	bool	interpretation;
+	int		quote_count;
 	char	*env;
 
 	lst = g_shell->list_token;//demarre sur le token apres le start token
+	interpretation = true;
+	quote_count = 0;
 	while (lst)
 	{
-		if (lst->type == dollar && lst->next->type == literal)
+		if (lst->type == single_quote && !(quote_count % 2))
+		{
+			quote_count += 1;
+			interpretation = false;
+		}
+		if (lst->type == dollar && lst->next->type == literal && interpretation)
 		{
 			env = getenv(lst->next->value);
 			if (env != NULL)
-			{
 				replace_token(lst, lst->next, new_token(env, literal, lst->pos));
-				//free(env);
-			}
 			else
 				replace_token(lst, lst->next, new_token("", literal, lst->pos));
 		}
