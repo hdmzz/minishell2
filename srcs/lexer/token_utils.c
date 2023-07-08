@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 16:53:23 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/07 00:44:43 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_token	*last_token(t_token *token)
 {
-	while (token->next != NULL)
+	while (token && token->next != NULL)
 		token = token->next;
 	return (token);
 }

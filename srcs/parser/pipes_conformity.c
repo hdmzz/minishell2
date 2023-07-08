@@ -15,7 +15,8 @@ static bool	no_cmd_btw_pipes(t_token *token)
 			if (temp && temp->type == pipeline)
 				return (true);
 		}
-		temp = temp->next;
+		if (temp)
+			temp = temp->next;
 	}
 	return (false);
 }

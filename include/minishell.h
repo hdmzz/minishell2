@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 16:49:22 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/06 12:56:15 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@
 enum e_type
 {
 	new_line,
-	white_space,
-	pipeline,
-	single_quote,
-	double_quote,
-	simple_redir_left,
-	simple_redir_right,
-	double_redir_left,
-	double_redir_right,
-	dollar,
-	literal,
+	pipeline,//0001
+	simple_redir_left = 2,//0010
+	simple_redir_right = 4,//0100
+	double_redir_left = 8,//1000
+	double_redir_right = 16,//0001 0000
+	white_space = 32,
+	single_quote = 64,
+	double_quote = 128,
+	dollar = 256,
+	literal = 512,
 	start_type,
 };
 
@@ -90,6 +90,7 @@ t_token	*final_concat(t_token *start);
 t_token	*concat_token(t_token *start);
 void	delfew(t_token *start, t_token *end);
 void	delone(t_token *to_del);
+int		concat_word(t_shell *g_shell);
 
 //src/error/error.c
 void	error_handler(char *error);

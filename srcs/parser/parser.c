@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/03 15:57:05 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:24:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	check_last_token(t_token *last)
 {
 	int	type;
 
+	if (last == NULL)
+		return (1);
 	type = last->type;
 	if (type != literal && type != white_space && type != double_quote \
 	&& type != single_quote && type != dollar && type != new_line)
@@ -84,7 +86,6 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		return (0);
 	dollar_rule(g_shell);
 	quotes_neutralizer(tokens);
-	print_lst(*tokens);
 	return (1);
 }
 
@@ -124,13 +125,12 @@ void	dollar_rule(t_shell *g_shell)
 */
 int	parser(t_shell *g_shell)
 {
-	g_shell->start_token = lexer(g_shell);
-	print_lst(g_shell->start_token);
+	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
+		return (0);
 	if (!pipes_conformity(g_shell))
-		printf("error pipes");
-	//dollar_rule(g_shell);
+		return (0);
+	concat_word(g_shell);
 	print_lst(g_shell->start_token);
-	//grammatical_analyzer(&g_shell->list_token);
 	//exec(g_shell);
 	//ft_free_split(g_shell->splitted_cmd);
 	return (1);
