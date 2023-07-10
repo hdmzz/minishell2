@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 02:17:31 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/10 06:04:56 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ void	delone(t_token *to_del)
 {
 	if (to_del)
 	{
-		to_del->prev->next = to_del->next;
-		to_del->next->prev = to_del->prev;
+		if (to_del->prev)
+			to_del->prev->next = to_del->next;
+		if (to_del->next)
+			to_del->next->prev = to_del->prev;
 		free(to_del->value);
 		free(to_del);
 	}
