@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 06:04:56 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/10 08:51:39 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_token	*final_concat(t_token *start)
 	new = new_token(value, literal, start->pos);
 	new->next = tmp;
 	new->prev = start->prev;
-	new->prev->next = new;
 	delfew(start, last_to_del);
+	new->prev->next = new;
 	return (new);
 }
 
@@ -80,6 +80,7 @@ t_token	*concat_token(t_token *start)
 	new->next = tmp->next;
 	new->prev = start->prev;
 	delfew(start, tmp);
+	new->prev->next = new;
 	return (new);
 }
 
@@ -101,6 +102,8 @@ void	delfew(t_token *start, t_token *end)
 	t_token	*temp;
 
 	temp = start->next;
+	if (start == end)
+		return (delone(start));
 	while (temp && temp != end)
 	{
 		delone(start);
