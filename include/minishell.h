@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 05:43:16 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:10:13 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int		concat_word(t_shell *g_shell);
 //src/lexer/token_utils3.c
 //a utiliser apres les translate et tout
 void	cln_whitespace_btw_ctrl_tok(t_shell *g_shell);
+int		check_redirection_rules(t_shell *g_shell);
 
 //src/error/error.c
 void	error_handler(char *error);

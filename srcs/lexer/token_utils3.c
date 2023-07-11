@@ -20,3 +20,17 @@ void	cln_whitespace_btw_ctrl_tok(t_shell *g_shell)
 		temp = temp->next;
 	}
 }
+
+int	check_redirection_rules(t_shell *g_shell)
+{
+	t_token	*temp;
+
+	temp = g_shell->list_token;
+	while (temp)
+	{
+		if ((temp->type & 31) && temp->next->type != literal)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}

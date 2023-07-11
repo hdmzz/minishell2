@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/07 00:44:43 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:03:26 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	replace_token(t_token *start, t_token *end, t_token *new)
 	t_token	*add_back;
 	t_token	*last_to_save;
 
-	add_back = start->prev;//si premier mot est un $ on se retrouve sur le start token
+	add_back = start->prev;
 	last_to_save = end->next;
 	delfew(start, end);
 	if (add_back)
