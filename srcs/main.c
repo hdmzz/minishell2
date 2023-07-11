@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 02:20:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:48:17 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	init_g_shell(t_shell *g_shell)
 	g_shell->splitted_cmd = NULL;
 	g_shell->list_token = NULL;
 	g_shell->start_token = NULL;
+	g_shell->cmds = NULL;
 	return (1);
 }
 

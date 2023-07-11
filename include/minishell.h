@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 09:10:13 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:47:59 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,16 @@ typedef struct s_shell
 	char	**splitted_cmd;
 	t_token	*list_token;
 	t_token	*start_token;
+	t_cmd	*cmds;
 }				t_shell;
+
+typedef	struct s_cmd
+{
+	char	**cmd;
+	int		nb_of_cmd;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}				t_cmd;
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);

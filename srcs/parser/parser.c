@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 06:01:54 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:47:13 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ void	dollar_rule(t_shell *g_shell)
 	t_token	*lst;
 	bool	interpretation;
 	int		quote_count;
-	char	*env;
+	char	*ev;
 
-	lst = g_shell->list_token;//demarre sur le token apres le start token
+	lst = g_shell->list_token;
 	interpretation = true;
 	quote_count = 0;
 	while (lst)
@@ -108,10 +108,9 @@ void	dollar_rule(t_shell *g_shell)
 		}
 		if (lst->type == dollar && lst->next->type == literal && interpretation)
 		{
-			env = getenv(lst->next->value);
-			if (env != NULL)
-				replace_token(lst, lst->next,\
-				 new_token(env, literal, lst->pos));
+			ev = getenv(lst->next->value);
+			if (ev != NULL)
+				replace_token(lst, lst->next, new_token(ev, literal, lst->pos));
 			else
 				replace_token(lst, lst->next, new_token("", literal, lst->pos));
 		}
@@ -131,8 +130,11 @@ int	parser(t_shell *g_shell)
 		return (0);
 	print_lst(g_shell->start_token);
 	cln_whitespace_btw_ctrl_tok(g_shell);//a mettre ds le concatwords
+	if (!check_redirection_rules(g_shell))
+		return (0);
 	concat_word(g_shell);
-	print_lst(g_shell->start_token);
+	//a ce stade on a les commande il ne reste plus qu'a faire des split de chaque token word
+	
 	//exec(g_shell);
 	//ft_free_split(g_shell->splitted_cmd);
 	return (1);
