@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/11 16:47:59 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/15 12:22:57 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ typedef struct s_token
 	struct s_token	*prev;
 }				t_token;
 
+typedef	struct s_cmd
+{
+	char	**cmd;
+	int		nb_of_cmd;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}				t_cmd;
+
 typedef struct s_shell
 {
 	char	*start_buff;
@@ -66,17 +74,13 @@ typedef struct s_shell
 	t_cmd	*cmds;
 }				t_shell;
 
-typedef	struct s_cmd
-{
-	char	**cmd;
-	int		nb_of_cmd;
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-}				t_cmd;
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
 void	dollar_rule(t_shell *g_shell);
+
+//parser_utils.c
+void	recompose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
 void	exec(t_shell *g_shell);
@@ -114,5 +118,6 @@ bool	pipes_conformity(t_shell *g_shell);
 
 //buiding function
 void	print_lst(t_token *token);
+void print_cmd(char **cmds);
 
 #endif

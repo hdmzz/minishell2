@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/10 08:51:39 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/15 13:06:44 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	concat_word(t_shell *g_shell)
 			temp = final_concat(temp);
 		temp = temp->next;
 	}
+	g_shell->list_token = g_shell->start_token->next;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/06 12:13:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/15 12:24:17 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ void	print_lst(t_token *token)
 	}
 	if (token)
 		printf(":%s:%d:%d:\n", token->value,token->type, token->pos);
+}
+
+void print_cmd(char **cmds)
+{
+	int i = -1;
+	while (cmds[++i])
+		printf("%s\n", cmds[i]);
 }
 
 /*
