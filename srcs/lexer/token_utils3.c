@@ -30,10 +30,15 @@ int	check_redirection_rules(t_shell *g_shell)
 	{
 		if (temp->type & 31)//si on est sur un token de controle
 		{
-			//il faut avancer tant que l'on a des whites space
+			temp = temp->next;
+			//il faut avancer tant que l'on a des white spaces
+			while (temp && temp->type == white_space)
+				temp = temp->next;
+			if (!temp || (temp && temp->type != literal))
+				return (0);
 		}
-			return (0);
-		temp = temp->next;
+		if (temp)
+			temp = temp->next;
 	}
 	return (1);
 }
