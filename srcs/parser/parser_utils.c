@@ -56,7 +56,7 @@ void	recompose_cmd(t_shell *g_shell)
 	{
 		while (lst->type == pipeline)
 			lst = lst->next;
-		if (lst->type == literal)
-			add_cmd_back(g_shell, create_new_cmd(lst));
+		add_cmd_back(g_shell, create_new_cmd(lst));
+		lst = lst->next;
 	}
 }

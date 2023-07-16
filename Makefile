@@ -4,6 +4,7 @@ P = parser/
 X = exec/
 L = lexer/
 U = utils/
+R = redirections/
 
 NAME =	minishell
 
@@ -15,11 +16,12 @@ SRC = $Smain.c \
 		$Slexer/token_utils.c \
 		$Slexer/token_utils2.c \
 		$Slexer/token_utils3.c \
-		$Sparser/parser.c \
-		$Sparser/parser_utils.c \
-		$Sparser/pipes_conformity.c \
-		$Sutils/utils.c \
-		$Serror/error.c
+		$S$P/parser.c \
+		$S$P/parser_utils.c \
+		$S$P/pipes_conformity.c \
+		$S$U/utils.c \
+		$Serror/error.c \
+		$S$Rsimple_right.c
 
 OBJ = $(SRC:$S%=$O%.o)
 
@@ -38,6 +40,7 @@ $O:
 	@mkdir -p $@parser
 	@mkdir -p $@exec
 	@mkdir -p $@utils
+	@mkdir -p $@$R
 
 $(OBJ): | $O
 
