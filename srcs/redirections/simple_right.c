@@ -9,17 +9,19 @@
 int	treat_cmd(char **cmd)
 {
 	int	i;
-	int	redirection_pos;
+	int	first_redir;;
 	int	fd;
 	int	saved_stdout;
 
 	i = -1;
+	first_redir = 0;
 	saved_stdout = dup(STDOUT_FILENO);
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '>')
 		{
-			redirection_pos = i;
+			if (first_redir == 0)
+				first_redir = i;
 			fd = open(cmd[i + 1], 01101, S_IRUSR | S_IWUSR);
 			if (fd == -1)
 				return 0;
@@ -27,11 +29,11 @@ int	treat_cmd(char **cmd)
 				return 0;
 		}
 	}
-	while (redirection_pos != i)
+	while (first_redir && first_redir != i)
 	{
-		free(cmd[redirection_pos]);
-		cmd[redirection_pos] = NULL;
-		redirection_pos++;
+		free(cmd[first_redir]);
+		cmd[first_redir] = NULL;
+		first_redir++;
 	}
 	printf ("ici\n");
 	print_cmd(cmd);
