@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/16 22:53:28 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:02:46 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,7 @@ int	parser(t_shell *g_shell)
 	t_cmd *cmds = g_shell->cmds;
 	while (cmds)
 	{
-		printf("\n");
-		print_cmd(cmds->cmd);
+		treat_cmd(cmds->cmd);
 		cmds = cmds->next;
 	}
 	

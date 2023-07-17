@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/15 14:33:02 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:04:34 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_shell
 	t_token	*list_token;
 	t_token	*start_token;
 	t_cmd	*cmds;
+	int		nb_cmds;
 }				t_shell;
 
 
@@ -121,5 +122,9 @@ bool	pipes_conformity(t_shell *g_shell);
 //buiding function
 void	print_lst(t_token *token);
 void print_cmd(char **cmds);
+
+//simple_right.c
+int	treat_cmd(char **cmd);
+
 
 #endif

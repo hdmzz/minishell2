@@ -51,6 +51,7 @@ void	recompose_cmd(t_shell *g_shell)
 	int		pipes_nb;
 
 	pipes_nb = count_pipes(g_shell->list_token) + 1;
+	g_shell->nb_cmds = pipes_nb;
 	lst = g_shell->list_token;
 	while (pipes_nb--)//on itere sur le nombre de commandes
 	{

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/15 13:50:49 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:58:39 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,3 +91,12 @@ void	exec(t_shell *g_shell)
 		exit(EXIT_SUCCESS);
 	}
 }
+
+/* 
+	on recoit la double liste chainee qui contient les commandes entre les pipes
+	il faut maintenant verifier si il y a redirection si il y a changer la valeur
+	de stdout em fonction du cas puis le remettre et executer la commande via la
+	fonction execve qui ecrira sur la sortie standard modifiee puis remettre
+	la valeur d'origine
+ */
+
