@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/17 16:02:46 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:52:37 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,10 @@ int	parser(t_shell *g_shell)
 	t_cmd *cmds = g_shell->cmds;
 	while (cmds)
 	{
-		treat_cmd(cmds->cmd);
+		simple_right(cmds->cmd);
+		simple_left(cmds->cmd);
 		cmds = cmds->next;
 	}
-	
 	//exec(g_shell);
 	//ft_free_split(g_shell->splitted_cmd);
 	return (1);

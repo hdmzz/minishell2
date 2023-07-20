@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/17 15:58:39 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:51:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	*get_cmd_path(char **to_search)
 	return (NULL);
 }
 
-void	exec(t_shell *g_shell)
+void	exec_cmd(t_shell *g_shell)
 {
 	pid_t	pid;
 	char	**split_cmd;
@@ -90,6 +90,12 @@ void	exec(t_shell *g_shell)
 			perror("Exec");
 		exit(EXIT_SUCCESS);
 	}
+}
+
+void	exec_final(const char *path, char **argv)
+{
+	if (execve(path, argv, NULL) == -1)
+		perror("Exec");
 }
 
 /* 

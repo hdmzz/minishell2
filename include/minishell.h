@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/17 16:04:34 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:51:22 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	dollar_rule(t_shell *g_shell);
 void	recompose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
-void	exec(t_shell *g_shell);
+//void	exec(t_shell *g_shell);
+void	exec_final(const char *path, char **argv);
 
 //srcs/lexer/lexer.c
 t_token	*lexer(t_shell *g_shell);
@@ -124,7 +125,8 @@ void	print_lst(t_token *token);
 void print_cmd(char **cmds);
 
 //simple_right.c
-int	treat_cmd(char **cmd);
+int	simple_right(char **cmd);
 
-
+//simple_left.c
+int	simple_left(char **cmd);
 #endif
