@@ -22,7 +22,8 @@ SRC = $Smain.c \
 		$S$U/utils.c \
 		$Serror/error.c \
 		$S$Rsimple_right.c \
-		$S$Rsimple_left.c
+		$S$Rsimple_left.c \
+		$S$Rredir.c
 
 OBJ = $(SRC:$S%=$O%.o)
 

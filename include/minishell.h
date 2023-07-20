@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/20 09:51:22 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/20 10:12:26 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ bool	pipes_conformity(t_shell *g_shell);
 //buiding function
 void	print_lst(t_token *token);
 void print_cmd(char **cmds);
+
+//redir.c
+void	clean_cmd_tab(char **cmd, int first_redir, int end);
 
 //simple_right.c
 int	simple_right(char **cmd);

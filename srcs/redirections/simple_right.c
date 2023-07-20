@@ -28,12 +28,6 @@ int	simple_right(char **cmd)
 				return 0;
 		}
 	}
-	while (first_redir && first_redir != i)
-	{
-		free(cmd[first_redir]);
-		cmd[first_redir] = NULL;
-		first_redir++;
-	}
 	//exec here
 	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
 		return (perror("Erreur restauration sortie standard"), 0);
