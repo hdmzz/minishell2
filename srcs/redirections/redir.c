@@ -10,31 +10,39 @@ void	clean_cmd_tab(char **cmd, int first_redir, int end)
 	}
 }
 
-int	recover_fd(int saved_fd, int redir_type)
+int	recover_fd(t_shell *g_shell)
 {
-	int	std_in_out;
+	int	ret;
 
-	std_in_out = STDIN_FILENO;//<
-	if (redir_type == larger || redir_type == d_larger)//1 pour out, 0 pour in
-		std_in_out = STDOUT_FILENO;
-	if (dup2(saved_fd, std_in_out) == -1)
-		return (perror("Erreur restauration std in/out"), 0);
-	return (1);
+	ret = 1;
+	if (g_shell->output_backup != -1)
+	{
+		if (dup2(g_shell->output_backup, STDOUT_FILENO) == -1)
+			ret = 0;
+	}
+	if (g_shell->input_backup != -1)
+	{
+		if (dup2(g_shell->input_backup, STDIN_FILENO) == -1)
+			ret = 0;
+	}
+	return (ret);
 }
-
+//!!!! WARNING pas encore les pipes!!!!!!1
 int	redirections(t_shell *g_shell)//genre de for each node in cmds
 {
 	t_cmd	*cmds;
-	int		i;
-	int		y;
-	int		saved_fd;
 
 	cmds = g_shell->cmds;
-	i = 0;
 	while (cmds)
 	{
-		simple_left(cmds->cmd);
+		simple_left(cmds->cmd, g_shell);
+		simple_right(cmds->cmd, g_shell);
+		if (!exec_cmd(cmds->cmd))
+			return (0);
 		cmds ++;
 	}
-
+	//la commande a ete executee il faut remettre tout dans l'ordre maintenant
+	if (!recover_fd(g_shell))
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/21 11:52:38 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/21 23:28:36 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,13 @@ int	parser(t_shell *g_shell)
 	t_cmd *cmds = g_shell->cmds;
 	while (cmds)
 	{
-		simple_right(cmds->cmd);
-		simple_left(cmds->cmd);
+		simple_right(cmds->cmd, g_shell);
+		simple_left(cmds->cmd, g_shell);
+		//on a fait les redrections maintenant on execute la commande
+		exec_cmd(cmds->cmd);
 		cmds = cmds->next;
 	}
+	recover_fd(g_shell);
 	//exec(g_shell);
 	//ft_free_split(g_shell->splitted_cmd);
 	return (1);

@@ -1,29 +1,25 @@
 #include "../../include/minishell.h"
 
-int	simple_left(char **cmd)//on redirige
+int	simple_left(char **cmd, t_shell *g_shell)
 {
 	int	i;
-	int	first_redir;;
 	int	fd;
-	int	saved_stdin;
 
 	i = -1;
-	first_redir = 0;
-	saved_stdin = dup(STDIN_FILENO);
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '<')
-			if (first_redir == 0)
-				first_redir = i;
-		fd = open(cmd[i + 1], O_RDONLY, NULL);
-		if (fd == -1)
-			return (0);
-		if (dup2(fd, STDIN_FILENO) == -1)//stdin est redirige vers le fichier
-			return (0);
+		{
+			g_shell->input_backup = dup(STDIN_FILENO);
+			fd = open(cmd[i + 1], O_RDONLY, NULL);
+			if (fd == -1)
+				return (0);
+			if (dup2(fd, STDIN_FILENO) == -1)//stdin est redirige vers le fichier
+				return (0);
+			close(fd);
+		}
 	}
-	close(fd);
-	
-	return (saved_stdin);
+	return (1);
 }
 
 //int main() {

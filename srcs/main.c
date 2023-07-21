@@ -6,13 +6,13 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/16 22:54:27 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/21 23:43:28 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	init_g_shell(t_shell *g_shell)
+static int	init_g_shell(t_shell *g_shell)
 {
 	g_shell->start_buff = NULL;
 	g_shell->full_cmd_path = NULL;
@@ -20,6 +20,8 @@ int	init_g_shell(t_shell *g_shell)
 	g_shell->list_token = NULL;
 	g_shell->start_token = NULL;
 	g_shell->cmds = NULL;
+	g_shell->output_backup = -1;
+	g_shell->input_backup = -1;
 	return (1);
 }
 

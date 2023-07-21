@@ -6,31 +6,26 @@
 	puis enlever le metacharactere et le mot qui represente le nom du fichier
 	simple right == '>'
  */
-int	simple_right(char **cmd)
+int	simple_right(char **cmd, t_shell *g_shell)
 {
 	int	i;
-	int	first_redir;;
 	int	fd;
-	int	saved_stdout;
 
 	i = -1;
-	first_redir = 0;
-	saved_stdout = dup(STDOUT_FILENO);
 	while (cmd[++i])
 	{
 		if (cmd[i][0] == '>')
 		{
-			if (first_redir == 0)
-				first_redir = i;
+			g_shell->output_backup = dup(STDOUT_FILENO);
 			fd = open(cmd[i + 1], 01101, S_IRUSR | S_IWUSR);
 			if (fd == -1)
 				return (-1);
 			if (dup2(fd, STDOUT_FILENO) == -1)//maintenant ecrire sur stdout revient a ecrire sur fd
 				return (-1);
+			close(fd);
 		}
 	}
-	close(fd);
-	return (saved_stdout);//il faut tocker cette valeur et la remettre au dans le fd correspondant
+	return (1);
 }
 //pas fini il faut encore executer apres avoir rediriger peut etre avec un nvx
 //process??

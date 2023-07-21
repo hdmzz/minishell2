@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/20 11:24:34 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:22:56 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*get_cmd_path(char **to_search)
 	int				i;
 
 	i = -1;
-	if (access(to_search[0], X_OK))
+	if (!access(to_search[0], X_OK))
 		return (to_search[0]);
 	split_env = ft_split(getenv("PATH"), 58);
 	if (split_env[0] == NULL)
@@ -62,46 +62,32 @@ static char	*get_cmd_path(char **to_search)
 					return (concat_cmd(split_env[i], entry->d_name));
 			}
 		}
+		closedir(dir);
 	}
 	return (NULL);
 }
 
-void	exec_cmd(t_shell *g_shell)
+int	exec_cmd(char **cmd)
 {
 	pid_t	pid;
-	char	**split_cmd;
+	char	*full_cmd_path;
 
-	split_cmd = g_shell->splitted_cmd;
-	g_shell->full_cmd_path = get_cmd_path(split_cmd);
-	if (g_shell->full_cmd_path == NULL)
-		return (perror("Getenv"), exit(EXIT_FAILURE));
+	full_cmd_path = get_cmd_path(cmd);
+	if (full_cmd_path == NULL)
+		return (perror("Getenv"), 0);
 	pid = fork();
 	if (pid == -1)
-		perror("Fork issue");
+		return (perror("Fork issue"), 0);
 	if (pid > 0)
 	{
 		waitpid(pid, NULL, 0);
 		kill(pid, SIGTERM);
+		free(full_cmd_path);
 	}
 	else if (pid == 0)
 	{
-		if ((execve(g_shell->full_cmd_path, split_cmd, NULL)) == -1)
-			perror("Exec");
-		exit(EXIT_SUCCESS);
+		if ((execve(full_cmd_path, cmd, NULL)) == -1)
+			return (perror("Exec"), 0);
 	}
+	return (1);
 }
-
-void	exec_final(const char *path, char **argv)
-{
-	if (execve(path, argv, NULL) == -1)
-		perror("Exec");
-}
-
-/* 
-	on recoit la double liste chainee qui contient les commandes entre les pipes
-	il faut maintenant verifier si il y a redirection si il y a changer la valeur
-	de stdout em fonction du cas puis le remettre et executer la commande via la
-	fonction execve qui ecrira sur la sortie standard modifiee puis remettre
-	la valeur d'origine
- */
-
