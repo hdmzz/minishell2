@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	simple_left(char **cmd)
+int	simple_left(char **cmd)//on redirige
 {
 	int	i;
 	int	first_redir;;
@@ -22,7 +22,8 @@ int	simple_left(char **cmd)
 			return (0);
 	}
 	close(fd);
-	return (1);
+	
+	return (saved_stdin);
 }
 
 //int main() {

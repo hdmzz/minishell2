@@ -4,6 +4,7 @@
 	pour recupper la commande si il y a une redirection
 	il va falloir recuperer le mot apres la redir, faire la redirection,
 	puis enlever le metacharactere et le mot qui represente le nom du fichier
+	simple right == '>'
  */
 int	simple_right(char **cmd)
 {
@@ -23,16 +24,13 @@ int	simple_right(char **cmd)
 				first_redir = i;
 			fd = open(cmd[i + 1], 01101, S_IRUSR | S_IWUSR);
 			if (fd == -1)
-				return 0;
+				return (-1);
 			if (dup2(fd, STDOUT_FILENO) == -1)//maintenant ecrire sur stdout revient a ecrire sur fd
-				return 0;
+				return (-1);
 		}
 	}
-	//exec here
-	if (dup2(saved_stdout, STDOUT_FILENO) == -1)
-		return (perror("Erreur restauration sortie standard"), 0);
 	close(fd);
-	return (1);
+	return (saved_stdout);//il faut tocker cette valeur et la remettre au dans le fd correspondant
 }
 //pas fini il faut encore executer apres avoir rediriger peut etre avec un nvx
 //process??

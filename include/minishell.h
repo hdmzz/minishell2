@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/20 10:12:26 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/21 12:37:25 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ enum e_type
 	start_type,
 };
 
+enum e_redir
+{
+	less,
+	larger,
+	d_less,
+	d_larger,
+};
+
 typedef struct s_token_trslte
 {
 	char	*value;
@@ -75,6 +83,8 @@ typedef struct s_shell
 	t_token	*start_token;
 	t_cmd	*cmds;
 	int		nb_cmds;
+	int		output_backup;
+	int		input_backup;
 }				t_shell;
 
 
@@ -127,9 +137,10 @@ void print_cmd(char **cmds);
 //redir.c
 void	clean_cmd_tab(char **cmd, int first_redir, int end);
 
-//simple_right.c
+//simple_right.c > output redir
 int	simple_right(char **cmd);
 
-//simple_left.c
+//simple_left.c < input redir
 int	simple_left(char **cmd);
+
 #endif

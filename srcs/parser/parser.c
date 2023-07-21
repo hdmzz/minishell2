@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/20 09:52:37 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/21 11:52:38 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,7 @@ int	parser(t_shell *g_shell)
 	if (!check_redirection_rules(g_shell))
 		return (0);
 	concat_word(g_shell);
-	printf("2\n");
-	print_lst(g_shell->start_token);
+	//print_lst(g_shell->start_token);
 	//a ce stade on a les commande il ne reste plus qu'a faire des split de chaque token word
 	recompose_cmd(g_shell);
 	t_cmd *cmds = g_shell->cmds;

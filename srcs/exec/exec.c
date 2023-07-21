@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/20 09:51:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:24:34 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static char	*get_cmd_path(char **to_search)
 	int				i;
 
 	i = -1;
+	if (access(to_search[0], X_OK))
+		return (to_search[0]);
 	split_env = ft_split(getenv("PATH"), 58);
 	if (split_env[0] == NULL)
 		return (NULL);
@@ -70,10 +72,7 @@ void	exec_cmd(t_shell *g_shell)
 	char	**split_cmd;
 
 	split_cmd = g_shell->splitted_cmd;
-	if (access(split_cmd[0], X_OK) == 0)
-		g_shell->full_cmd_path = split_cmd[0];
-	else
-		g_shell->full_cmd_path = get_cmd_path(split_cmd);
+	g_shell->full_cmd_path = get_cmd_path(split_cmd);
 	if (g_shell->full_cmd_path == NULL)
 		return (perror("Getenv"), exit(EXIT_FAILURE));
 	pid = fork();
