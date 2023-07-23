@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/23 16:35:48 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/23 16:41:13 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	del_cmds(t_cmd *cmds)
 {
 	ft_free_split(cmds->cmd);
 	free(cmds);
+	cmds = NULL;
 }
 
 static void	free_all(t_shell *g_shell)
@@ -25,6 +26,8 @@ static void	free_all(t_shell *g_shell)
 
 	tmp_cmds = g_shell->cmds;
 	delfew(g_shell->start_token, last_token(g_shell->start_token));
+	g_shell->start_token = NULL;
+	g_shell->list_token = NULL;
 	while (g_shell->cmds)
 	{
 		tmp_cmds = g_shell->cmds->next;
@@ -36,10 +39,19 @@ static void	free_all(t_shell *g_shell)
 void	ft_free_shell(t_shell *g_shell)
 {
 	if (g_shell->full_cmd_path != NULL)
+	{
 		free(g_shell->full_cmd_path);
-	if (g_shell->splitted_cmd != NULL)
+		g_shell->full_cmd_path = NULL;
+	}
+	if (g_shell->splitted_cmd != NULL)//on s'en sert meme plus de ca
+	{
 		ft_free_split(g_shell->splitted_cmd);
+		g_shell->splitted_cmd = NULL;
+	}
 	if (g_shell->start_buff != NULL)
+	{
 		free(g_shell->start_buff);
+		g_shell->start_buff = NULL;
+	}
 	free_all(g_shell);
 }
