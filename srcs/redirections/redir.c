@@ -27,7 +27,7 @@ int	recover_fd(t_shell *g_shell)
 	}
 	return (ret);
 }
-//!!!! WARNING pas encore les pipes!!!!!!1
+//!!!! WARNING pas encore les pipes!!!!!!
 int	redirections(t_shell *g_shell)//genre de for each node in cmds
 {
 	t_cmd	*cmds;
@@ -39,7 +39,7 @@ int	redirections(t_shell *g_shell)//genre de for each node in cmds
 		simple_right(cmds->cmd, g_shell);
 		if (!exec_cmd(cmds->cmd))
 			return (0);
-		cmds ++;
+		cmds = cmds->next;
 	}
 	//la commande a ete executee il faut remettre tout dans l'ordre maintenant
 	if (!recover_fd(g_shell))

@@ -5,8 +5,10 @@ int	simple_left(char **cmd, t_shell *g_shell)
 	int	i;
 	int	fd;
 
-	i = -1;
-	while (cmd[++i])
+	i = 0;
+	if (!cmd)
+		return (1);
+	while (cmd[i])
 	{
 		if (cmd[i][0] == '<')
 		{
@@ -18,6 +20,7 @@ int	simple_left(char **cmd, t_shell *g_shell)
 				return (0);
 			close(fd);
 		}
+		i++;
 	}
 	return (1);
 }
