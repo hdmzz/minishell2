@@ -4,11 +4,13 @@ int	simple_left(char **cmd, t_shell *g_shell)
 {
 	int	i;
 	int	fd;
+	int	split_lght;
 
 	i = 0;
 	if (!cmd)
 		return (1);
-	while (cmd[i])
+	split_lght = split_lenght(cmd);
+	while (i < split_lght)
 	{
 		if (cmd[i][0] == '<')
 		{
@@ -19,6 +21,9 @@ int	simple_left(char **cmd, t_shell *g_shell)
 			if (dup2(fd, STDIN_FILENO) == -1)//stdin est redirige vers le fichier
 				return (0);
 			close(fd);
+			cmd[i] = NULL;
+			cmd[i + 1] = NULL;
+			i++;
 		}
 		i++;
 	}

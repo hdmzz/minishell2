@@ -10,9 +10,11 @@ int	simple_right(char **cmd, t_shell *g_shell)
 {
 	int	i;
 	int	fd;
+	int	split_lght;
 
-	i = -1;
-	while (cmd[++i])
+	i = 0;
+	split_lght = split_lenght(cmd);
+	while (i < split_lght)
 	{
 		if (cmd[i][0] == '>')
 		{
@@ -23,9 +25,41 @@ int	simple_right(char **cmd, t_shell *g_shell)
 			if (dup2(fd, STDOUT_FILENO) == -1)//maintenant ecrire sur stdout revient a ecrire sur fd
 				return (-1);
 			close(fd);
+			cmd[i] = NULL;
+			cmd[i + 1] = NULL;
+			i++;
 		}
+		i++;
 	}
 	return (1);
 }
 //pas fini il faut encore executer apres avoir rediriger peut etre avec un nvx
 //process??
+
+	//int	i;
+	//int	first_redir;;
+	//int	fd;
+	//int	saved_stdout;
+
+	//i = -1;
+	//first_redir = 0;
+	//saved_stdout = dup(STDOUT_FILENO);
+	//while (cmd[++i])
+	//{
+	//	if (cmd[i][0] == '>')
+	//	{
+	//		if (first_redir == 0)
+	//			first_redir = i;
+	//		fd = open(cmd[i + 1], 01101, S_IRUSR | S_IWUSR);
+	//		if (fd == -1)
+	//			return 0;
+	//		if (dup2(fd, STDOUT_FILENO) == -1)//maintenant ecrire sur stdout revient a ecrire sur fd
+	//			return 0;
+	//	}
+	//}
+	//while (first_redir && first_redir != i)
+	//{
+	//	free(cmd[first_redir]);
+	//	cmd[first_redir] = NULL;
+	//	first_redir++;
+	//}

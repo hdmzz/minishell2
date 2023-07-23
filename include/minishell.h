@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/23 16:55:51 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/23 18:02:12 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ t_token	*lexer(t_shell *g_shell);
 //src/utils/utils.c
 void	ft_free_shell(t_shell *g_shell);
 void	del_cmds(t_cmd *cmds);
+int		split_lenght(char **cmds);
 
 //src/lexer/token_utils.c
 t_token	*new_token(char *value, int type, int pos);
