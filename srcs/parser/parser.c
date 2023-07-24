@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/23 16:56:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/24 19:12:36 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,18 +128,9 @@ int	parser(t_shell *g_shell)
 		return (0);
 	if (!pipes_conformity(g_shell))
 		return (0);
-	//print_lst(g_shell->start_token);
-	//printf("1\n");
-	//cln_whitespace_btw_ctrl_tok(g_shell);//a mettre ds le concatwords
 	if (!check_redirection_rules(g_shell))
 		return (0);
-	concat_word(g_shell);
-	//print_lst(g_shell->start_token);
-	//a ce stade on a les commande il ne reste plus qu'a faire des split de chaque token word
-	recompose_cmd(g_shell);
 	redirections(g_shell);
 	recover_fd(g_shell);
-	//exec(g_shell);
-	//ft_free_split(g_shell->splitted_cmd);
 	return (1);
 }

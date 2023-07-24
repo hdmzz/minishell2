@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/15 12:24:17 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/24 11:29:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 	this is where we calaculate the size of each token
-	the idea is to use th strchr function for each chararcter of input
+	the idea is to use th strchr function for each chararcter of input,
 	sarch an occucrence in the string composed of all the metacharcter, control
 	operators, and words
 */
@@ -135,5 +135,6 @@ t_token	*lexer(t_shell *g_shell)
 		}
 	}
 	g_shell->start_token = token;
+	print_lst(token);//pas de probleme ici la separations entre >> et file qd on a >>file se fait bien
 	return (token->next);
 }

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/23 17:46:28 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:41:38 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	split_lenght(char **cmds)
 
 void	del_cmds(t_cmd *cmds)
 {
-	ft_free_split(cmds->cmd);
+	//ft_free_split(cmds->cmd);
 	free(cmds);
 	cmds = NULL;
 }

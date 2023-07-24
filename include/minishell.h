@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/23 18:02:12 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:38:54 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ enum e_type
 	simple_redir_right = 4,//0100
 	double_redir_left = 8,//1000
 	double_redir_right = 16,//0001 0000
-	white_space = 32,
+	white_space = 32,//0010 0000
 	single_quote = 64,
 	double_quote = 128,
 	dollar = 256,
@@ -93,7 +93,7 @@ int		parser(t_shell *g_shell);
 void	dollar_rule(t_shell *g_shell);
 
 //parser_utils.c
-void	recompose_cmd(t_shell *g_shell);
+void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
 int	exec_cmd(char **cmd);
@@ -141,7 +141,7 @@ int		recover_fd(t_shell *g_shelll);
 int		redirections(t_shell *g_shell);
 
 //simple_right.c > output redir
-int		simple_right(char **cmd, t_shell *g_shell);
+int		right_redirections(char **cmd, t_shell *g_shell);
 
 //simple_left.c < input redir
 int		simple_left(char **cmd, t_shell *g_shell);
