@@ -79,7 +79,6 @@ t_cmd	*create_new_cmd(t_token *token)
 	new->cmd[i] = NULL;
 	new->next = NULL;
 	new->prev = NULL;
-	print_cmd(new->cmd);
 	return (new);
 }
 

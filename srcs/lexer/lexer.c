@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/24 11:29:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:39:50 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,5 @@ t_token	*lexer(t_shell *g_shell)
 		}
 	}
 	g_shell->start_token = token;
-	print_lst(token);//pas de probleme ici la separations entre >> et file qd on a >>file se fait bien
 	return (token->next);
 }
