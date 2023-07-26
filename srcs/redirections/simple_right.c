@@ -8,7 +8,7 @@
 	01101 == O_WRONLY | O_CREAT | O_TRUNC
 	pour >> il faudrait O_WRONLY | O_APPEND | O_CREAT
  */
-int	right_redirections(char **cmd, t_shell *g_shell)
+int	right_redirections(char **cmd)
 {
 	int		i;
 	int		fd;
@@ -24,7 +24,6 @@ int	right_redirections(char **cmd, t_shell *g_shell)
 		{
 			if (!ft_strncmp(cmd[i], ">>", 2))
 				oflag = O_WRONLY | O_APPEND | O_CREAT;
-			g_shell->output_backup = dup(STDOUT_FILENO);
 			fd = open(cmd[i + 1], oflag, 0644);
 			if (fd == -1)
 				return (-1);

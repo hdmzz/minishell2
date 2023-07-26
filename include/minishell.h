@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/24 17:38:54 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:13:21 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ int		recover_fd(t_shell *g_shelll);
 int		redirections(t_shell *g_shell);
 
 //simple_right.c > output redir
-int		right_redirections(char **cmd, t_shell *g_shell);
+int		right_redirections(char **cmd);
 
 //simple_left.c < input redir
-int		simple_left(char **cmd, t_shell *g_shell);
+int		simple_left(char **cmd);
 
 #endif

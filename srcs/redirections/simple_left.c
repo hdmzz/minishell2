@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	simple_left(char **cmd, t_shell *g_shell)
+int	simple_left(char **cmd)
 {
 	int	i;
 	int	fd;
@@ -14,7 +14,6 @@ int	simple_left(char **cmd, t_shell *g_shell)
 	{
 		if (cmd[i][0] == '<')
 		{
-			g_shell->input_backup = dup(STDIN_FILENO);
 			fd = open(cmd[i + 1], O_RDONLY, NULL);
 			if (fd == -1)
 				return (0);
