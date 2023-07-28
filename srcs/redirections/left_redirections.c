@@ -1,31 +1,36 @@
 #include "../../include/minishell.h"
 
-int	left_redirections(char **cmd)
+//le but est d'isoler la redirections ds une fonction 
+int	redir_input(int fd)
 {
-	int	i;
-	int	fd;
-	int	split_lght;
+	if (dup2(fd, STDIN_FILENO) == -1)
+		return (0);
+	return (1);
+}
 
-	i = 0;
+int	left_redirections(char **cmd, int split_lght)
+{
+	int		i;
+	int		fd;
+
+	i = -1;
 	if (!cmd)
 		return (1);
-	split_lght = split_lenght(cmd);
-	while (i < split_lght)
-	{
+	while (++i < split_lght)
 		if (cmd[i][0] == '<')
 		{
-			fd = open(cmd[i + 1], O_RDONLY, NULL);
+			if (strncmp(cmd[i], "<<", ft_strlen(cmd[i])) == 0)
+				fd = heredoc(cmd[i + 1]);
+			else
+				fd = open(cmd[i + 1], O_RDONLY, NULL);
 			if (fd == -1)
 				return (0);
-			if (dup2(fd, STDIN_FILENO) == -1)//stdin est redirige vers le fichier
-				return (0);
+			redir_input(fd);
 			close(fd);
 			cmd[i] = NULL;
 			cmd[i + 1] = NULL;
 			i++;
 		}
-		i++;
-	}
 	return (1);
 }
 

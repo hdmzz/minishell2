@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/22 00:22:56 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/28 21:57:41 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,12 @@ static char	*get_cmd_path(char **to_search)
 	if (!access(to_search[0], X_OK))
 		return (to_search[0]);
 	split_env = ft_split(getenv("PATH"), 58);
-	if (split_env[0] == NULL)
-		return (NULL);
 	while (split_env[++i])
 	{
 		dir = opendir(split_env[i]);
 		if (dir != NULL)
 		{
+			entry = readdir(dir);
 			while ((entry = readdir(dir)) != NULL)
 			{
 				if (found_cmd_path(to_search[0], entry->d_name) == true)

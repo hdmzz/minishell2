@@ -27,21 +27,23 @@ int	recover_fd(t_shell *g_shell)
 	}
 	return (ret);
 }
+
 //!!!! WARNING pas encore les pipes!!!!!!
-int	redirections(t_shell *g_shell)//genre de for each node in cmds
+int	redirections(t_shell *g_shell)
 {
 	t_cmd	*cmds;
+	int		split_lght;
 
 	cmds = g_shell->cmds;
 	while (cmds)
 	{
-		right_redirections(cmds->cmd);
-		left_redirections(cmds->cmd);
+		split_lght = split_lenght(cmds->cmd);
+		right_redirections(cmds->cmd, split_lght);
+		left_redirections(cmds->cmd, split_lght);
 		if (!exec_cmd(cmds->cmd))
 			return (0);
 		cmds = cmds->next;
 	}
-	//la commande a ete executee il faut remettre tout dans l'ordre maintenant
 	if (!recover_fd(g_shell))
 		return (0);
 	return (1);

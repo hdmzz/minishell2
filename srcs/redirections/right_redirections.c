@@ -8,15 +8,13 @@
 	01101 == O_WRONLY | O_CREAT | O_TRUNC
 	pour >> il faudrait O_WRONLY | O_APPEND | O_CREAT
  */
-int	right_redirections(char **cmd)
+int	right_redirections(char **cmd, int split_lght)
 {
 	int		i;
 	int		fd;
-	int		split_lght;
 	int		oflag;
 
 	i = 0;
-	split_lght = split_lenght(cmd);
 	oflag = O_WRONLY | O_CREAT | O_TRUNC;
 	while (i < split_lght)
 	{
@@ -27,7 +25,7 @@ int	right_redirections(char **cmd)
 			fd = open(cmd[i + 1], oflag, 0644);
 			if (fd == -1)
 				return (-1);
-			if (dup2(fd, STDOUT_FILENO) == -1)//maintenant ecrire sur stdout revient a ecrire sur fd
+			if (dup2(fd, STDOUT_FILENO) == -1)
 				return (-1);
 			close(fd);
 			cmd[i] = NULL;
