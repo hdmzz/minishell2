@@ -21,8 +21,9 @@ SRC = $Smain.c \
 		$S$P/pipes_conformity.c \
 		$S$U/utils.c \
 		$Serror/error.c \
-		$S$Rsimple_right.c \
-		$S$Rsimple_left.c \
+		$S$Rright_redirections.c \
+		$S$Rleft_redirections.c \
+		$S$Rheredoc.c \
 		$S$Rredir.c
 
 OBJ = $(SRC:$S%=$O%.o)

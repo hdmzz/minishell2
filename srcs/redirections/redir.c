@@ -36,7 +36,7 @@ int	redirections(t_shell *g_shell)//genre de for each node in cmds
 	while (cmds)
 	{
 		right_redirections(cmds->cmd);
-		simple_left(cmds->cmd);
+		left_redirections(cmds->cmd);
 		if (!exec_cmd(cmds->cmd))
 			return (0);
 		cmds = cmds->next;

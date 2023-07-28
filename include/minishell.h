@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/26 12:13:21 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:03:13 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@
 enum e_type
 {
 	new_line,
-	pipeline,//0001
-	simple_redir_left = 2,//0010
-	simple_redir_right = 4,//0100
-	double_redir_left = 8,//1000
-	double_redir_right = 16,//0001 0000
-	white_space = 32,//0010 0000
+	pipeline,
+	simple_redir_left = 2,
+	simple_redir_right = 4,
+	double_redir_left = 8,
+	double_redir_right = 16,
+	white_space = 32,
 	single_quote = 64,
 	double_quote = 128,
 	dollar = 256,
@@ -66,10 +66,10 @@ typedef struct s_token
 	struct s_token	*prev;
 }				t_token;
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
-	char	**cmd;
-	int		nb_of_cmd;
+	char			**cmd;
+	int				nb_of_cmd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }				t_cmd;
@@ -87,7 +87,6 @@ typedef struct s_shell
 	int		input_backup;
 }				t_shell;
 
-
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
 void	dollar_rule(t_shell *g_shell);
@@ -96,7 +95,7 @@ void	dollar_rule(t_shell *g_shell);
 void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
-int	exec_cmd(char **cmd);
+int		exec_cmd(char **cmd);
 
 //srcs/lexer/lexer.c
 t_token	*lexer(t_shell *g_shell);
@@ -133,7 +132,7 @@ bool	pipes_conformity(t_shell *g_shell);
 
 //buiding function
 void	print_lst(t_token *token);
-void 	print_cmd(char **cmds);
+void	print_cmd(char **cmds);
 
 //redir.c
 void	clean_cmd_tab(char **cmd, int first_redir, int end);
@@ -144,6 +143,6 @@ int		redirections(t_shell *g_shell);
 int		right_redirections(char **cmd);
 
 //simple_left.c < input redir
-int		simple_left(char **cmd);
+int		left_redirections(char **cmd);
 
 #endif

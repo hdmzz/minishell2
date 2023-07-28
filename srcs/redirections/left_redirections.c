@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-int	simple_left(char **cmd)
+int	left_redirections(char **cmd)
 {
 	int	i;
 	int	fd;
