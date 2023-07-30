@@ -19,6 +19,7 @@ SRC = $Smain.c \
 		$S$P/parser.c \
 		$S$P/parser_utils.c \
 		$S$P/pipes_conformity.c \
+		$S$P/parser_heredoc.c \
 		$S$U/utils.c \
 		$Serror/error.c \
 		$S$Rright_redirections.c \

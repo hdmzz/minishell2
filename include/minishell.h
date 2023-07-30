@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/30 17:55:53 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/30 18:20:32 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,8 @@ int		left_redirections(char **cmd, int split_lght);
 
 //heredoc.c
 int		heredoc(char *delim);
+
+//heredoc_parser.c
+int	heredoc_parser(t_shell *g_shell);
 
 #endif
