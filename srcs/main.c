@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/27 18:18:14 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/30 18:10:14 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static int	init_g_shell(t_shell *g_shell)
 	g_shell->cmds = NULL;
 	g_shell->output_backup = dup(STDOUT_FILENO);
 	g_shell->input_backup = dup(STDIN_FILENO);
+	g_shell->io = malloc(sizeof(t_io));
+	if (!g_shell->io)
+		return (0);
 	return (1);
 }
 
@@ -30,13 +33,11 @@ int	main(void)
 {
 	t_shell	g_shell;
 
-	init_g_shell(&g_shell);
+	if (!init_g_shell(&g_shell))
+		return (perror("Error init shell\n"), 1);
 	g_shell.start_buff = ft_calloc(sizeof(char), 2048);
 	if (!g_shell.start_buff)
-	{
-		perror("Error calloc");
-		return (1);
-	}
+		return (perror("Error callo\n"), 1);
 	while (isatty(STDIN_FILENO))
 	{
 		g_shell.start_buff = readline("$> ");
@@ -45,4 +46,5 @@ int	main(void)
 			printf("Error parsing");
 		ft_free_shell(&g_shell);
 	}
+	return (0);
 }

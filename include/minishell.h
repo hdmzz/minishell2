@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/28 22:15:58 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/30 17:55:53 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 }				t_cmd;
 
+typedef struct s_io
+{
+	int	delim_in_quotes;
+}			t_io;
+
 typedef struct s_shell
 {
 	char	*start_buff;
@@ -85,6 +90,7 @@ typedef struct s_shell
 	int		nb_cmds;
 	int		output_backup;
 	int		input_backup;
+	t_io	*io;
 }				t_shell;
 
 //srcs/parser/parser.c
