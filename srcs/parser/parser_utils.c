@@ -82,23 +82,6 @@ t_cmd	*create_new_cmd(t_token *token)
 	return (new);
 }
 
-//void	recompose_cmd(t_shell *g_shell)
-//{
-//	t_token	*lst;
-//	int		pipes_nb;
-
-//	pipes_nb = count_pipes(g_shell->list_token) + 1;
-//	g_shell->nb_cmds = pipes_nb;
-//	lst = g_shell->list_token;
-//	while (pipes_nb--)//on itere sur le nombre de commandes
-//	{
-//		while (lst->type == pipeline)
-//			lst = lst->next;
-//		add_cmd_back(g_shell, create_new_cmd(lst));
-//		lst = lst->next;
-//	}
-//}
-
 /* 
 	here we are gonna take the list token and create a command node
 	based directly on the token no need to split and concat

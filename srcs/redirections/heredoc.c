@@ -48,7 +48,11 @@ int	heredoc(char *delim, t_io *io)
 		if (ft_strncmp(delim, input, ft_strlen(input)) == 0)
 			break ;
 		tmp = heredoc_expanser(input, io);
+		if (!tmp)
+			return (free(input), 0);
 		ft_putendl_fd(tmp, fd);//deja free ds here doc xpanser
+		if (!io->var_expanser)
+			free(tmp);
 	}
 	return (close (fd), fdcpy);
 }

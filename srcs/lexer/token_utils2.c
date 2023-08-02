@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/24 11:33:11 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:10:35 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ t_token	*final_concat(t_token *start)
 		return (free(value), start);
 	if (tmp && tmp->type == white_space)
 		tmp = tmp->next;
-		//pb ici on reconcate les redir avec les litteral 
-		//on pourait
-	while (tmp && !(tmp->type & 1))//tant que lon est pas sur un token de controle or il faut concat meme les redirections
+	while (tmp && !(tmp->type & 1))
 	{
 		buff = value;
 		value = ft_strjoin(value, tmp->value);

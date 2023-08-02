@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/30 23:38:43 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/02 23:16:13 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,15 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 	return (1);
 }
 
+char	*var_xpanser(char *input)
+{
+	char	*ev;
+
+	input++;
+	ev  = getenv(input);
+	return (ev);
+}
+
 void	dollar_rule(t_shell *g_shell)
 {
 	t_token	*lst;
@@ -109,7 +118,7 @@ void	dollar_rule(t_shell *g_shell)
 		}
 		if (lst->type == dollar && lst->next->type == literal && interpretation)
 		{
-			ev = getenv(lst->next->value);
+			ev = var_xpanser(lst->next->value);
 			if (ev != NULL)
 				replace_token(lst, lst->next, new_token(ev, literal, lst->pos));
 			else

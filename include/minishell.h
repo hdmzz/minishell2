@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/02 16:47:53 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/02 23:36:32 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_io
 {
 	int	heredoc;
 	int	delim_in_quotes;
+	int	var_expanser;
 }			t_io;
 
 typedef struct s_shell
@@ -160,6 +161,7 @@ int		heredoc(char *delim, t_io *io);
 
 //heredoc_parser.c
 int		heredoc_first_analyzer(t_shell *g_shell);
+char	*var_xpanser(char *input);
 
 //exec/exec_heredoc.c
 char	*pipe_heredoc(char *cmd_str);

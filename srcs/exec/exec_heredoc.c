@@ -24,7 +24,7 @@ char	*pipe_heredoc(char *cmd_str)
 		close(pipe_fd[0]);
 		redir_in_or_out(pipe_fd[1], STDOUT_FILENO);
 		execve(full_cmd_path, cmd_tab, NULL);
-		perror("exec pipe");
+		return (perror("Exec pipe"), NULL);
 	}
 	else
 	{

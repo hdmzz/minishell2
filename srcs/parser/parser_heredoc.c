@@ -1,7 +1,5 @@
 #include "../../include/minishell.h"
 
-
-
 static int	delim_in_quotes(t_token *lst)
 {
 	int	delim_in_quotes;
@@ -57,6 +55,38 @@ int	input_into_parenthesis(char *input, int *i)
 	return (0);
 }
 
+/* 
+	need a function that recompose the input from the char ** 
+	so this function calculates the total lenght of the final char *
+ */
+char	*recompose_input(char **tab)
+{
+	char	*new_input;
+	int		total_len;
+	int		tab_len;
+	int		i;
+
+	total_len = 0;
+	i = -1;
+	while (tab[++i])
+		total_len += ft_strlen(tab[i]);
+	tab_len = i;
+	total_len += i - 1;
+	new_input = ft_calloc(total_len + 1, sizeof(char));
+	if (!new_input)
+		return (NULL);
+	new_input[0] = '\0';//peut etre pas besoin de faire ca puisque tout est init a zero avec calloc
+	i = 0;
+	while (tab[i])
+	{
+		ft_strlcat(new_input, tab[i], total_len + 1);
+		if (i < tab_len - 1)
+			ft_strlcat(new_input, " ", total_len + 1);
+		i++;
+	}
+	ft_free_split(tab);
+	return (new_input);
+}
 
 /* 
 	this function takes the original input str and substitute the heredoc cmd with the value
@@ -67,17 +97,12 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 	char	**tab;
 	char	**tmp;
 	char	*new_input;
-	int		total_len;
 	int		i;
 
-	total_len = 0;
 	tab = ft_split_charset(input, "$");
 	tmp = tab;
-	if (!tab)
-	{
-		perror("Split cmd output");
-		return (NULL);
-	}
+	if (!tab || !cmd_output)
+		return (perror("Error substitute_input_wth_output"), NULL);
 	i = 0;
 	while (tmp[i])
 	{
@@ -85,21 +110,24 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 			tmp[i] = cmd_output;
 		i++;
 	}
-	while (i--)
-		total_len += ft_strlen(tmp[i]);
-	i++;
-	new_input = ft_calloc(total_len + 1, sizeof(char));
-	if (!new_input)
-		return (NULL);
-	new_input[0] = '\0';//peut etre pas besoin de faire ca puisque tout est init a zero avec calloc
-	while (tmp[i])
+	new_input = recompose_input(tmp);
+	return (new_input);
+}
+
+char	*heredoc_var_xpanser(char *input)
+{
+	char	**tab;
+	int		i;
+
+	i = 0;
+	tab = ft_split(input, 32);
+	while (tab[i])
 	{
-		ft_strlcat(new_input, tmp[i], total_len + 1);
+		if (tab[i][0] == '$')
+			return (var_xpanser(tab[i]));
 		i++;
 	}
-	ft_free_split(tab);
-	free(input);
-	return (new_input);
+	return (NULL);
 }
 
 /* 
@@ -118,17 +146,23 @@ char	*heredoc_expanser(char *input, t_io *std_io)
 	inp = input;
 	if (std_io->delim_in_quotes)
 		return (inp);
-	while (inp[i])
+	while (inp[i] != '\0')//on est encore sur la str original
 	{
-		if (inp[i] == '$')
+		if (inp[i] == '$')// si je suis sur un $ signe soit jexecute une commande soit j'expanse une variable
 		{
 			y = input_into_parenthesis(input, &i);
 			if (y > i)
 			{
 				imbrecated_cmd = ft_substr(input, i, y - i);
 				cmd_output = pipe_heredoc(imbrecated_cmd);
-				inp = substitute_input_wth_output(input, cmd_output);
+				inp = substitute_input_wth_output(input, cmd_output);//free input original ici
 			}
+			else
+			{
+				std_io->var_expanser = 1;
+				inp = heredoc_var_xpanser(input);
+			}
+			free(input);
 		}
 		i++;
 	}
