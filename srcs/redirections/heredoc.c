@@ -10,7 +10,7 @@ static int	ft_mkstemp(char *filename)
 
 	i = 0;
 	try_max = 0;
-	fd = open(filename, O_CREAT | O_EXCL | O_RDWR | O_TRUNC, S_IWUSR | S_IRUSR);
+	fd = open(filename, O_CREAT | O_EXCL | O_RDWR | O_TRUNC, 0600);
 	while (fd == -1 && try_max <= 15)
 	{
 		while (filename[i] && filename[i] != 'X')
@@ -19,7 +19,7 @@ static int	ft_mkstemp(char *filename)
 			filename[i] = filename[i] + 1;
 		else
 			filename[i] = 97;
-		fd = open(filename, O_CREAT | O_EXCL | O_RDWR, S_IWUSR | S_IRUSR);
+		fd = open(filename, O_CREAT | O_EXCL | O_RDWR | O_TRUNC, 0600);
 		try_max++;
 	}
 	if (try_max == 15)
@@ -27,12 +27,13 @@ static int	ft_mkstemp(char *filename)
 	return (fd);
 }
 
-int	heredoc(char *delim)
+int	heredoc(char *delim, t_io *io)
 {
 	static char	tmpfile[] = "tmpfileXXXXXXXXXXXXXXX";
 	int			fd;
 	int			fdcpy;
 	char		*input;
+	char		*tmp;
 
 	fd = ft_mkstemp(tmpfile);
 	fdcpy = open(tmpfile, O_RDONLY, NULL);
@@ -46,12 +47,8 @@ int	heredoc(char *delim)
 			break ;
 		if (ft_strncmp(delim, input, ft_strlen(input)) == 0)
 			break ;
-		ft_putendl_fd(input, fd);
-		free(input);
+		tmp = heredoc_expanser(input, io);
+		ft_putendl_fd(tmp, fd);//deja free ds here doc xpanser
 	}
-	if (input)
-		free(input);
-	ft_putendl_fd("", fd);
-	close (fd);
-	return (fdcpy);
+	return (close (fd), fdcpy);
 }

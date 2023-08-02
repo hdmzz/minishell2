@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/30 18:20:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:47:53 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_cmd
 
 typedef struct s_io
 {
+	int	heredoc;
 	int	delim_in_quotes;
 }			t_io;
 
@@ -102,6 +103,7 @@ void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
 int		exec_cmd(char **cmd);
+char	*get_cmd_path(char **to_search);
 
 //srcs/lexer/lexer.c
 t_token	*lexer(t_shell *g_shell);
@@ -147,14 +149,23 @@ int		redirections(t_shell *g_shell);
 
 //simple_right.c > output redir
 int		right_redirections(char **cmd, int split_lght);
+int		redir_in_or_out(int fd, int in_or_out);
+
 
 //simple_left.c < input redir
-int		left_redirections(char **cmd, int split_lght);
+int		left_redirections(char **cmd, int split_lght, t_io *io);
 
 //heredoc.c
-int		heredoc(char *delim);
+int		heredoc(char *delim, t_io *io);
 
 //heredoc_parser.c
-int	heredoc_parser(t_shell *g_shell);
+int		heredoc_first_analyzer(t_shell *g_shell);
+
+//exec/exec_heredoc.c
+char	*pipe_heredoc(char *cmd_str);
+
+//parser/parser_heredoc.c
+char	*heredoc_expanser(char *input, t_io *std_io);
+
 
 #endif

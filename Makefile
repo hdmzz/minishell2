@@ -25,7 +25,8 @@ SRC = $Smain.c \
 		$S$Rright_redirections.c \
 		$S$Rleft_redirections.c \
 		$S$Rheredoc.c \
-		$S$Rredir.c
+		$S$Rredir.c \
+		$S$Xexec_heredoc.c
 
 OBJ = $(SRC:$S%=$O%.o)
 

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/28 21:57:41 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:20:57 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static bool	found_cmd_path(char *cmd, char *to_comp)
 }
 
 //58 is int for : in ascii
-static char	*get_cmd_path(char **to_search)
+char	*get_cmd_path(char **to_search)
 {
 	char			**split_env;
 	DIR				*dir;

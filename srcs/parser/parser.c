@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/30 17:57:18 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/07/30 23:38:43 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 	if (!check_last_token(last_token(*tokens)))
 		return (0);
 	dollar_rule(g_shell);
-	heredoc_parser(g_shell);
+	heredoc_first_analyzer(g_shell);
 	quotes_neutralizer(tokens);
 	return (1);
 }

@@ -39,7 +39,7 @@ int	redirections(t_shell *g_shell)
 	{
 		split_lght = split_lenght(cmds->cmd);
 		right_redirections(cmds->cmd, split_lght);
-		left_redirections(cmds->cmd, split_lght);
+		left_redirections(cmds->cmd, split_lght, g_shell->io);
 		if (!exec_cmd(cmds->cmd))
 			return (0);
 		cmds = cmds->next;
