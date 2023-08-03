@@ -1,9 +1,56 @@
 #include "../../include/minishell.h"
 
+static void	error_free(int **tab, int i)
+{
+	while (i--)
+		free(tab[i]);
+	free(tab);
+}
+
+static int	init_pipes_fd(int nb_cmds, int **pipes_fd)
+{
+	int	i;
+
+	i = 0;
+	pipes_fd = ft_calloc(nb_cmds - 1, sizeof(int *));
+	if (pipes_fd == NULL)
+		return (perror("Error calloc init pipes"), 0);
+	while (i < nb_cmds - 1)
+	{
+		pipes_fd[i] = ft_calloc(2, sizeof(int));
+		if (pipes_fd[i] == NULL || pipe(pipes_fd[i]) == -1)
+			return (error_free(pipes_fd, i), 0);
+		i++;
+	}
+	return (1);
+}
+
+int	pipe(t_shell *g_shell)
+{
+	int		nb_cmds;
+	int		**pipes_fd;
+	int		i;
+	pid_t	pid;
+
+	nb_cmds = g_shell->nb_cmds;
+	i = 0;
+	if (!init_pipes_fd(nb_cmds, pipes_fd))
+		return (perror("Error init pipes"), 0);
+	//executer les commandes
+	while (i < nb_cmds)
+	{
+		pid = fork();
+		if (pid == -1)
+			return(error_free(pipes_fd, nb_cmds - 1), 0);
+		
+	}
+
+}
+
 int main() {
     int num_commands = 3; // Modifier ce nombre selon le nombre de commandes que vous voulez exécuter
     char* commands[][3] = {
-        {"ls", "-l", NULL},
+        {"ls", "-l", NULL},//value 
         {"grep", "file", NULL},
         {"wc", "-l", NULL}
     };

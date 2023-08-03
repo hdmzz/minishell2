@@ -5,13 +5,14 @@ static int	delim_in_quotes(t_token *lst)
 	int	delim_in_quotes;
 
 	delim_in_quotes = 0;
-	while (lst->type == white_space)
+	while (lst->type == white_space || lst->type == double_redir_left)
 		lst = lst->next;
 	if (lst->type == double_quote)
 	{
-		while (lst->type & 608)
+		lst = lst->next;
+		while (lst && lst->type != double_quote)
 			lst = lst->next;
-		if (lst->type != double_quote)
+		if (lst && lst->type == double_quote)
 			delim_in_quotes = 1;
 	}
 	return (delim_in_quotes);
