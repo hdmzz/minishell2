@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/02 23:36:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:40:11 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int		heredoc_first_analyzer(t_shell *g_shell);
 char	*var_xpanser(char *input);
 
 //exec/exec_heredoc.c
-char	*pipe_heredoc(char *cmd_str);
+char	*pipe_heredoc(char *cmd_str, ssize_t bytes_read);
 
 //parser/parser_heredoc.c
 char	*heredoc_expanser(char *input, t_io *std_io);

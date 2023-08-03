@@ -1,12 +1,19 @@
 #include "../../include/minishell.h"
 
-char	*pipe_heredoc(char *cmd_str)
+static void	*child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
+{
+	close(pipe_fd[0]);
+	redir_in_or_out(pipe_fd[1], STDOUT_FILENO);
+	execve(full_cmd_path, cmd_tab, NULL);
+	return (perror("Exec pipe"), NULL);
+}
+
+char	*pipe_heredoc(char *cmd_str, ssize_t bytes_read)
 {
 	char	**cmd_tab;
 	int		pid;
 	int		pipe_fd[2];
-	char	 *buffer;
-	ssize_t	bytes_read;
+	char	*buffer;
 	char	*full_cmd_path;
 
 	cmd_tab = ft_split(cmd_str, 32);
@@ -20,12 +27,7 @@ char	*pipe_heredoc(char *cmd_str)
 	if (pid == -1)
 		return (NULL);
 	if (pid == 0)
-	{
-		close(pipe_fd[0]);
-		redir_in_or_out(pipe_fd[1], STDOUT_FILENO);
-		execve(full_cmd_path, cmd_tab, NULL);
-		return (perror("Exec pipe"), NULL);
-	}
+		child(pipe_fd, full_cmd_path, cmd_tab);
 	else
 	{
 		close(pipe_fd[1]);
