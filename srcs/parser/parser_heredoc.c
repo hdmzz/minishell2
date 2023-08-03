@@ -75,7 +75,6 @@ char	*recompose_input(char **tab)
 	new_input = ft_calloc(total_len + 1, sizeof(char));
 	if (!new_input)
 		return (NULL);
-	new_input[0] = '\0';//peut etre pas besoin de faire ca puisque tout est init a zero avec calloc
 	i = 0;
 	while (tab[i])
 	{
