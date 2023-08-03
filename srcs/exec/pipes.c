@@ -30,10 +30,13 @@ int	pipe(t_shell *g_shell)
 	int		nb_cmds;
 	int		**pipes_fd;
 	int		i;
+	int		j;
 	pid_t	pid;
+	t_cmd	*cmds;
 
 	nb_cmds = g_shell->nb_cmds;
 	i = 0;
+	cmds = g_shell->cmds;
 	if (!init_pipes_fd(nb_cmds, pipes_fd))
 		return (perror("Error init pipes"), 0);
 	//executer les commandes
@@ -42,82 +45,46 @@ int	pipe(t_shell *g_shell)
 		pid = fork();
 		if (pid == -1)
 			return(error_free(pipes_fd, nb_cmds - 1), 0);
+		if (pid == 0)
+		{
+			if (i != 0)
+				dup2(pipes_fd[i - 1][0], STDIN_FILENO);//entree processus enfant redirigee vers tete de lecture du pipe
+			if (i != nb_cmds - 1)
+				dup2(pipes_fd[i][1], STDOUT_FILENO);//sortie  processus enfant redirige vers tete d'ecriture du pipe
+//il faut close les descripteurs des autres car la memoire est dupliquee lors dun fork donc il resteront ouvert si on les ferment pas
+			j = 0;
+			while (j < nb_cmds - 1)
+			{
+				if (j != i - 1 && i != i)
+				{
+					close(pipes_fd[j][0]);
+					close(pipes_fd[j][1]);
+				}
+			}
+			//il faut executer la  commande maintenant
+			exec_cmd(cmds->cmd);
+			//si erreur
+			return (perror("Error commmande exec"), 0);
+		}
+		//ici process pere
+		else if  (pid > 0)
+		{
+			//on libere les fds non utilisee
+			j = 0;
+			while (j < nb_cmds - 1)
+			{
+				close(pipes_fd[j][0]);
+				close(pipes_fd[j][1]);
+			}
+			j++;
+			while (j--)
+				wait(NULL);
+			while (j < nb_cmds - 1)
+				free(pipes_fd[j]);
+			free(pipes_fd);
+			return (1);
+		}
 		
 	}
 
-}
-
-int main() {
-    int num_commands = 3; // Modifier ce nombre selon le nombre de commandes que vous voulez exécuter
-    char* commands[][3] = {
-        {"ls", "-l", NULL},//value 
-        {"grep", "file", NULL},
-        {"wc", "-l", NULL}
-    };
-
-    // Allouer de l'espace pour le tableau des pipes
-    int** pipes = (int**)malloc((num_commands - 1) * sizeof(int*));
-    for (int i = 0; i < num_commands - 1; i++) {
-        pipes[i] = (int*)malloc(2 * sizeof(int));
-        if (pipe(pipes[i]) == -1) {
-            perror("Erreur lors de la création des pipes");
-            return 1;
-        }
-    }
-
-    // Exécuter les commandes
-    for (int i = 0; i < num_commands; i++) {
-        pid_t pid = fork();
-
-        if (pid == -1) {
-            perror("Erreur lors de la création des processus enfants");
-            return 1;
-        } else if (pid == 0) {
-            // Code du processus enfant
-
-            // Rediriger l'entrée du processus enfant
-            if (i != 0) {
-                dup2(pipes[i - 1][0], STDIN_FILENO);
-            }
-
-            // Rediriger la sortie du processus enfant
-            if (i != num_commands - 1) {
-                dup2(pipes[i][1], STDOUT_FILENO);
-            }
-
-            // Fermer les descripteurs de fichiers des pipes non utilisés
-            for (int j = 0; j < num_commands - 1; j++) {
-                if (j != i - 1 && j != i) {
-                    close(pipes[j][0]);
-                    close(pipes[j][1]);
-                }
-            }
-
-            // Exécuter la commande
-            execvp(commands[i][0], commands[i]);
-
-            // Cette ligne ne sera atteinte que si execvp échoue
-            perror("Erreur lors de l'exécution de la commande");
-            return 1;
-        }
-    }
-
-    // Fermer les descripteurs de fichiers des pipes dans le processus père
-    for (int i = 0; i < num_commands - 1; i++) {
-        close(pipes[i][0]);
-        close(pipes[i][1]);
-    }
-
-    // Attendre que tous les processus enfants se terminent
-    for (int i = 0; i < num_commands; i++) {
-        wait(NULL);
-    }
-
-    // Libérer la mémoire allouée pour les pipes
-    for (int i = 0; i < num_commands - 1; i++) {
-        free(pipes[i]);
-    }
-    free(pipes);
-
-    return 0;
 }
