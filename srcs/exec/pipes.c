@@ -1,10 +1,5 @@
 #include "../../include/minishell.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-
 int main() {
     int num_commands = 3; // Modifier ce nombre selon le nombre de commandes que vous voulez exécuter
     char* commands[][3] = {
@@ -79,4 +74,3 @@ int main() {
 
     return 0;
 }
-
