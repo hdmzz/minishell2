@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/02 23:16:13 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/04 12:01:22 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int	parser(t_shell *g_shell)
 	if (!check_redirection_rules(g_shell))
 		return (0);
 	compose_cmd(g_shell);
-	redirections(g_shell);
+	redirections(g_shell);//on va devoir remplacer cette fonction 
 	recover_fd(g_shell);
 	return (1);
 }

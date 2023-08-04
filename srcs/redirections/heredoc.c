@@ -43,9 +43,7 @@ int	heredoc(char *delim, t_io *io)
 	while (1)
 	{
 		input = readline("> ");
-		if (input == NULL)
-			break ;
-		if (ft_strncmp(delim, input, ft_strlen(input)) == 0)
+		if (ft_strcmp(delim, input) == 0)
 			break ;
 		tmp = heredoc_expanser(input, io);
 		if (!tmp)

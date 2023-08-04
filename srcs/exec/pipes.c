@@ -5,7 +5,7 @@ static void	error_free(int **tab, int i)
 	while (i--)
 		free(tab[i]);
 	free(tab);
-}
+} 
 
 static int	init_pipes_fd(int nb_cmds, int **pipes_fd)
 {
@@ -37,6 +37,8 @@ int	pipe(t_shell *g_shell)
 	nb_cmds = g_shell->nb_cmds;
 	i = 0;
 	cmds = g_shell->cmds;
+	//ouverture des pipes du tableau et malloc
+	//si une seule commande faudra penser a tout free etc
 	if (!init_pipes_fd(nb_cmds, pipes_fd))
 		return (perror("Error init pipes"), 0);
 	//executer les commandes
@@ -62,6 +64,7 @@ int	pipe(t_shell *g_shell)
 				}
 			}
 			//il faut executer la  commande maintenant
+			
 			exec_cmd(cmds->cmd);
 			//si erreur
 			return (perror("Error commmande exec"), 0);

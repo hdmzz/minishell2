@@ -22,7 +22,7 @@ $O:
 $(OBJ): | $O
 
 $(OBJ): $O%.o: % libft.h Makefile settings.mk
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -g3 $(CFLAGS) -c $< -o $@
 
 $D:
 	@mkdir $@
