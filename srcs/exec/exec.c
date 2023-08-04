@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/01 13:20:57 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:29:30 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*concat_cmd(char *dir_path, char *entry_path)
 
 static bool	found_cmd_path(char *cmd, char *to_comp)
 {
-	if (ft_strncmp(cmd, to_comp, ft_strlen(to_comp)) == 0)
+	if (ft_strcmp(cmd, to_comp) == 0)
 		return (true);
 	return (false);
 }

@@ -20,7 +20,7 @@ int	right_redirections(char **cmd, int split_lght)
 	{
 		if (cmd[i][0] == '>' && ft_strlen(cmd[i]) <= 2)
 		{
-			if (!ft_strncmp(cmd[i], ">>", 2))
+			if (!ft_strcmp(cmd[i], ">>"))
 				oflag = O_WRONLY | O_APPEND | O_CREAT;
 			fd = open(cmd[i + 1], oflag, 0644);
 			if (fd == -1)

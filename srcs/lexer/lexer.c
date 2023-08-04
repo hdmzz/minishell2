@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/26 11:39:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:31:35 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 	the idea is to use th strchr function for each chararcter of input,
 	sarch an occucrence in the string composed of all the metacharcter, control
 	operators, and words
+	no need to do a simple ft_strcmp because the double quote can be glued to the next word
 */
 int	token_len(char *input)
 {

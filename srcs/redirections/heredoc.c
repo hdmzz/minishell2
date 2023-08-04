@@ -52,5 +52,5 @@ int	heredoc(char *delim, t_io *io)
 		if (!io->var_expanser)
 			free(tmp);
 	}
-	return (close (fd), fdcpy);
+	return (close(fd), io->delim_in_quotes = 0, fdcpy);
 }
