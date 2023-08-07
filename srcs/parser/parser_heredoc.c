@@ -133,7 +133,7 @@ char	*heredoc_var_xpanser(char *input)
 /* 
 	for each input of the heredoc
  */
-char	*heredoc_expanser(char *input, t_io *std_io)
+char	*heredoc_expanser(char *input, t_io *std_io, t_shell *g_shell)
 {
 	char	*inp;
 	char	*imbrecated_cmd;
@@ -154,7 +154,7 @@ char	*heredoc_expanser(char *input, t_io *std_io)
 			if (y > i)
 			{
 				imbrecated_cmd = ft_substr(input, i, y - i);
-				cmd_output = pipe_heredoc(imbrecated_cmd, 0);
+				cmd_output = pipe_heredoc(imbrecated_cmd, 0, g_shell);
 				inp = substitute_input_wth_output(input, cmd_output);//free input original ici
 			}
 			else

@@ -88,14 +88,20 @@ t_cmd	*create_new_cmd(t_token *token)
  */
 void	compose_cmd(t_shell *g_shell)
 {
-	int		pipes_nb;
+	int		nb_pipes;
+	int		nb_cmds;
 	t_token	*lst;
 
 	lst = g_shell->list_token;
-	pipes_nb = count_pipes(g_shell->list_token) + 1;
-	while (pipes_nb--)
+	nb_pipes = count_pipes(g_shell->list_token);
+	g_shell->nb_pipes = nb_pipes;
+	g_shell->nb_cmds = nb_pipes + 1;
+	nb_cmds = nb_pipes + 1;
+	while (nb_cmds--)
 	{
 		add_cmd_back(g_shell, create_new_cmd(lst));
+		if (lst->type == pipeline)
+			lst = lst->next;
 		while (lst && lst->type != pipeline)
 			lst = lst->next;
 	}

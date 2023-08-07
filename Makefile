@@ -8,7 +8,9 @@ R = redirections/
 
 NAME =	minishell
 
-HEADER = include/minishell.h
+HEADER = include/minishell.h \
+			include/pipes.h \
+			include/typedef.h
 
 SRC = $Smain.c \
 		$Sexec/exec.c \
@@ -26,7 +28,8 @@ SRC = $Smain.c \
 		$S$Rleft_redirections.c \
 		$S$Rheredoc.c \
 		$S$Rredir.c \
-		$S$Xexec_heredoc.c
+		$S$Xexec_heredoc.c \
+		$S$Xpipes.c
 
 OBJ = $(SRC:$S%=$O%.o)
 

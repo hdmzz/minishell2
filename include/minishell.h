@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/03 11:35:59 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:49:57 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <dirent.h>
 # include <stdbool.h>
 # include "typedef.h"
+# include "pipes.h"
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
@@ -35,7 +36,7 @@ void	dollar_rule(t_shell *g_shell);
 void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
-int		exec_cmd(char **cmd);
+int		exec_cmd(char **cmd, t_shell *g_shell);
 char	*get_cmd_path(char **to_search);
 
 //srcs/lexer/lexer.c
@@ -82,24 +83,22 @@ int		redirections(t_shell *g_shell);
 
 //simple_right.c > output redir
 int		right_redirections(char **cmd, int split_lght);
-int		redir_in_or_out(int fd, int in_or_out);
-
 
 //simple_left.c < input redir
-int		left_redirections(char **cmd, int split_lght, t_io *io);
+int		left_redirections(char **cmd, int split_lght, t_shell *g_shell);
 
 //heredoc.c
-int		heredoc(char *delim, t_io *io);
+int		heredoc(char *delim, t_io *io, t_shell *g_shell);
 
 //heredoc_parser.c
 int		heredoc_first_analyzer(t_shell *g_shell);
 char	*var_xpanser(char *input);
 
 //exec/exec_heredoc.c
-char	*pipe_heredoc(char *cmd_str, ssize_t bytes_read);
+char	*pipe_heredoc(char *cmd_str, ssize_t bytes_read, t_shell *g_shell);
 
 //parser/parser_heredoc.c
-char	*heredoc_expanser(char *input, t_io *std_io);
+char	*heredoc_expanser(char *input, t_io *std_io, t_shell *g_shell);
 
 
 #endif

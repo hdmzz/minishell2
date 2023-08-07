@@ -25,7 +25,7 @@ int	right_redirections(char **cmd, int split_lght)
 			fd = open(cmd[i + 1], oflag, 0644);
 			if (fd == -1)
 				return (-1);
-			redir_in_or_out(fd, STDOUT_FILENO);
+			dup2(fd, STDOUT_FILENO);
 			close(fd);
 			cmd[i] = NULL;
 			cmd[i + 1] = NULL;

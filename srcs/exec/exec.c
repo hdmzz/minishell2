@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/04 13:29:30 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/05 16:57:39 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static bool	found_cmd_path(char *cmd, char *to_comp)
 //58 is int for : in ascii
 char	*get_cmd_path(char **to_search)
 {
-	char			**split_env;
 	DIR				*dir;
+	char			**split_env;
+	char			*full_cmd_path;
 	struct dirent	*entry;
 	int				i;
 
@@ -58,35 +59,29 @@ char	*get_cmd_path(char **to_search)
 			while ((entry = readdir(dir)) != NULL)
 			{
 				if (found_cmd_path(to_search[0], entry->d_name) == true)
-					return (concat_cmd(split_env[i], entry->d_name));
+				{
+					full_cmd_path = concat_cmd(split_env[i], entry->d_name);
+					return (ft_free_split(split_env), full_cmd_path);
+				}
 			}
 		}
 		closedir(dir);
 	}
+	if (split_env)
+		free(split_env);
 	return (NULL);
 }
 
-int	exec_cmd(char **cmd)
+//le exec commd ne devrait pas fork puisque le pipe handler fork lui meme
+int	exec_cmd(char **cmd, t_shell *g_shell)
 {
-	pid_t	pid;
 	char	*full_cmd_path;
 
-	full_cmd_path = get_cmd_path(cmd);
+	g_shell->full_cmd_path = get_cmd_path(cmd);
+	full_cmd_path = g_shell->full_cmd_path;
 	if (full_cmd_path == NULL)
 		return (perror("Getenv"), 0);
-	pid = fork();
-	if (pid == -1)
-		return (perror("Fork issue"), 0);
-	if (pid > 0)
-	{
-		waitpid(pid, NULL, 0);
-		kill(pid, SIGTERM);
-		free(full_cmd_path);
-	}
-	else if (pid == 0)
-	{
-		if ((execve(full_cmd_path, cmd, NULL)) == -1)
-			return (perror("Exec"), 0);
-	}
-	return (1);
+	if ((execve(full_cmd_path, cmd, NULL)) == -1)
+		return (perror("Exec"), 0);
+	return(0);
 }

@@ -1,93 +1,150 @@
 #include "../../include/minishell.h"
 
-static void	error_free(int **tab, int i)
+static void	close_fds(int **fds, int nb_pipes, int i)
 {
-	while (i--)
-		free(tab[i]);
-	free(tab);
-} 
+	int	j;
 
-static int	init_pipes_fd(int nb_cmds, int **pipes_fd)
+	j = 0;
+	if (i != -1)
+	{
+		while (j < nb_pipes)
+		{
+			if (j != i && j != i + 1)
+			{
+				close(fds[j][0]);
+				close(fds[j][1]);
+			}
+			j++;
+		}
+	}
+	if (i == -1)
+	{
+		while (++i < nb_pipes)
+		{
+			close(fds[i][0]);
+			close(fds[i][1]);
+		}
+	}
+}
+
+void	simple_close(int **fds, int i)
+{
+	close(fds[i][0]);
+	close(fds[i][1]);
+}
+
+void	create_pipe(int pipefd[2])
+{
+	if (pipe(pipefd) == -1)
+	{
+		perror("Erreur lors de la création du pipe");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static int	**init_pipes(int **pipes, t_shell *g_shell)
 {
 	int	i;
+	int	j;
+
+	j = -1;
+	i = -1;
+	pipes = ft_calloc(g_shell->nb_pipes, sizeof(int *));
+	if (pipes == NULL)
+		return(perror("pipes init"), NULL);
+	while (++i < g_shell->nb_pipes)
+	{
+		pipes[i] = ft_calloc(2, sizeof(int));
+		if (pipes[i] == NULL)
+		{
+			while (++j <= i)
+				free(pipes[i]);
+			return (0);
+		}
+	}
+	i = -1;
+	while (++i < g_shell->nb_pipes)
+		pipe(pipes[i]);
+	return (pipes);
+}
+/* 
+	This function must close the inutilized fds
+
+ */
+static void	child(t_cmd *cmds, t_shell *g_shell, int i)
+{
+	int	**pipes;
+
+	pipes = g_shell->pipes_fd;
+	if (i != 0)
+	{
+		dup2(pipes[i - 1][0], STDIN_FILENO);
+	}
+	if (i != g_shell->nb_pipes)
+	{
+		//i = 0 pour premiere commande nb pipes = 1 ds notre cas
+		dup2(pipes[i][1], STDOUT_FILENO);
+	}
+	close_fds(pipes, g_shell->nb_pipes, -1);
+	exec_cmd(cmds->cmd, g_shell);
+}
+/* 
+	Handle pipes 
+ */
+int	handle_pipes_cmd(t_shell *g_shell)
+{
+	int		**pipes;
+	t_cmd	*cmds;
+	int		i;
+	int		pid;
 
 	i = 0;
-	pipes_fd = ft_calloc(nb_cmds - 1, sizeof(int *));
-	if (pipes_fd == NULL)
-		return (perror("Error calloc init pipes"), 0);
-	while (i < nb_cmds - 1)
+	pipes = NULL;
+	cmds = g_shell->cmds;
+	g_shell->pipes_fd = init_pipes(pipes, g_shell);
+	while (i < g_shell->nb_cmds)
 	{
-		pipes_fd[i] = ft_calloc(2, sizeof(int));
-		if (pipes_fd[i] == NULL || pipe(pipes_fd[i]) == -1)
-			return (error_free(pipes_fd, i), 0);
+		pid = fork();
+
+		//int y;
+		//scanf("%d", &y);
+
+		if (pid < 0)
+			return (0);
+		if (pid == 0)
+			child(cmds, g_shell, i);
 		i++;
+		cmds = cmds->next;
 	}
+	close_fds(g_shell->pipes_fd, g_shell->nb_pipes, -1);
+	i = -1;
+	while (++i < g_shell->nb_cmds)
+		wait(NULL);
 	return (1);
 }
 
-int	pipe(t_shell *g_shell)
+int	handle_cmd(t_shell *g_shell)
 {
-	int		nb_cmds;
-	int		**pipes_fd;
-	int		i;
-	int		j;
 	pid_t	pid;
-	t_cmd	*cmds;
 
-	nb_cmds = g_shell->nb_cmds;
-	i = 0;
-	cmds = g_shell->cmds;
-	//ouverture des pipes du tableau et malloc
-	//si une seule commande faudra penser a tout free etc
-	if (!init_pipes_fd(nb_cmds, pipes_fd))
-		return (perror("Error init pipes"), 0);
-	//executer les commandes
-	while (i < nb_cmds)
-	{
-		pid = fork();
-		if (pid == -1)
-			return(error_free(pipes_fd, nb_cmds - 1), 0);
-		if (pid == 0)
-		{
-			if (i != 0)
-				dup2(pipes_fd[i - 1][0], STDIN_FILENO);//entree processus enfant redirigee vers tete de lecture du pipe
-			if (i != nb_cmds - 1)
-				dup2(pipes_fd[i][1], STDOUT_FILENO);//sortie  processus enfant redirige vers tete d'ecriture du pipe
-//il faut close les descripteurs des autres car la memoire est dupliquee lors dun fork donc il resteront ouvert si on les ferment pas
-			j = 0;
-			while (j < nb_cmds - 1)
-			{
-				if (j != i - 1 && i != i)
-				{
-					close(pipes_fd[j][0]);
-					close(pipes_fd[j][1]);
-				}
-			}
-			//il faut executer la  commande maintenant
-			
-			exec_cmd(cmds->cmd);
-			//si erreur
-			return (perror("Error commmande exec"), 0);
-		}
-		//ici process pere
-		else if  (pid > 0)
-		{
-			//on libere les fds non utilisee
-			j = 0;
-			while (j < nb_cmds - 1)
-			{
-				close(pipes_fd[j][0]);
-				close(pipes_fd[j][1]);
-			}
-			j++;
-			while (j--)
-				wait(NULL);
-			while (j < nb_cmds - 1)
-				free(pipes_fd[j]);
-			free(pipes_fd);
-			return (1);
-		}
-		
-	}
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+		exec_cmd(g_shell->cmds->cmd, g_shell);
+	wait(NULL);
+	return (1);
+}
 
+/* 
+	This function takes the cmds and execute it with the pipes etc
+
+ */
+int	cmd_handler(t_shell *g_shell)
+{
+	if (g_shell->nb_cmds == 1)
+		handle_cmd(g_shell);
+	else
+		handle_pipes_cmd(g_shell);
+	return (1);
 }

@@ -40,10 +40,10 @@ int	redirections(t_shell *g_shell)
 		//isole ca pour chaque commande
 		//on va faire les redir etc 
 		right_redirections(cmds->cmd, split_lenght(cmds->cmd));
-		left_redirections(cmds->cmd, split_lenght(cmds->cmd), g_shell->io);
+		left_redirections(cmds->cmd, split_lenght(cmds->cmd), g_shell);
 		//---------------------------------------------
 		//ci dessous on peut enlever et laisser ca a la fonction pipes qui execute les commandes
-		if (!exec_cmd(cmds->cmd))
+		if (!cmd_handler(g_shell))
 			return (0);
 		cmds = cmds->next;
 	}

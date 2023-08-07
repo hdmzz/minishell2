@@ -14,7 +14,7 @@ enum e_type
 	double_quote = 128,
 	dollar = 256,
 	literal = 512,
-	start_type,
+	start_type
 };
 
 enum e_redir
@@ -61,13 +61,17 @@ typedef struct s_shell
 	char	*start_buff;
 	char	*full_cmd_path;
 	char	**splitted_cmd;
+	char	**split_env;
 	t_token	*list_token;
 	t_token	*start_token;
 	t_cmd	*cmds;
 	int		nb_cmds;//nb pipes + 1
+	int		nb_pipes;
 	int		output_backup;
 	int		input_backup;
+	int		**pipes_fd;
 	t_io	*io;
-}				t_shell;
+	pid_t	*pids;
+}			t_shell;
 
 #endif

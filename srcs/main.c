@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/02 23:37:00 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/06 13:53:40 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ static int	init_g_shell(t_shell *g_shell)
 		return (0);
 	g_shell->io->delim_in_quotes = 0;
 	g_shell->io->var_expanser = 0;
+	g_shell->split_env = NULL;
+	g_shell->pids = NULL;
+	g_shell->nb_pipes = 0;
 	return (1);
 }
 

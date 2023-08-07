@@ -7,6 +7,8 @@ static bool	pipe_then_space(t_token *token)
 	temp = token;
 	while (temp && temp->type != pipeline)
 		temp = temp->next;
+	if (temp && temp->type == pipeline)
+		temp = temp->next;
 	while (temp && temp->type == white_space)
 		temp = temp->next;
 	if (temp && temp->type != literal)
@@ -50,10 +52,6 @@ static bool	space_then_pipe(t_token *token)
 	return (false);
 }
 
-//il faut verifier 1)que lusieurs pipe ne se suivent pas sans commande entre,
-//2)si le premier token n'est pas un pipe,
-//3)si l'input commence par des espace suivi d'un pipe
-//si 1 ou 2 ou 3 alors error
 bool	pipes_conformity(t_shell *g_shell)
 {
 	t_token	*token;
