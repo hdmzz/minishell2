@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/09 17:38:48 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:47:25 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ char	*var_xpanser(char *input)
 {
 	char	*ev;
 
-	input++;
 	ev  = getenv(input);
 	return (ev);
 }
