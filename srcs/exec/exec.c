@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/09 16:04:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:01:11 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static char	*get_cmd_util(char **split_env, char **to_search)
 //58 is int for : in ascii
 char	*get_cmd_path(char **to_search)
 {
-	char			**split_env;
-	char			*full_cmd_path;
+	char	**split_env;
+	char	*full_cmd_path;
 
 	if (!access(to_search[0], X_OK))
 		return (to_search[0]);

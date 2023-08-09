@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/04 18:05:27 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:38:48 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 //wile we are in between two same type quotes we neutralize the other quotes met
 //but if there is no matching quotes there is a syntax problem

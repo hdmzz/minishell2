@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/08 00:25:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/09 18:26:22 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "typedef.h"
 # include "pipes.h"
 # include "signal_sh.h"
-
-extern int	g_exit_code;
+//ici branch signal
+extern int	g_last_exit_code;
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
