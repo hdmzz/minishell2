@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/07/11 17:15:58 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:32:07 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 t_token	*last_token(t_token *token)
 {

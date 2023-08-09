@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:16:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/06/23 14:31:24 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:31:36 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	error_handler(char *error)
 {

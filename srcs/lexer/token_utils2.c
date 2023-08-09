@@ -6,13 +6,12 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/02 18:10:35 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:34:10 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-//This function is used to concat the words token at the end
 t_token	*final_concat(t_token *start)
 {
 	t_token	*tmp;
@@ -38,12 +37,10 @@ t_token	*final_concat(t_token *start)
 	new = new_token(value, literal, start->pos);
 	new->next = tmp;
 	new->prev = start->prev;
-	delfew(start, last_to_del);
 	new->prev->next = new;
-	return (new);
+	return (delfew(start, last_to_del), new);
 }
 
-//on arrive a la fin il faut recncat
 int	concat_word(t_shell *g_shell)
 {
 	t_token	*temp;

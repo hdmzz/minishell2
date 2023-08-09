@@ -53,13 +53,13 @@ $O:
 $(OBJ): | $O
 
 $(OBJ): $O%.o: $S% Makefile $(HEADER) libft/libft.a
-	$(CC) $(CFLAGS) -g3 -lreadline -c $< -o $@
+	$(CC) $(CFLAGS) -g3 -lreadline -c $< -o $@ -I ./include
 
 libft:
 	@make -C libft
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -g3 $^ -lreadline $(LIBFLAGS) -o $@
+	$(CC) $(CFLAGS) -g3 $^ $(LIBFLAGS) -o $@ -I ./include -lreadline
 
 clean:
 	rm -rf $(SRC:$S%=$O%.o)

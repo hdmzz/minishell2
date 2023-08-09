@@ -1,7 +1,6 @@
 #include "../../include/minishell.h"
 
-//je dois implementer une fonction qui ouvre un fichier unique
-// et renvoie son fd
+
 static int	ft_mkstemp(char *filename)
 {
 	int	i;

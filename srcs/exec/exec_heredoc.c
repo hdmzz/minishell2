@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static void	*child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
 {

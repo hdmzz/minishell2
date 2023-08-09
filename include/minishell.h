@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/05 16:49:57 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/08 00:25:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <signal.h>
 # include <dirent.h>
 # include <stdbool.h>
 # include "typedef.h"
 # include "pipes.h"
+# include "signal_sh.h"
+
+extern int	g_exit_code;
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);

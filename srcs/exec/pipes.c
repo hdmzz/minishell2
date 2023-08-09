@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static void	close_fds(int **fds, int nb_pipes, int i)
 {
@@ -82,7 +82,6 @@ static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 	}
 	if (i != g_shell->nb_pipes)
 	{
-		//i = 0 pour premiere commande nb pipes = 1 ds notre cas
 		dup2(pipes[i][1], STDOUT_FILENO);
 	}
 	close_fds(pipes, g_shell->nb_pipes, -1);
@@ -104,11 +103,10 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	g_shell->pipes_fd = init_pipes(pipes, g_shell);
 	while (i < g_shell->nb_cmds)
 	{
+		if (g_shell->full_cmd_path != NULL)
+			free(g_shell->full_cmd_path);
+		g_shell->full_cmd_path = get_cmd_path(cmds->cmd);
 		pid = fork();
-
-		//int y;
-		//scanf("%d", &y);
-
 		if (pid < 0)
 			return (0);
 		if (pid == 0)
@@ -127,12 +125,14 @@ int	handle_cmd(t_shell *g_shell)
 {
 	pid_t	pid;
 
+	g_shell->full_cmd_path = get_cmd_path(g_shell->cmds->cmd);
 	pid = fork();
 	if (pid == -1)
 		return (-1);
 	if (pid == 0)
 		exec_cmd(g_shell->cmds->cmd, g_shell);
 	wait(NULL);
+	//free g_shell->full_cmd_path;
 	return (1);
 }
 

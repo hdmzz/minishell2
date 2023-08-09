@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/04 13:31:35 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:31:57 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 /*
 	this is where we calaculate the size of each token

@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	cln_whitespace_btw_ctrl_tok(t_shell *g_shell)
 {
