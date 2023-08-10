@@ -5,6 +5,7 @@ X = exec/
 L = lexer/
 U = utils/
 R = redirections/
+SIG = signal/
 
 NAME =	minishell
 
@@ -29,7 +30,8 @@ SRC = $Smain.c \
 		$S$Rheredoc.c \
 		$S$Rredir.c \
 		$S$Xexec_heredoc.c \
-		$S$Xpipes.c
+		$S$Xpipes.c \
+		$S$(SIG)handle_signal.c
 
 OBJ = $(SRC:$S%=$O%.o)
 
@@ -49,6 +51,7 @@ $O:
 	@mkdir -p $@exec
 	@mkdir -p $@utils
 	@mkdir -p $@$R
+	@mkdir -p $@$(SIG)
 
 $(OBJ): | $O
 

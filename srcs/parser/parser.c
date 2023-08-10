@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/10 14:08:29 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:17:48 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ void	dollar_rule(t_shell *g_shell)
 */
 int	parser(t_shell *g_shell)
 {
+	if (g_shell->start_buff == NULL)
+		exit_builtin(g_shell);
 	if (ft_strlen(g_shell->start_buff) == 0)
 		return (1);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))

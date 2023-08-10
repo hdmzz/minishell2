@@ -6,11 +6,27 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/09 15:24:20 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:08:04 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	prompt(t_shell *g_shell)
+{
+	while (isatty(STDIN_FILENO))
+	{
+		//mode intearactif avec les signaux
+		set_signals_interactive();
+		g_shell->start_buff = readline("$> ");
+		//mode initeractif
+		set_signals_noninteractive();
+		g_shell->list_token = lexer(g_shell);
+		if (!parser(g_shell))
+			printf("Error parsing");
+		ft_free_shell(g_shell);
+	}
+}
 
 static int	init_g_shell(t_shell *g_shell)
 {
@@ -43,13 +59,6 @@ int	main(void)
 	g_shell.start_buff = ft_calloc(sizeof(char), 2048);
 	if (!g_shell.start_buff)
 		return (perror("Error callo\n"), 1);
-	while (isatty(STDIN_FILENO))
-	{
-		g_shell.start_buff = readline("$> ");
-		g_shell.list_token = lexer(&g_shell);
-		if (!parser(&g_shell))
-			printf("Error parsing");
-		ft_free_shell(&g_shell);
-	}
+	prompt(&g_shell);
 	return (0);
 }

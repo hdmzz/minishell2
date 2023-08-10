@@ -133,8 +133,6 @@ int	handle_cmd(t_shell *g_shell)
 	pid = fork();
 	if (pid == -1)
 		return (-1);
-	int y;
-	scanf("%d", &y);
 	if (pid == 0)
 	{
 		left_redirections(g_shell->cmds->cmd, split_lenght(g_shell->cmds->cmd), g_shell);
