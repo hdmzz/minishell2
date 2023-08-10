@@ -27,28 +27,3 @@ int	recover_fd(t_shell *g_shell)
 	}
 	return (ret);
 }
-
-//!!!! WARNING pas encore les pipes!!!!!!
-//ici on execute
-int	redirections(t_shell *g_shell)
-{
-	t_cmd	*cmds;
-
-	cmds = g_shell->cmds;
-	while (cmds)//deplacer le while 
-	{
-		//isole ca pour chaque commande
-		//on va faire les redir etc 
-		right_redirections(cmds->cmd, split_lenght(cmds->cmd));
-		left_redirections(cmds->cmd, split_lenght(cmds->cmd), g_shell);
-		//---------------------------------------------
-		//ci dessous on peut enlever et laisser ca a la fonction pipes qui execute les commandes
-		if (!cmd_handler(g_shell))
-			return (0);
-		cmds = cmds->next;
-	}
-	//on fera ca apres 
-	if (!recover_fd(g_shell))
-		return (0);
-	return (1);
-}

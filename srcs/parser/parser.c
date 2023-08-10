@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/09 18:47:25 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:08:29 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ char	*var_xpanser(char *input)
 {
 	char	*ev;
 
+	if (*input == '$')
+		input++;
 	ev  = getenv(input);
 	return (ev);
 }
@@ -143,7 +145,6 @@ int	parser(t_shell *g_shell)
 		return (0);
 	compose_cmd(g_shell);
 	cmd_handler(g_shell);
-	//redirections(g_shell);//on va devoir remplacer cette fonction 
 	recover_fd(g_shell);
 	return (1);
 }

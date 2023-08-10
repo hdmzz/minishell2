@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/09 18:26:22 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:35:23 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ int		right_redirections(char **cmd, int split_lght);
 int		left_redirections(char **cmd, int split_lght, t_shell *g_shell);
 
 //heredoc.c
-int		heredoc(char *delim, t_io *io, t_shell *g_shell);
+int		heredoc(char *delim, t_io *io);
 
 //heredoc_parser.c
 int		heredoc_first_analyzer(t_shell *g_shell);
 char	*var_xpanser(char *input);
 
 //exec/exec_heredoc.c
-char	*pipe_heredoc(char *cmd_str, ssize_t bytes_read, t_shell *g_shell);
+char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read);
 
 //parser/parser_heredoc.c
-char	*heredoc_expanser(char *input, t_io *std_io, t_shell *g_shell);
+char	*heredoc_expanser(char *input, t_io *std_io);
 
 
 #endif

@@ -15,7 +15,7 @@ int	left_redirections(char **cmd, int split_lght, t_shell *g_shell)
 		if (cmd[i][0] == '<')
 		{
 			if (ft_strcmp(cmd[i], "<<") == 0)
-				fd = heredoc(cmd[i + 1], io, g_shell);
+				fd = heredoc(cmd[i + 1], io);
 			else
 				fd = open(cmd[i + 1], O_RDONLY, NULL);
 			if (fd == -1)

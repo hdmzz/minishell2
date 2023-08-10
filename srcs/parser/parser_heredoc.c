@@ -117,6 +117,8 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 char	*heredoc_var_xpanser(char *input)
 {
 	char	**tab;
+	char	*temp;
+	char	*buff;
 	int		i;
 
 	i = 0;
@@ -124,7 +126,12 @@ char	*heredoc_var_xpanser(char *input)
 	while (tab[i])
 	{
 		if (tab[i][0] == '$')
-			return (var_xpanser(tab[i]));
+		{
+			buff = tab[i];
+			temp = var_xpanser(buff);
+			ft_free_split(tab);
+			return (temp);
+		}
 		i++;
 	}
 	return (NULL);
@@ -133,7 +140,7 @@ char	*heredoc_var_xpanser(char *input)
 /* 
 	for each input of the heredoc
  */
-char	*heredoc_expanser(char *input, t_io *std_io, t_shell *g_shell)
+char	*heredoc_expanser(char *input, t_io *std_io)
 {
 	char	*inp;
 	char	*imbrecated_cmd;
@@ -154,7 +161,7 @@ char	*heredoc_expanser(char *input, t_io *std_io, t_shell *g_shell)
 			if (y > i)
 			{
 				imbrecated_cmd = ft_substr(input, i, y - i);
-				cmd_output = pipe_heredoc(imbrecated_cmd, 0, g_shell);
+				cmd_output = exec_imbricated_cmd(imbrecated_cmd, 0);
 				inp = substitute_input_wth_output(input, cmd_output);//free input original ici
 			}
 			else

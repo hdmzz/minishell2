@@ -110,7 +110,11 @@ int	handle_pipes_cmd(t_shell *g_shell)
 		if (pid < 0)
 			return (0);
 		if (pid == 0)
+		{
+			left_redirections(cmds->cmd, split_lenght(cmds->cmd), g_shell);
+			right_redirections(cmds->cmd, split_lenght(cmds->cmd));
 			child(cmds, g_shell, i);
+		}
 		i++;
 		cmds = cmds->next;
 	}
@@ -129,8 +133,14 @@ int	handle_cmd(t_shell *g_shell)
 	pid = fork();
 	if (pid == -1)
 		return (-1);
+	int y;
+	scanf("%d", &y);
 	if (pid == 0)
+	{
+		left_redirections(g_shell->cmds->cmd, split_lenght(g_shell->cmds->cmd), g_shell);
+		right_redirections(g_shell->cmds->cmd, split_lenght(g_shell->cmds->cmd));
 		exec_cmd(g_shell->cmds->cmd, g_shell);
+	}
 	wait(NULL);
 	//free g_shell->full_cmd_path;
 	return (1);

@@ -26,7 +26,7 @@ static int	ft_mkstemp(char *filename)
 	return (fd);
 }
 
-int	heredoc(char *delim, t_io *io, t_shell *g_shell)
+int	heredoc(char *delim, t_io *io)
 {
 	static char	tmpfile[] = "tmpfileXXXXXXXXXXXXXXX";
 	int			fd;
@@ -41,10 +41,10 @@ int	heredoc(char *delim, t_io *io, t_shell *g_shell)
 		return (perror("Trop de fichier deja existant"), -1);
 	while (1)
 	{
-		input = readline("> ");
+ 		input = readline("> ");
 		if (ft_strcmp(delim, input) == 0)
 			break ;
-		tmp = heredoc_expanser(input, io, g_shell);
+		tmp = heredoc_expanser(input, io);
 		if (!tmp)
 			return (free(input), 0);
 		ft_putendl_fd(tmp, fd);//deja free ds here doc xpanser
