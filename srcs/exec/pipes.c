@@ -67,10 +67,7 @@ static int	**init_pipes(int **pipes, t_shell *g_shell)
 		pipe(pipes[i]);
 	return (pipes);
 }
-/* 
-	This function must close the inutilized fds
 
- */
 static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 {
 	int	**pipes;
@@ -87,6 +84,20 @@ static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 	close_fds(pipes, g_shell->nb_pipes, -1);
 	exec_cmd(cmds->cmd, g_shell);
 }
+
+static void	free_pipes(t_shell *g_shell)
+{
+	int	i;
+
+	i = -1;
+	if (g_shell->pipes_fd != NULL)
+	{
+		while (++i < g_shell->nb_pipes)
+			free(g_shell->pipes_fd[i]);
+		free(g_shell->pipes_fd);
+	}
+}
+
 /* 
 	Handle pipes 
  */
@@ -95,22 +106,21 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	int		**pipes;
 	t_cmd	*cmds;
 	int		i;
-	int		*pid;
 
 	i = 0;
 	pipes = NULL;
 	cmds = g_shell->cmds;
-	pid = ft_calloc(g_shell->nb_cmds, sizeof(int));
-	g_shell->pipes_fd = init_pipes(pipes, g_shell);
+	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));
+	g_shell->pipes_fd = init_pipes(pipes, g_shell);//to free
 	while (i < g_shell->nb_cmds)
 	{
 		if (g_shell->full_cmd_path != NULL)
 			free(g_shell->full_cmd_path);
 		g_shell->full_cmd_path = get_cmd_path(cmds->cmd);
-		pid[i] = fork();
-		if (pid[i] < 0)
+		g_shell->pids[i] = fork();
+		if (g_shell->pids[i] < 0)
 			return (0);
-		if (pid[i] == 0)
+		if (g_shell->pids[i] == 0)
 		{
 			left_redirections(cmds->cmd, split_lenght(cmds->cmd), g_shell);
 			right_redirections(cmds->cmd, split_lenght(cmds->cmd));
@@ -122,7 +132,8 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	close_fds(g_shell->pipes_fd, g_shell->nb_pipes, -1);
 	i = -1;
 	while (++i < g_shell->nb_cmds)
-		waitpid(pid[i], &g_last_exit_code, 0);
+		waitpid(g_shell->pids[i], &g_last_exit_code, 0);
+	free_pipes(g_shell);
 	return (1);
 }
 
@@ -140,14 +151,14 @@ int	handle_cmd(t_shell *g_shell)
 		right_redirections(g_shell->cmds->cmd, split_lenght(g_shell->cmds->cmd));
 		exec_cmd(g_shell->cmds->cmd, g_shell);
 	}
-	wait(NULL);
-	//free g_shell->full_cmd_path;
+	waitpid(pid, &g_last_exit_code, 0);
+	free(g_shell->full_cmd_path);
+	g_shell->full_cmd_path = NULL;
 	return (1);
 }
 
 /* 
 	This function takes the cmds and execute it with the pipes etc
-
  */
 int	cmd_handler(t_shell *g_shell)
 {

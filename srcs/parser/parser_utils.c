@@ -4,12 +4,7 @@ void	add_cmd_back(t_shell *g_shell, t_cmd *to_add)
 {
 	t_cmd	*temp;
 
-	temp = g_shell->cmds;
-	if (!g_shell->cmds)
-	{
-		g_shell->cmds = to_add;
-		return ;
-	}
+	temp = g_shell->start_cmd;
 	if (temp->next != NULL)
 	{
 		while (temp->next != NULL)
@@ -74,7 +69,7 @@ t_cmd	*create_new_cmd(t_token *token)
 	{
 		if (token->type != white_space)
 		{
-			new->cmd[i] = token->value;
+			new->cmd[i] = ft_strdup(token->value);
 			i++;
 		}
 		token = token->next;
@@ -108,4 +103,5 @@ void	compose_cmd(t_shell *g_shell)
 		while (lst && lst->type != pipeline)
 			lst = lst->next;
 	}
+	g_shell->cmds = g_shell->start_cmd->next;
 }

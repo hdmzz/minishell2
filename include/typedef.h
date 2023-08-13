@@ -78,6 +78,7 @@ typedef struct s_shell
 	t_token	*list_token;
 	t_token	*start_token;
 	t_cmd	*cmds;
+	t_cmd	*start_cmd;
 	int		nb_cmds;//nb pipes + 1
 	int		output_backup;
 	int		input_backup;

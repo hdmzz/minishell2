@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 14:06:16 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:24:08 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,24 @@ static int	init_g_shell(t_shell *g_shell)
 	g_shell->io->var_expanser = 0;
 	g_shell->pids = NULL;
 	g_shell->nb_pipes = 0;
+	g_shell->pipes_fd = NULL;
 	return (1);
 }
 
 //il faut recuperer la commande donc faire un split et ensuite executer
 int	main(void)
 {
+	t_cmd	start_cmd;
 	t_shell	g_shell;
+
+	start_cmd.cmd = NULL;
+	start_cmd.next = NULL;
+	start_cmd.prev = NULL;
+	start_cmd.nb_of_cmd = 0;
 
 	if (!init_g_shell(&g_shell))
 		return (perror("Error init shell\n"), 1);
+	g_shell.start_cmd = &start_cmd;
 	prompt(&g_shell);
 	return (0);
 }

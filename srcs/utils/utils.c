@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 14:18:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:41:04 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ int	split_lenght(char **cmds)
 
 void	del_cmds(t_cmd *cmds)
 {
-	if (cmds->cmd != NULL)
-		ft_free_split(cmds->cmd);
 	if (cmds != NULL)
+	{
+		ft_free_split(cmds->cmd);
 		free(cmds);
+	}
 	cmds = NULL;
 }
 
@@ -55,25 +56,24 @@ void	free_lst_cmd(t_cmd *cmds)
 		del_cmds(cmds);
 		cmds = tmp;
 	}
+	
 }
 
 void	free_lst_token(t_token *tokens)
 {
 	t_token	*tmp;
-	t_token	*tmp2;
 	
-	tmp2 = tokens;
 	while (tokens)
 	{
 		tmp = tokens->next;
 		if (tokens != NULL)
 		{
 			free(tokens->value);
+			tokens->value = NULL;
 			free(tokens);
 		}
 		tokens = tmp;
 	}
-	tmp2 = NULL;
 }
 
 static void	free_all(t_shell *g_shell, int last_exit)
@@ -84,6 +84,14 @@ static void	free_all(t_shell *g_shell, int last_exit)
 		g_shell->list_token = NULL;
 		g_shell->start_token->next = NULL;
 	}
+	if (g_shell->cmds != NULL)
+	{
+		free_lst_cmd(g_shell->cmds);
+		g_shell->cmds = NULL;
+		g_shell->start_cmd->next = NULL;
+	}
+	if (last_exit)
+		last_exit = 0;
 }
 
 void	ft_free_shell(t_shell *g_shell, int last_exit)

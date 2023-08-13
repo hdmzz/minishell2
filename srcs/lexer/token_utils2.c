@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/12 03:16:22 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 14:54:19 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,10 @@ void	delone(t_token *to_del)
 void	delfew(t_token *start, t_token *end)
 {
 	t_token	*temp;
-	t_token	*tmp;
 
 	if (start == end)
 		return (delone(start));
 	temp = start->next;
-	tmp = start;
 	//fonction qui doit free une list chainee de tokens
 	while (temp && temp != end)
 	{

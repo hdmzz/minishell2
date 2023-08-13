@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:16:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/11 20:07:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:41:32 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ft_free_split(char **tab)
 	i = 0;
 	while (tab[i] != NULL)
 	{
-		free(tab[i]);
+		if (tab[i] != NULL)
+			free(tab[i]);
 		i++;
 	}
 	free(tab);

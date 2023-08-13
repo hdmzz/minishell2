@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/10 17:36:20 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:48:14 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ char	*get_cmd_path(char **to_search)
 	full_cmd_path = get_cmd_util(split_env, to_search);
 	if (full_cmd_path != NULL)
 		return (ft_free_split(split_env), full_cmd_path);
-	if (split_env)
-		free(split_env);
+	ft_free_split(split_env);
+	if (full_cmd_path != NULL)
+		free(full_cmd_path);
 	return (NULL);
 }
 
