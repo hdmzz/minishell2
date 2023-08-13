@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 16:41:04 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:31:09 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,6 @@ void	del_cmds(t_cmd *cmds)
 	}
 	cmds = NULL;
 }
-
-//q: comment free une liste chainee de t_cmd?
-//r: on parcourt la liste chainee et on free chaque element
-//q: comment free une liste chainee de t_token?
-
-//r: on parcourt la liste chainee et on free chaque element
-//il faut une fonction qui parcour la liste chainee et qui free chaque element
-//il faut une fonction qui free les tokens
-//il faut une fonction qui free les cmds
 
 void	free_lst_cmd(t_cmd *cmds)
 {

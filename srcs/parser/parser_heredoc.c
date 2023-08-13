@@ -99,7 +99,7 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 	char	*new_input;
 	int		i;
 
-	tab = ft_split_charset(input, "$");
+	tab = ft_split(input, '$');
 	tmp = tab;
 	if (!tab || !cmd_output)
 		return (perror("Error substitute_input_wth_output"), NULL);
