@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 13:31:28 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:24:40 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		split_lenght(char **cmds);
 t_token	*new_token(char *value, int type, int pos);
 void	token_add_back(t_token **lst, t_token *to_add);
 t_token	*last_token(t_token *token);
-void	quotes_neutralizer(t_token **lst);
+void	quotes_neutralizer(t_shell *g_shell);
 t_token	*replace_token(t_token *start, t_token *end, t_token *new);
 
 //src/lexer/token_utils2.c
