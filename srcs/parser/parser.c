@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 18:00:35 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:28:29 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int	parser(t_shell *g_shell)
 		return (0);
 	compose_cmd(g_shell);
 	cmd_handler(g_shell);
-	//recover_fd(g_shell);
+	if (recover_fd(g_shell) == 0)
+		return (0);
 	return (1);
 }
