@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 18:28:29 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:05:19 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int	parser(t_shell *g_shell)
 		exit_builtin(g_shell);
 	if (ft_strlen(g_shell->start_buff) == 0)
 		return (1);
+	add_history(g_shell->start_buff);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
 		return (0);
 	if (!pipes_conformity(g_shell))
