@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/10 16:17:48 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 14:14:24 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 	if (!check_last_token(last_token(*tokens)))
 		return (0);
 	dollar_rule(g_shell);
-	heredoc_first_analyzer(g_shell);
-	quotes_neutralizer(tokens);
+	//heredoc_first_analyzer(g_shell);
+	//quotes_neutralizer(tokens);
 	return (1);
 }
 
@@ -107,7 +107,7 @@ void	dollar_rule(t_shell *g_shell)
 	int		quote_count;
 	char	*ev;
 
-	lst = g_shell->list_token;
+	lst = g_shell->start_token->next;
 	interpretation = true;
 	quote_count = 0;
 	while (lst)
@@ -121,12 +121,15 @@ void	dollar_rule(t_shell *g_shell)
 		{
 			ev = var_xpanser(lst->next->value);
 			if (ev != NULL)
-				replace_token(lst, lst->next, new_token(ev, literal, lst->pos));
+			{
+				lst = replace_token(lst, lst->next, new_token(ev, literal, lst->pos));
+			}
 			else
-				replace_token(lst, lst->next, new_token("", literal, lst->pos));
+				lst = replace_token(lst, lst->next, new_token("", literal, lst->pos));
 		}
 		lst = lst->next;
 	}
+	g_shell->list_token = g_shell->start_token->next;
 }
 
 /*
@@ -141,12 +144,12 @@ int	parser(t_shell *g_shell)
 		return (1);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
 		return (0);
-	if (!pipes_conformity(g_shell))
-		return (0);
-	if (!check_redirection_rules(g_shell))
-		return (0);
-	compose_cmd(g_shell);
-	cmd_handler(g_shell);
-	recover_fd(g_shell);
+	//if (!pipes_conformity(g_shell))
+	//	return (0);
+	//if (!check_redirection_rules(g_shell))
+	//	return (0);
+	//compose_cmd(g_shell);
+	//cmd_handler(g_shell);
+	//recover_fd(g_shell);
 	return (1);
 }

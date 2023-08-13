@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/09 18:01:11 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:36:20 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static char	*get_cmd_util(char **split_env, char **to_search)
 				if (found_cmd_path(to_search[0], entry->d_name) == true)
 				{
 					full_cmd_path = concat_cmd(split_env[i], entry->d_name);
+					closedir(dir);
 					return (full_cmd_path);
 				}
 			}
@@ -82,7 +83,6 @@ char	*get_cmd_path(char **to_search)
 	return (NULL);
 }
 
-//le exec commd ne devrait pas fork puisque le pipe handler fork lui meme
 int	exec_cmd(char **cmd, t_shell *g_shell)
 {
 	char	*full_cmd_path;

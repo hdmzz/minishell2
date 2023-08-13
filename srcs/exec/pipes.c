@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void	close_fds(int **fds, int nb_pipes, int i)
+void	close_fds(int **fds, int nb_pipes, int i)
 {
 	int	j;
 
@@ -95,21 +95,22 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	int		**pipes;
 	t_cmd	*cmds;
 	int		i;
-	int		pid;
+	int		*pid;
 
 	i = 0;
 	pipes = NULL;
 	cmds = g_shell->cmds;
+	pid = ft_calloc(g_shell->nb_cmds, sizeof(int));
 	g_shell->pipes_fd = init_pipes(pipes, g_shell);
 	while (i < g_shell->nb_cmds)
 	{
 		if (g_shell->full_cmd_path != NULL)
 			free(g_shell->full_cmd_path);
 		g_shell->full_cmd_path = get_cmd_path(cmds->cmd);
-		pid = fork();
-		if (pid < 0)
+		pid[i] = fork();
+		if (pid[i] < 0)
 			return (0);
-		if (pid == 0)
+		if (pid[i] == 0)
 		{
 			left_redirections(cmds->cmd, split_lenght(cmds->cmd), g_shell);
 			right_redirections(cmds->cmd, split_lenght(cmds->cmd));
@@ -121,7 +122,7 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	close_fds(g_shell->pipes_fd, g_shell->nb_pipes, -1);
 	i = -1;
 	while (++i < g_shell->nb_cmds)
-		wait(NULL);
+		waitpid(pid[i], &g_last_exit_code, 0);
 	return (1);
 }
 

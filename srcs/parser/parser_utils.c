@@ -10,8 +10,11 @@ void	add_cmd_back(t_shell *g_shell, t_cmd *to_add)
 		g_shell->cmds = to_add;
 		return ;
 	}
-	while (temp->next != NULL)
-		temp = temp->next;
+	if (temp->next != NULL)
+	{
+		while (temp->next != NULL)
+			temp = temp->next;
+	}
 	to_add->prev = temp;
 	temp->next = to_add;
 }
@@ -62,7 +65,7 @@ t_cmd	*create_new_cmd(t_token *token)
 	new = ft_calloc(1, sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->cmd = ft_calloc(split_size, sizeof(char *));
+	new->cmd = ft_calloc(split_size, sizeof(char *));//leaks ici
 	if (!new->cmd)
 		return (NULL);
 	if (token && token->type == pipeline)

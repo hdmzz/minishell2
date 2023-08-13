@@ -1,6 +1,5 @@
 #include "../../include/minishell.h"
 
-
 static int	ft_mkstemp(char *filename)
 {
 	int	i;

@@ -1,6 +1,19 @@
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
 
+# include <stdio.h>
+# include "../libft/libft.h"
+# include <unistd.h>
+# include <fcntl.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <dirent.h>
+# include <stdbool.h>
+
+extern int	g_last_exit_code;
 enum e_type
 {
 	new_line,
@@ -66,12 +79,12 @@ typedef struct s_shell
 	t_token	*start_token;
 	t_cmd	*cmds;
 	int		nb_cmds;//nb pipes + 1
-	int		nb_pipes;
 	int		output_backup;
 	int		input_backup;
-	int		**pipes_fd;
 	t_io	*io;
+	int		**pipes_fd;
 	pid_t	*pids;
+	int		nb_pipes;
 }			t_shell;
 
 #endif

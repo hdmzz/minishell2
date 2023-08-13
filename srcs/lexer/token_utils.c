@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/07 23:32:07 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 14:21:59 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,7 @@ t_token	*new_token(char *value, int type, int pos)
 	return (new);
 }
 
-void	token_add_back(t_token **lst, t_token *to_add)
-{
-	t_token	*start;
-
-	start = *lst;
-	if (start == NULL)
-	{
-		*lst = to_add;
-		(*lst)->prev = NULL;
-		return ;
-	}
-	if (lst && *lst && to_add)
-	{
-		while (start->next != NULL)
-			start = start->next;
-		start->next = to_add;
-		to_add->prev = start;
-	}
-}
-
-void	replace_token(t_token *start, t_token *end, t_token *new)
+t_token	*replace_token(t_token *start, t_token *end, t_token *new)
 {
 	t_token	*add_back;
 	t_token	*last_to_save;
@@ -70,18 +50,14 @@ void	replace_token(t_token *start, t_token *end, t_token *new)
 		if (last_to_save)
 			last_to_save->prev = new;
 	}
-	else
-	{
-		start = new;
-		start->next = NULL;
-		start->prev = NULL;
-	}
+	return (new);
 }
 
 void	quotes_neutralizer(t_token **lst)
 {
 	t_token	*prev;
 	t_token	*start;
+	t_token	*temp;
 
 	start = *lst;
 	while ((*lst))
@@ -92,11 +68,16 @@ void	quotes_neutralizer(t_token **lst)
 			prev = (*lst)->prev;
 			if (prev)
 			{
-				(*lst) = concat_token(*lst);
-				prev->next = (*lst);
+				temp = concat_token(*lst);//ICI tout les token entre quotes se sont fait del
+				prev->next = temp;
+				temp->prev = prev;
 			}
 			else
+			{
 				start = concat_token(*lst);
+				start->prev = NULL;
+				(*lst) = start;
+			}
 		}
 		(*lst) = (*lst)->next;
 	}

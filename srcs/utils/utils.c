@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/10 16:16:48 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 14:18:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,64 @@ int	split_lenght(char **cmds)
 
 void	del_cmds(t_cmd *cmds)
 {
-	//ft_free_split(cmds->cmd);
-	free(cmds);
+	if (cmds->cmd != NULL)
+		ft_free_split(cmds->cmd);
+	if (cmds != NULL)
+		free(cmds);
 	cmds = NULL;
 }
 
-static void	free_all(t_shell *g_shell)
-{
-	t_cmd	*tmp_cmds;
-	t_token	*tmp_token;
+//q: comment free une liste chainee de t_cmd?
+//r: on parcourt la liste chainee et on free chaque element
+//q: comment free une liste chainee de t_token?
 
-	tmp_cmds = g_shell->cmds;
-	tmp_token = g_shell->start_token;
-	if (tmp_cmds != NULL)
+//r: on parcourt la liste chainee et on free chaque element
+//il faut une fonction qui parcour la liste chainee et qui free chaque element
+//il faut une fonction qui free les tokens
+//il faut une fonction qui free les cmds
+
+void	free_lst_cmd(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+
+	while (cmds)
 	{
-		while (tmp_cmds->next)
-		{
-			tmp_cmds = tmp_cmds->next;
-			del_cmds(g_shell->cmds);
-			g_shell->cmds = tmp_cmds;
-		}
-		del_cmds(g_shell->cmds);
+		tmp = cmds->next;
+		del_cmds(cmds);
+		cmds = tmp;
 	}
-	if (tmp_token != NULL)
-	{
-		while (tmp_token->next)
-		{
-			tmp_token = tmp_token->next;
-			free(g_shell->start_token->value);
-			free(g_shell->start_token);
-			g_shell->start_token = tmp_token;
-		}
-		free(g_shell->start_token->value);
-		free(g_shell->start_token);
-	}
-	g_shell->start_token = NULL;
-	g_shell->list_token = NULL;
-	g_shell->cmds = NULL;
 }
 
-void	ft_free_shell(t_shell *g_shell)
+void	free_lst_token(t_token *tokens)
 {
-	if (g_shell->full_cmd_path != NULL)
+	t_token	*tmp;
+	t_token	*tmp2;
+	
+	tmp2 = tokens;
+	while (tokens)
 	{
-		free(g_shell->full_cmd_path);
-		g_shell->full_cmd_path = NULL;
+		tmp = tokens->next;
+		if (tokens != NULL)
+		{
+			free(tokens->value);
+			free(tokens);
+		}
+		tokens = tmp;
 	}
-	if (g_shell->splitted_cmd != NULL)//on s'en sert meme plus de ca
+	tmp2 = NULL;
+}
+
+static void	free_all(t_shell *g_shell, int last_exit)
+{
+	if (g_shell->list_token != NULL)
 	{
-		ft_free_split(g_shell->splitted_cmd);
-		g_shell->splitted_cmd = NULL;
+		free_lst_token(g_shell->list_token);
+		g_shell->list_token = NULL;
+		g_shell->start_token->next = NULL;
 	}
-	if (g_shell->start_buff != NULL)
-	{
-		free(g_shell->start_buff);
-		g_shell->start_buff = NULL;
-	}
-	free_all(g_shell);
+}
+
+void	ft_free_shell(t_shell *g_shell, int last_exit)
+{
+	free_all(g_shell, last_exit);
 }

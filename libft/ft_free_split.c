@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdamitzi <hdamitzi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:16:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/03/20 12:17:56 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/11 20:07:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	ft_free_split(char **tab)
 {
-	char	**temp;
+	int		i;
 
-	temp = tab;
-	while (*tab)
+	i = 0;
+	while (tab[i] != NULL)
 	{
-		free(*tab);
-		tab++;
+		free(tab[i]);
+		i++;
 	}
-	free(temp);
+	free(tab);
 }

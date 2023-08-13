@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/10 15:46:07 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/13 14:09:01 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ void print_cmd(char **cmds)
 	ten malloc the size of the token and add it to the list
 	in arguments
 */
-int	create_token(t_token **lst, char **input, int *pos)
+static t_token	*create_token(char **input, int *pos)
 {
 	char	*value;
 	int		token_size;
 	int		type;
 	t_token	*new;
 
-	token_size = token_len(*input);//ici on a la longeur de ce que l'on va mettre ds la value
+	token_size = token_len(*input);
 	if (token_size == 0)
 		return (0);
 	value = ft_strndup((*input), token_size);
@@ -105,36 +105,55 @@ int	create_token(t_token **lst, char **input, int *pos)
 		type = literal;
 	new = new_token(value, type, *pos);
 	if (!new)
-		return (free(value), 0);
-	token_add_back(lst, new);
+		return (free(value), NULL);
+	free(value);
 	*input += token_size;
 	*pos += 1;
-	return (1);
+	return (new);
+}
+
+void	token_add_back(t_token **lst, t_token *to_add)
+{
+	t_token	*start;
+
+	start = *lst;
+	if (start == NULL)
+	{
+		*lst = to_add;
+		(*lst)->prev = NULL;
+		(*lst)->next = NULL;
+		return ;
+	}
+	if (lst && *lst && to_add)
+	{
+		while (start->next != NULL)
+			start = start->next;
+		start->next = to_add;
+		to_add->prev = start;
+	}
 }
 
 /*
 *	The function recovers the command then for each
 *	create a token with the value and the token type
 */
-t_token	*lexer(t_shell *g_shell)
+int	lexer(t_shell *g_shell)
 {
 	int		i;
-	t_token	*token;
+	t_token	*new_token;
 	char	*input;
 
 	i = 1;
-	token = new_token("", start_type, 0);
 	input = g_shell->start_buff;
-	if (!input)
-		return (NULL);
+	if (input == NULL)
+		exit_builtin(g_shell);
 	while (*input != 0)
 	{
-		if (!create_token(&token, &input, &i))
-		{
-			//free token list etc
-			exit(EXIT_FAILURE);
-		}
+		new_token = create_token(&input, &i);
+		if (new_token == NULL)
+			return (0);
+		token_add_back(&g_shell->start_token, new_token);
 	}
-	g_shell->start_token = token;
-	return (token->next);
+	g_shell->list_token = g_shell->start_token->next;
+	return (1);
 }
