@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:52:54 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 18:09:54 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/16 00:29:45 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char				*ft_strrchr(const char *s, int c);
 char				*ft_strchr(const char *s, int c);
 size_t				ft_strspn(const char *s, const char *accept);
 char				*ft_strnstr(const char *haystack, const char *needle,
-						size_t len);
+						size_t haystack_len);
 char				*ft_strdup(const char *s1);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
@@ -110,5 +110,8 @@ void				ft_free_split(char **tab);
 
 size_t				ft_strnlen(const char *str, size_t n);
 char				*ft_strndup(const char *str, size_t n);
+
+int					ft_vsprintf(char *str, const char *format, ...);
+char				*ft_recompose_split(char **strs, char sep);
 
 #endif

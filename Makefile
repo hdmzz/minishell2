@@ -33,7 +33,10 @@ SRC = $Smain.c \
 		$S$Xexec_heredoc.c \
 		$S$Xpipes.c \
 		$S$(SIG)handle_signal.c \
-		$S$Bexit.c
+		$S$Bexit.c \
+		$S$Bexport.c\
+		$S$Bdispatch_builtins.c
+
 
 OBJ = $(SRC:$S%=$O%.o)
 
