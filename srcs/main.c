@@ -6,13 +6,20 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 18:10:52 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:18:16 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 int	g_last_exit_code = 0;
+
+static int	check_start(int ac, char **av)
+{
+	if (ac != 1 && av[0])
+		return (0);
+	return (1);
+}
 
 void	prompt(t_shell *g_shell)
 {
@@ -29,40 +36,29 @@ void	prompt(t_shell *g_shell)
 	}
 }
 
-static int	init_g_shell(t_shell *g_shell)
+static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 {
-	g_shell->start_buff = NULL;
-	g_shell->full_cmd_path = NULL;
-	g_shell->splitted_cmd = NULL;
-	g_shell->split_env = NULL;
-	g_shell->list_token = NULL;
-	g_shell->cmds = NULL;
+	ft_memset(g_shell, 0, sizeof(t_shell));
+	ft_memset(start_cmd, 0, sizeof(t_cmd));
 	g_shell->output_backup = dup(STDOUT_FILENO);
 	g_shell->input_backup = dup(STDIN_FILENO);
 	g_shell->io = ft_calloc(1, sizeof(t_io));//leaks ici
 	g_shell->start_token = new_token("", 513, 0);
 	if (!g_shell->io)
 		return (0);
-	g_shell->io->delim_in_quotes = 0;
-	g_shell->io->var_expanser = 0;
-	g_shell->pids = NULL;
-	g_shell->nb_pipes = 0;
-	g_shell->pipes_fd = NULL;
+	g_shell->split_env = env;
 	return (1);
 }
 
 //il faut recuperer la commande donc faire un split et ensuite executer
-int	main(void)
+int	main(int ac, char **av, char **env)
 {
 	t_cmd	start_cmd;
 	t_shell	g_shell;
 
-	start_cmd.cmd = NULL;
-	start_cmd.next = NULL;
-	start_cmd.prev = NULL;
-	start_cmd.nb_of_cmd = 0;
-
-	if (!init_g_shell(&g_shell))
+	if (!check_start(ac, av))
+		return (1);
+	if (!init_g_shell(&g_shell, &start_cmd, env))
 		return (perror("Error init shell\n"), 1);
 	g_shell.start_cmd = &start_cmd;
 	prompt(&g_shell);
