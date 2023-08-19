@@ -74,13 +74,9 @@ static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 
 	pipes = g_shell->pipes_fd;
 	if (i != 0)
-	{
 		dup2(cmds->fd_in, STDIN_FILENO);
-	}
 	if (i != g_shell->nb_pipes)
-	{
 		dup2(cmds->fd_out, STDOUT_FILENO);
-	}
 	close_fds(pipes, g_shell->nb_pipes, -1);
 	exec_cmd(cmds->cmd, g_shell);
 }
