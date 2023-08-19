@@ -68,6 +68,11 @@ static int	**init_pipes(int **pipes, t_shell *g_shell)
 	return (pipes);
 }
 
+void	set_pipe_fds(t_cmd *cmds, t_shell *g_shell)
+{
+	
+}
+
 static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 {
 	int	**pipes;
@@ -152,8 +157,7 @@ int	handle_cmd(t_shell *g_shell)
 		exec_cmd(g_shell->cmds->cmd, g_shell);
 	}
 	waitpid(pid, &g_last_exit_code, 0);
-	free(g_shell->full_cmd_path);
-	g_shell->full_cmd_path = NULL;
+	ft_free_ptr(g_shell->full_cmd_path);
 	return (1);
 }
 
