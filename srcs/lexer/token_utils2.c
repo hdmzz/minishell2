@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 14:54:19 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:37:00 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ t_token	*final_concat(t_token *start)
 	value = ft_strdup("");
 	tmp = start;
 	if (tmp == NULL)
-		return (free(value), start);
+		return (ft_free_ptr(value), start);
 	if (tmp && tmp->type == white_space)
 		tmp = tmp->next;
 	while (tmp && !(tmp->type & 1))
 	{
 		buff = value;
 		value = ft_strjoin(value, tmp->value);
-		free(buff);
+		ft_free_ptr(buff);
 		last_to_del = tmp;
 		tmp = tmp->next;
 	}
@@ -71,14 +71,14 @@ t_token	*concat_token(t_token *start)
 	{
 		buff = value;
 		value = ft_strjoin(value, tmp->value);
-		free(buff);
+		ft_free_ptr(buff);
 		buff = NULL;
 		tmp = tmp->next;
 	}
 	new = new_token(value, literal, start->pos);
 	new->next = tmp->next;
 	delfew(start, tmp);
-	free(value);
+	ft_free_ptr(value);
 	return (new);
 }
 
@@ -90,8 +90,8 @@ void	delone(t_token *to_del)
 			to_del->prev->next = to_del->next;
 		if (to_del->next)
 			to_del->next->prev = to_del->prev;
-		free(to_del->value);
-		free(to_del);
+		ft_free_ptr(to_del->value);
+		ft_free_ptr(to_del);
 	}
 }
 

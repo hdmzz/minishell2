@@ -169,7 +169,7 @@ char	*heredoc_expanser(char *input, t_io *std_io)
 				std_io->var_expanser = 1;
 				inp = heredoc_var_xpanser(input);
 			}
-			free(input);
+			ft_free_ptr(input);
 		}
 		i++;
 	}

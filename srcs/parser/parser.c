@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 19:05:19 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:43:25 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,25 @@
 
 //wile we are in between two same type quotes we neutralize the other quotes met
 //but if there is no matching quotes there is a syntax problem
-bool	check_quote(t_token **token)
+static bool	check_quote(t_token *token)
 {
 	int		type;
 	bool	found_matching_quote;
+	t_token	*tmp;
 
-	type = (*token)->type;
-	*token = (*token)->next;
+	tmp = token;
+	type = tmp->type;
+	tmp = token->next;
 	found_matching_quote = false;
-	while (*token && (*token)->type != type)
+	while (tmp && tmp->type != type)
 	{
-		if (type == double_quote && (*token)->type == single_quote)
-			(*token)->type = literal;
-		if (type == single_quote && (*token)->type == double_quote)
-			(*token)->type = literal;
-		*token = (*token)->next;
+		if (type == double_quote && tmp->type == single_quote)
+			tmp->type = literal;
+		if (type == single_quote && tmp->type == double_quote)
+			tmp->type = literal;
+		tmp = tmp->next;
 	}
-	if (*token && (*token)->type == type)
+	if (tmp && tmp->type == type)
 		found_matching_quote = true;
 	return (found_matching_quote);
 }
@@ -39,12 +41,11 @@ bool	check_quote(t_token **token)
 //type to close th opening if we count the number of quotes and the modulo
 //by 2 of this number is not 0 the we have a syntax problem or imbricated quotes
 //of different types the the inbetween quotes must be neutralized
-bool	quotes_rules(t_token **token)
+bool	quotes_rules(t_token *token)
 {
 	if (!check_quote(token))
 	{
 		error_handler("Syntax error");
-		print_lst(*token);
 		return (false);
 	}
 	return (true);
@@ -69,20 +70,20 @@ int	check_last_token(t_token *last)
 */
 int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 {
-	t_token	*start;
+	t_token	*tmp;
 
-	start = *tokens;
-	while (*tokens)
+	tmp = *tokens;
+	while (tmp)
 	{
-		if ((*tokens)->type == double_quote || (*tokens)->type == single_quote)
+		if (tmp->type == double_quote || tmp->type == single_quote)
 		{
-			if (!quotes_rules(tokens))
+			if (!quotes_rules(tmp))
 				return (0);
 		}
-		*tokens = (*tokens)->next;
+		tmp = tmp->next;
 	}
-	*tokens = start;
-	if (!check_last_token(last_token(*tokens)))
+	tmp = *tokens;
+	if (!check_last_token(last_token(tmp)))
 		return (0);
 	dollar_rule(g_shell);
 	heredoc_first_analyzer(g_shell);

@@ -62,6 +62,8 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	int				fd_in;
 	int				fd_out;
+	int				output_backup;
+	int				input_backup;
 }				t_cmd;
 
 typedef struct s_io

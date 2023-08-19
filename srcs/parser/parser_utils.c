@@ -79,6 +79,8 @@ t_cmd	*create_new_cmd(t_token *token)
 	new->prev = NULL;
 	new->fd_in = -1;
 	new->fd_out = -1;
+	new->input_backup = -1;
+	new->output_backup = -1;
 	return (new);
 }
 

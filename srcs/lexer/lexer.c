@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 14:09:01 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:37:54 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ static t_token	*create_token(char **input, int *pos)
 		type = literal;
 	new = new_token(value, type, *pos);
 	if (!new)
-		return (free(value), NULL);
-	free(value);
+		return (ft_free_ptr(value), NULL);
+	ft_free_ptr(value);
 	*input += token_size;
 	*pos += 1;
 	return (new);

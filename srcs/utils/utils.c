@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 12:07:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:35:35 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	del_cmds(t_cmd *cmds)
 	if (cmds != NULL)
 	{
 		ft_free_split(cmds->cmd);
-		free(cmds);
+		ft_free_ptr(cmds);
 	}
 	cmds = NULL;
 }
@@ -59,9 +59,9 @@ void	free_lst_token(t_token *tokens)
 		tmp = tokens->next;
 		if (tokens != NULL)
 		{
-			free(tokens->value);
+			ft_free_ptr(tokens->value);
 			tokens->value = NULL;
-			free(tokens);
+			ft_free_ptr(tokens);
 		}
 		tokens = tmp;
 	}

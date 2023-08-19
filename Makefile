@@ -35,6 +35,7 @@ SRC = $Smain.c \
 		$S$(SIG)handle_signal.c \
 		$S$Bexit.c \
 		$S$Bexport.c\
+		$S$Becho.c \
 		$S$Bdispatch_builtins.c
 
 

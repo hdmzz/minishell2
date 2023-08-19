@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/15 21:18:41 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 18:35:35 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,14 @@ void	print_cmd(char **cmds);
 //redir.c
 void	clean_cmd_tab(char **cmd, int first_redir, int end);
 int		recover_fd(t_shell *g_shelll);
+void	recover_or_io(t_cmd *cmd);
 int		redirections(t_shell *g_shell);
 
 //simple_right.c > output redir
-int		right_redirections(char **cmd, int split_lght);
+int		right_redirections(t_cmd *cmds, int split_lght);
 
 //simple_left.c < input redir
-int		left_redirections(char **cmd, int split_lght, t_shell *g_shell);
+int		left_redirections(t_cmd *cmds, int split_lght, t_shell *g_shell);
 
 //heredoc.c
 int		heredoc(char *delim, t_io *io);

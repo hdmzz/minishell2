@@ -97,7 +97,7 @@ static char	**get_name_value(char *str)
 }
 
 	// Si l'entrée n'a pas été trouvée, ajouter la nouvelle entrée à la fin
-void	export_builtin(char **user_input, t_shell *g_shell)
+int	export_builtin(char **user_input, t_shell *g_shell)
 {
 	char	**name_value_key;
 	int		i;
@@ -106,14 +106,14 @@ void	export_builtin(char **user_input, t_shell *g_shell)
 	while (user_input[i])
 	{
 		if (!is_valid_env_var_key(user_input[i]))
-			return(perror("Not a valid env var key value"));
+			return(perror("Not a valid env var key value"), -1);
 		else if (ft_strchr(user_input[i], '=') != NULL)
 			name_value_key = get_name_value(user_input[i]);
 		i++;
 	}
 	my_set_env(name_value_key[0], name_value_key[1], g_shell);
 	ft_free_split(name_value_key);
-	exit(EXIT_SUCCESS);
+	return (1);
 }
 
 //bool	set_env_var(t_data *data, char *key, char *value)

@@ -35,6 +35,6 @@ char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read)
 		return (NULL);
 	buffer[bytes_read] = '\0';
 	waitpid(pid, &g_last_exit_code, 0);
-	free(full_cmd_path);
+	ft_free_ptr(full_cmd_path);
 	return (buffer);
 }

@@ -45,10 +45,10 @@ int	heredoc(char *delim, t_io *io)
 			break ;
 		tmp = heredoc_expanser(input, io);
 		if (!tmp)
-			return (free(input), 0);
-		ft_putendl_fd(tmp, fd);//deja free ds here doc xpanser
+			return (ft_free_ptr(input), 0);
+		ft_putendl_fd(tmp, fd);
 		if (!io->var_expanser)
-			free(tmp);
+			ft_free_ptr(tmp);
 	}
 	return (close(fd), io->delim_in_quotes = 0, fdcpy);
 }

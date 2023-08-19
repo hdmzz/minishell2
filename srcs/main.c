@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 11:51:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 19:02:25 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	prompt(t_shell *g_shell)
 		set_signals_noninteractive();
 		lexer(g_shell);
 		if (!parser(g_shell))
-			printf("Error parsing");
+			printf("Error parsing\n");
 		ft_free_shell(g_shell, 0);
 		free(g_shell->start_buff);
 	}
