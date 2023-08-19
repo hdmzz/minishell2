@@ -17,18 +17,67 @@ int	is_valid_env_var_key(char *var)
 	return (1);
 }
 
+static int	add_new_var(char *new_env_var, t_shell *g_shell)
+{
+	char	**new_env;
+	int		env_size;
+	int		i;
+
+	i = 0;
+	env_size = split_lenght(g_shell->split_env) + 1;
+	new_env = ft_calloc(env_size + 1, sizeof(char *));
+	if (new_env == NULL)
+		return (0);
+	while (i < env_size)
+	{
+		if (i == env_size - 1)
+			new_env[i] = new_env_var;
+		new_env[i] = g_shell->split_env[i];
+		i++;
+	}
+	new_env[i] = NULL;
+	ft_free_split(g_shell->split_env);
+	g_shell->split_env = new_env;
+	return (1);
+}
+
+static int	get_env_idx(const char *name, t_shell *g_shell)
+{
+	int		i;
+	char	*buff;
+	char	**env;
+
+	i = 0;
+	buff = ft_strjoin(name, "=");
+	env = g_shell->split_env;
+	while (env[i])
+	{
+		if (ft_strncmp(buff, env[i], ft_strlen(buff)) == 0)
+			return(ft_free_ptr(buff), i);
+		i++;
+	}
+	return (ft_free_ptr(buff), -1);
+}
+
 static int	my_set_env(const char *name, const char *value, t_shell *g_shell)
 {
 	char	*new_env_var;
-	// Vérifier si la variable d'environnement existe déjà si elle existe deja overwrite
-	
+	int		idx;
+	//recherche d'un index dans un tableau
+	idx = get_env_idx(name, g_shell);
 	// Sinon créer une nouvelle entrée sous forme de chaîne "nom=valeur"
 	new_env_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
 	if (!new_env_var)
 		return (0);
 	ft_vsprintf(new_env_var, "%s=%s", name, value);
-	printf("resultat = %s\n", new_env_var);
-	free(new_env_var);
+	if (idx != -1)
+	{
+		ft_free_ptr(g_shell->split_env[idx]);
+		g_shell->split_env[idx] = new_env_var;
+	}
+	else
+		add_new_var(new_env_var, g_shell);
+	ft_free_ptr(new_env_var);
 	return (1);
 }
 
@@ -47,10 +96,8 @@ static char	**get_name_value(char *str)
 	return (name_value_key);
 }
 
-	// Rechercher l'entrée existante dans la liste
-
 	// Si l'entrée n'a pas été trouvée, ajouter la nouvelle entrée à la fin
-int	export_builtin(char **user_input, t_shell *g_shell)
+void	export_builtin(char **user_input, t_shell *g_shell)
 {
 	char	**name_value_key;
 	int		i;
@@ -59,14 +106,14 @@ int	export_builtin(char **user_input, t_shell *g_shell)
 	while (user_input[i])
 	{
 		if (!is_valid_env_var_key(user_input[i]))
-			return(0);
+			return(perror("Not a valid env var key value"));
 		else if (ft_strchr(user_input[i], '=') != NULL)
 			name_value_key = get_name_value(user_input[i]);
 		i++;
 	}
 	my_set_env(name_value_key[0], name_value_key[1], g_shell);
 	ft_free_split(name_value_key);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
 //bool	set_env_var(t_data *data, char *key, char *value)

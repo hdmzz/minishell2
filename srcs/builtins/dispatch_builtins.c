@@ -3,7 +3,7 @@
 int	dispatcher_builtin(t_shell *g_shell, char **cmds)
 {
 	if (ft_strcmp("export", cmds[0]) == 0)
-		return (export_builtin(cmds));
+		export_builtin(cmds, g_shell);
 	else if (ft_strcmp("exit", cmds[0]) == 0)
 		return (exit_builtin(g_shell));
 	//else if (ft_strcmp("echo", cmd[0]) == 0)

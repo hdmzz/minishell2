@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/13 17:31:09 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 12:07:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	free_all(t_shell *g_shell, int last_exit)
 		g_shell->start_cmd->next = NULL;
 	}
 	if (last_exit)
-		last_exit = 0;
+		ft_free_split(g_shell->split_env);
 }
 
 void	ft_free_shell(t_shell *g_shell, int last_exit)

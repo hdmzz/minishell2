@@ -61,7 +61,7 @@ $O:
 
 $(OBJ): | $O
 
-$(OBJ): $O%.o: $S% Makefile $(HEADER) libft/libft.a
+$(OBJ): $O%.o: $S% Makefile $(HEADER) libft/libft.h libft/libft.a
 	$(CC) $(CFLAGS) -g3 -lreadline -c $< -o $@ -I ./include
 
 libft:

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/17 19:18:16 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 11:51:50 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,26 @@ void	prompt(t_shell *g_shell)
 
 static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 {
+	int	i;
+
+	i = -1;
 	ft_memset(g_shell, 0, sizeof(t_shell));
 	ft_memset(start_cmd, 0, sizeof(t_cmd));
 	g_shell->output_backup = dup(STDOUT_FILENO);
 	g_shell->input_backup = dup(STDIN_FILENO);
 	g_shell->io = ft_calloc(1, sizeof(t_io));//leaks ici
-	g_shell->start_token = new_token("", 513, 0);
 	if (!g_shell->io)
 		return (0);
-	g_shell->split_env = env;
+	g_shell->start_token = new_token("", 513, 0);
+	g_shell->split_env = ft_calloc(split_lenght(env) + 1, sizeof(char *));
+	if (g_shell->split_env == NULL)
+		return (0);
+	while (env[++i])
+		g_shell->split_env[i] = ft_strdup(env[i]);
+	g_shell->split_env[i] = NULL;
 	return (1);
 }
 
-//il faut recuperer la commande donc faire un split et ensuite executer
 int	main(int ac, char **av, char **env)
 {
 	t_cmd	start_cmd;
