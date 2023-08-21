@@ -78,7 +78,7 @@ static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 	if (i != g_shell->nb_pipes)
 		dup2(cmds->fd_out, STDOUT_FILENO);
 	close_fds(pipes, g_shell->nb_pipes, -1);
-	exec_cmd(cmds->cmd, g_shell);
+	exec_cmd(cmds->cmd, cmds);
 }
 
 static void	free_pipes(t_shell *g_shell)
@@ -125,15 +125,13 @@ int	handle_pipes_cmd(t_shell *g_shell)
 		{
 			if (g_shell->full_cmd_path != NULL)
 				ft_free_ptr(g_shell->full_cmd_path);
-			g_shell->full_cmd_path = get_cmd_path(cmds->cmd);
+			cmds->full_cmd_path = get_cmd_path(cmds->cmd);
 			g_shell->pids[i] = fork();
 			if (g_shell->pids[i] < 0)
 				return (0);
 			if (g_shell->pids[i] == 0)
 				child(cmds, g_shell, i);
 		}
-
-
 		i++;
 		cmds = cmds->next;
 	}
@@ -141,6 +139,7 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	i = -1;
 	while (++i < g_shell->nb_cmds)
 		waitpid(g_shell->pids[i], &g_last_exit_code, 0);
+	
 	free_pipes(g_shell);
 	return (1);
 }
@@ -157,7 +156,7 @@ void	prepare_pipes_for_exec(t_shell *g_shell)
 	cmds = g_shell->cmds;
 	if (g_shell->nb_cmds > 1)
 		g_shell->pipes_fd = init_pipes(pipes, g_shell);
-	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));
+	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));//peut etre alloc deux fois
 
 //ici chaque commande sait dans quelle fd rediriger son output et son input
 

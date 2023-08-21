@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 19:35:35 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 22:57:46 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	del_cmds(t_cmd *cmds)
 	if (cmds != NULL)
 	{
 		ft_free_split(cmds->cmd);
+		ft_free_ptr(cmds->full_cmd_path);
 		ft_free_ptr(cmds);
 	}
 	cmds = NULL;
@@ -81,8 +82,23 @@ static void	free_all(t_shell *g_shell, int last_exit)
 		g_shell->cmds = NULL;
 		g_shell->start_cmd->next = NULL;
 	}
+	if (g_shell->pids != NULL)
+	{
+		ft_free_ptr(g_shell->pids);
+		g_shell->pids = NULL;
+	}
 	if (last_exit)
+	{
 		ft_free_split(g_shell->split_env);
+		g_shell->split_env = NULL;
+		free_lst_token(g_shell->start_token);
+		g_shell->start_token = NULL;
+	}
+	if (g_shell->io != NULL)
+	{
+		ft_free_ptr(g_shell->io);
+		g_shell->io = NULL;
+	}
 }
 
 void	ft_free_shell(t_shell *g_shell, int last_exit)

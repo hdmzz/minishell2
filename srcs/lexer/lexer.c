@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 19:37:54 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 22:53:50 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,6 @@ void print_cmd(char **cmds)
 		printf("%s\n", cmds[i]);
 }
 
-/*
-	this function calculates the token size
-	ten malloc the size of the token and add it to the list
-	in arguments
-*/
 static t_token	*create_token(char **input, int *pos)
 {
 	char	*value;
@@ -146,7 +141,7 @@ int	lexer(t_shell *g_shell)
 	i = 1;
 	input = g_shell->start_buff;
 	if (input == NULL)
-		exit_builtin(g_shell);
+		exit_builtin(g_shell, 1);
 	while (*input != 0)
 	{
 		new_token = create_token(&input, &i);

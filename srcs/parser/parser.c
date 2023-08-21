@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 19:43:25 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 23:27:20 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,23 @@ int	check_last_token(t_token *last)
 int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 {
 	t_token	*tmp;
+	int		type;
 
 	tmp = *tokens;
 	while (tmp)
 	{
 		if (tmp->type == double_quote || tmp->type == single_quote)
 		{
+			type = tmp->type;
 			if (!quotes_rules(tmp))
 				return (0);
+			tmp = tmp->next;
+			while (tmp->type != type)
+				tmp = tmp->next;
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
+		if (tmp)
+			tmp = tmp->next;
 	}
 	tmp = *tokens;
 	if (!check_last_token(last_token(tmp)))
@@ -139,8 +146,6 @@ void	dollar_rule(t_shell *g_shell)
 */
 int	parser(t_shell *g_shell)
 {
-	if (g_shell->start_buff == NULL)
-		exit_builtin(g_shell);
 	if (ft_strlen(g_shell->start_buff) == 0)
 		return (1);
 	add_history(g_shell->start_buff);

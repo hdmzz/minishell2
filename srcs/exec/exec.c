@@ -6,15 +6,15 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 19:34:35 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/19 22:41:46 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* 
+/*
 *	strlcat of the dir name + / + entrypath(the command name like ls) + \0
- */
+*/
 static char	*concat_cmd(char *dir_path, char *entry_path)
 {
 	char	*cmd;
@@ -79,19 +79,17 @@ char	*get_cmd_path(char **to_search)
 	if (full_cmd_path != NULL)
 		return (ft_free_split(split_env), full_cmd_path);
 	ft_free_split(split_env);
-	if (full_cmd_path != NULL)
-		ft_free_ptr(full_cmd_path);
+	ft_free_ptr(full_cmd_path);
 	return (NULL);
 }
 
-int	exec_cmd(char **cmd, t_shell *g_shell)
+int	exec_cmd(char **cmd, t_cmd *c)
 {
 	char	*full_cmd_path;
 
-	full_cmd_path = g_shell->full_cmd_path;
+	full_cmd_path = c->full_cmd_path;
 	if (full_cmd_path == NULL)
 		return (perror("Getenv"), 0);
-	if ((execve(full_cmd_path, cmd, NULL)) == -1)
-		return (perror("Exec"), 0);
+	execve(full_cmd_path, cmd, NULL);
 	return(0);
 }

@@ -34,8 +34,10 @@ SRC = $Smain.c \
 		$S$Xpipes.c \
 		$S$(SIG)handle_signal.c \
 		$S$Bexit.c \
+		$S$Bpwd_builtins.c \
 		$S$Bexport.c\
 		$S$Becho.c \
+		$S$Benv_builtins.c \
 		$S$Bdispatch_builtins.c
 
 

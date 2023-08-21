@@ -1,6 +1,15 @@
 #include "minishell.h"
 
-int	pwd_builtin(t_cmd *cmds)
+int	pwd_builtin(void)
 {
-	printf("pwd built");
+	char	path[PATH_MAX];
+	char	*cwd;
+
+	cwd = getcwd(path, PATH_MAX);
+	if (cwd)
+	{
+		ft_putendl_fd(cwd, STDOUT_FILENO);
+		return (1);
+	}
+	return (0);
 }

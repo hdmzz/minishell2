@@ -57,9 +57,10 @@ typedef struct s_token
 typedef struct s_cmd
 {
 	char			**cmd;
-	int				nb_of_cmd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
+	char			*full_cmd_path;
+	int				nb_of_cmd;
 	int				fd_in;
 	int				fd_out;
 	int				output_backup;

@@ -55,7 +55,7 @@ t_cmd	*create_new_cmd(t_token *token)
 	int		split_size;
 	int		i;
 
-	i = 0;
+	i = -1;
 	split_size = count_split_size(token) + 1;///+1 pour le null a la fin
 	new = ft_calloc(1, sizeof(t_cmd));
 	if (!new)
@@ -68,15 +68,9 @@ t_cmd	*create_new_cmd(t_token *token)
 	while (token && token->type != pipeline)
 	{
 		if (token->type != white_space)
-		{
-			new->cmd[i] = ft_strdup(token->value);
-			i++;
-		}
+			new->cmd[++i] = ft_strdup(token->value);
 		token = token->next;
 	}
-	new->cmd[i] = NULL;
-	new->next = NULL;
-	new->prev = NULL;
 	new->fd_in = -1;
 	new->fd_out = -1;
 	new->input_backup = -1;

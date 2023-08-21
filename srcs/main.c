@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 19:02:25 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/21 22:53:47 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 	ft_memset(start_cmd, 0, sizeof(t_cmd));
 	g_shell->output_backup = dup(STDOUT_FILENO);
 	g_shell->input_backup = dup(STDIN_FILENO);
-	g_shell->io = ft_calloc(1, sizeof(t_io));//leaks ici
+	g_shell->io = ft_calloc(1, sizeof(t_io));//invalid free
 	if (!g_shell->io)
 		return (0);
 	g_shell->start_token = new_token("", 513, 0);
@@ -54,7 +54,6 @@ static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 		return (0);
 	while (env[++i])
 		g_shell->split_env[i] = ft_strdup(env[i]);
-	g_shell->split_env[i] = NULL;
 	return (1);
 }
 
@@ -69,5 +68,6 @@ int	main(int ac, char **av, char **env)
 		return (perror("Error init shell\n"), 1);
 	g_shell.start_cmd = &start_cmd;
 	prompt(&g_shell);
+	ft_free_ptr(g_shell.start_token);
 	return (0);
 }
