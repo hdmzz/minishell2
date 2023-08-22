@@ -118,7 +118,7 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	{
 		left_redirections(cmds, split_lenght(cmds->cmd), g_shell);
 		right_redirections(cmds, split_lenght(cmds->cmd));
-		ret = dispatcher_builtin(g_shell, cmds->cmd);
+		ret = dispatcher_builtin(g_shell, cmds);
 		recover_or_io(cmds);
 
 		if (ret == 0)

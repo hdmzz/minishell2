@@ -31,12 +31,14 @@ static int	add_new_var(char *new_env_var, t_shell *g_shell)
 	while (i < env_size)
 	{
 		if (i == env_size - 1)
-			new_env[i] = new_env_var;
-		new_env[i] = g_shell->split_env[i];
+			new_env[i] = ft_strdup(new_env_var);
+		else
+			new_env[i] = ft_strdup(g_shell->split_env[i]);
 		i++;
 	}
 	new_env[i] = NULL;
 	ft_free_split(g_shell->split_env);
+	g_shell->split_env = NULL;
 	g_shell->split_env = new_env;
 	return (1);
 }
@@ -63,9 +65,8 @@ static int	my_set_env(const char *name, const char *value, t_shell *g_shell)
 {
 	char	*new_env_var;
 	int		idx;
-	//recherche d'un index dans un tableau
+
 	idx = get_env_idx(name, g_shell);
-	// Sinon créer une nouvelle entrée sous forme de chaîne "nom=valeur"
 	new_env_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
 	if (!new_env_var)
 		return (0);
@@ -97,12 +98,14 @@ static char	**get_name_value(char *str)
 }
 
 	// Si l'entrée n'a pas été trouvée, ajouter la nouvelle entrée à la fin
-int	export_builtin(char **user_input, t_shell *g_shell)
+int	export_builtin(t_cmd *c, t_shell *g_shell)
 {
 	char	**name_value_key;
 	int		i;
+	char	**user_input;
 
 	i = 1;
+	user_input = c->cmd;
 	while (user_input[i])
 	{
 		if (!is_valid_env_var_key(user_input[i]))
@@ -115,31 +118,3 @@ int	export_builtin(char **user_input, t_shell *g_shell)
 	ft_free_split(name_value_key);
 	return (1);
 }
-
-//bool	set_env_var(t_data *data, char *key, char *value)
-//{
-//	int		idx;
-//	char	*tmp;
-
-//	idx = get_env_var_index(data->env, key);
-//	if (value == NULL)
-//		value = "";
-//	tmp = ft_strjoin("=", value);
-//	if (!tmp)
-//		return (false);
-//	if (idx != -1 && data->env[idx])
-//	{
-//		free_ptr(data->env[idx]);
-//		data->env[idx] = ft_strjoin(key, tmp);
-//	}
-//	else
-//	{
-//		idx = env_var_count(data->env);
-//		data->env = realloc_env_vars(data, idx + 1);
-//		if (!data->env)
-//			return (false);
-//		data->env[idx] = ft_strjoin(key, tmp);
-//	}
-//	free_ptr(tmp);
-//	return (true);
-//}
