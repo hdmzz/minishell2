@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 22:41:46 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:43:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ int	exec_cmd(char **cmd, t_cmd *c)
 
 	full_cmd_path = c->full_cmd_path;
 	if (full_cmd_path == NULL)
-		return (perror("Getenv"), 0);
+	{
+		perror("Getenv");
+		exit(1);
+	}
 	execve(full_cmd_path, cmd, NULL);
 	return(0);
 }

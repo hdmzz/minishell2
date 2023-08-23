@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	dispatcher_builtin(t_shell *g_shell,t_cmd *c)
+int	dispatcher_builtin(t_shell *g_shell, t_cmd *c)
 {
 	if (ft_strcmp("export", c->cmd[0]) == 0)
 		return(export_builtin(c, g_shell));
@@ -10,8 +10,8 @@ int	dispatcher_builtin(t_shell *g_shell,t_cmd *c)
 		return (echo_builtin(c->cmd));
 	else if (ft_strcmp("env", c->cmd[0]) == 0)
 		return (env_builtin(c->cmd, g_shell));
-	//else if (ft_strcmp("cd", cmd[0]) == 0)
-	//	return (cd_builtin(cmd));
+	else if (ft_strcmp("cd", c->cmd[0]) == 0)
+		return (cd_builtin(c, g_shell));
 	//else if (ft_strcmp("pwd", cmd[0]) == 0)
 	//	return (pwd(cmd));
 	//else if (ft_strcmp("unset", cmd[0]) == 0)

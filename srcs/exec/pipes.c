@@ -120,11 +120,8 @@ int	handle_pipes_cmd(t_shell *g_shell)
 		right_redirections(cmds, split_lenght(cmds->cmd));
 		ret = dispatcher_builtin(g_shell, cmds);
 		recover_or_io(cmds);
-
 		if (ret == 0)
 		{
-			if (g_shell->full_cmd_path != NULL)
-				ft_free_ptr(g_shell->full_cmd_path);
 			cmds->full_cmd_path = get_cmd_path(cmds->cmd);
 			g_shell->pids[i] = fork();
 			if (g_shell->pids[i] < 0)
@@ -139,7 +136,6 @@ int	handle_pipes_cmd(t_shell *g_shell)
 	i = -1;
 	while (++i < g_shell->nb_cmds)
 		waitpid(g_shell->pids[i], &g_last_exit_code, 0);
-	
 	free_pipes(g_shell);
 	return (1);
 }

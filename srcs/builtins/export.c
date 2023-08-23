@@ -43,30 +43,14 @@ static int	add_new_var(char *new_env_var, t_shell *g_shell)
 	return (1);
 }
 
-static int	get_env_idx(const char *name, t_shell *g_shell)
-{
-	int		i;
-	char	*buff;
-	char	**env;
-
-	i = 0;
-	buff = ft_strjoin(name, "=");
-	env = g_shell->split_env;
-	while (env[i])
-	{
-		if (ft_strncmp(buff, env[i], ft_strlen(buff)) == 0)
-			return(ft_free_ptr(buff), i);
-		i++;
-	}
-	return (ft_free_ptr(buff), -1);
-}
-
-static int	my_set_env(const char *name, const char *value, t_shell *g_shell)
+int	my_set_env(const char *name, char *value, t_shell *g_shell)
 {
 	char	*new_env_var;
 	int		idx;
 
 	idx = get_env_idx(name, g_shell);
+	if (value == NULL)
+		value = "";
 	new_env_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
 	if (!new_env_var)
 		return (0);
@@ -78,7 +62,6 @@ static int	my_set_env(const char *name, const char *value, t_shell *g_shell)
 	}
 	else
 		add_new_var(new_env_var, g_shell);
-	ft_free_ptr(new_env_var);
 	return (1);
 }
 
@@ -116,5 +99,6 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 	}
 	my_set_env(name_value_key[0], name_value_key[1], g_shell);
 	ft_free_split(name_value_key);
+	name_value_key = NULL;
 	return (1);
 }
