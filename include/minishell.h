@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 22:43:47 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:44:43 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	dollar_rule(t_shell *g_shell);
 void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
-int		exec_cmd(char **cmd, t_cmd *c);
+int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
 char	*get_cmd_path(char **to_search);
 
 //srcs/lexer/lexer.c

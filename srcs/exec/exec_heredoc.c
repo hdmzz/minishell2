@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-static void	*child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
+static void	child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
 {
 	dup2(pipe_fd[1], STDOUT_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	execve(full_cmd_path, cmd_tab, NULL);
 	perror("exec pipes");
-	exit(EXIT_FAILURE);
+	exit(1);
 }
 
 char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read)

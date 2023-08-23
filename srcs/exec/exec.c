@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/23 19:43:27 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:50:07 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*get_cmd_path(char **to_search)
 	return (NULL);
 }
 
-int	exec_cmd(char **cmd, t_cmd *c)
+int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 {
 	char	*full_cmd_path;
 
@@ -91,7 +91,7 @@ int	exec_cmd(char **cmd, t_cmd *c)
 	if (full_cmd_path == NULL)
 	{
 		perror("Getenv");
-		exit(1);
+		exit_builtin(g_shell, 2);
 	}
 	execve(full_cmd_path, cmd, NULL);
 	return(0);

@@ -78,7 +78,7 @@ static void	child(t_cmd *cmds, t_shell *g_shell, int i)
 	if (i != g_shell->nb_pipes)
 		dup2(cmds->fd_out, STDOUT_FILENO);
 	close_fds(pipes, g_shell->nb_pipes, -1);
-	exec_cmd(cmds->cmd, cmds);
+	exec_cmd(cmds->cmd, cmds, g_shell);
 }
 
 static void	free_pipes(t_shell *g_shell)
