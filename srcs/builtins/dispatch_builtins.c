@@ -12,9 +12,9 @@ int	dispatcher_builtin(t_shell *g_shell, t_cmd *c)
 		return (env_builtin(c->cmd, g_shell));
 	else if (ft_strcmp("cd", c->cmd[0]) == 0)
 		return (cd_builtin(c, g_shell));
-	//else if (ft_strcmp("pwd", cmd[0]) == 0)
-	//	return (pwd(cmd));
-	//else if (ft_strcmp("unset", cmd[0]) == 0)
-	//	return (unset(cmd));
+	else if (ft_strcmp("unset", c->cmd[0]) == 0)
+		return (unset_builtin(c, g_shell));
+	else if (ft_strcmp("pwd", c->cmd[0]) == 0)
+		return (pwd_builtin());
 	return (0);
 }
