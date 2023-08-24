@@ -6,7 +6,7 @@ static void	child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	execve(full_cmd_path, cmd_tab, NULL);
-	perror("exec pipes");
+	perror("exec pipes child heredoc");
 	exit(1);
 }
 

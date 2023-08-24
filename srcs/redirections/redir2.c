@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:51:58 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 07:39:18 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/24 11:08:24 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	prep_heredoc(t_cmd *c, char *delim)
 {
 	static char	tmpfile[] = "tmpfile0";
 
-	
+	c->heredoc = 1;
 	c->fd_heredoc = ft_mkstemp(tmpfile);
 	if (c->fd_heredoc == -1)
 		return (perror("too many temporary files"));

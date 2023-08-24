@@ -28,7 +28,6 @@ int	heredoc_first_analyzer(t_shell *g_shell)//A REVOIR le pb viendrait du fait q
 	{
 		if (lst->type == double_redir_left)
 		{
-			g_shell->io->heredoc = 1;
 			if (delim_in_quotes(lst))
 				lst->hd_delim_into_quotes = 1;
 		}
