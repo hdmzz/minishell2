@@ -39,8 +39,6 @@ static char	*recompose_output(int fd, ssize_t bytes_read)
 	return (buffer);
 }
 
-//je pense qu'il faut utiliser get next line pour recomposer la sortie de la commande
-
 char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read)
 {
 	char	**cmd_tab;

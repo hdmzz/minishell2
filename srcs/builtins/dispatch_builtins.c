@@ -1,8 +1,7 @@
 #include "minishell.h"
 
-int	dispatcher_builtin(t_shell *g_shell, t_cmd *c, int i)
+int	dispatcher_builtin(t_shell *g_shell, t_cmd *c)
 {
-	redir_io(c, g_shell);
 	if (ft_strcmp("export", c->cmd[0]) == 0)
 		return(export_builtin(c, g_shell));
 	else if (ft_strcmp("exit", c->cmd[0]) == 0)

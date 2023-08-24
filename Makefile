@@ -40,6 +40,7 @@ SRC = $Smain.c \
 		$S$Benv_builtins.c \
 		$S$Bcd_builtins.c \
 		$S$Bunset_builtins.c \
+		$S$Rredir2.c \
 		$S$Bdispatch_builtins.c
 
 

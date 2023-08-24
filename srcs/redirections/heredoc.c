@@ -1,54 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/24 03:15:14 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/08/24 05:58:46 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
-static int	ft_mkstemp(char *filename)
+int	heredoc(t_cmd *c)
 {
-	int	i;
-	int	try_max;
-	int	fd;
+	char	*tmp;
+	char	*input;
 
-	i = 0;
-	try_max = 0;
-	fd = open(filename, O_CREAT | O_EXCL | O_RDWR | O_TRUNC, 0600);
-	while (fd == -1 && try_max <= 15)
-	{
-		while (filename[i] && filename[i] != 'X')
-			i++;
-		if (filename[i] && ft_isalnum(filename[i] + 1))
-			filename[i] = filename[i] + 1;
-		else
-			filename[i] = 97;
-		fd = open(filename, O_CREAT | O_EXCL | O_RDWR | O_TRUNC, 0600);
-		try_max++;
-	}
-	if (try_max == 15)
-		return (-1);
-	return (fd);
-}
-
-int	heredoc(char *delim, t_io *io)
-{
-	static char	tmpfile[] = "tmpfileXXXXXXXXXXXXXXX";
-	int			fd;
-	int			fdcpy;
-	char		*input;
-	char		*tmp;
-
-	fd = ft_mkstemp(tmpfile);
-	fdcpy = open(tmpfile, O_RDONLY, NULL);
-	unlink(tmpfile);
-	if (fd == -1)
-		return (perror("Trop de fichier deja existant"), -1);
 	while (1)
 	{
  		input = readline("> ");
-		if (ft_strcmp(delim, input) == 0)
+		if (ft_strcmp(c->heredoc_delim, input) == 0)
 			break ;
-		tmp = heredoc_expanser(input, io, -1, 0);
+		tmp = heredoc_expanser(input, c, -1, 0);
 		if (!tmp)
 			return (ft_free_ptr(input), 0);
-		ft_putendl_fd(tmp, fd);
-		if (!io->var_expanser)
-			ft_free_ptr(tmp);
+		ft_putendl_fd(tmp, c->fd_heredoc);
+		if (c->hd_delim_into_quotes)
+			tmp = ft_free_ptr(tmp);
 	}
-	return (close(fd), io->delim_in_quotes = 0, fdcpy);
+	return (close(c->fd_heredoc), 1);
 }

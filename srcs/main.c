@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/23 20:40:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/24 10:16:16 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,9 @@ static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 	i = -1;
 	ft_memset(g_shell, 0, sizeof(t_shell));
 	ft_memset(start_cmd, 0, sizeof(t_cmd));
+	start_cmd->idx_cmd = -1;
 	g_shell->output_backup = dup(STDOUT_FILENO);
 	g_shell->input_backup = dup(STDIN_FILENO);
-	g_shell->io = ft_calloc(1, sizeof(t_io));//invalid free
-	if (!g_shell->io)
-		return (0);
 	g_shell->start_token = new_token("", 513, 0);
 	g_shell->split_env = ft_calloc(split_lenght(env) + 1, sizeof(char *));
 	if (g_shell->split_env == NULL)

@@ -100,5 +100,6 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 	my_set_env(name_value_key[0], name_value_key[1], g_shell);
 	ft_free_split(name_value_key);
 	name_value_key = NULL;
+	exit_builtin(g_shell, 0);
 	return (1);
 }

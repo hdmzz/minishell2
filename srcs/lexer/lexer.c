@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 22:53:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/24 05:19:00 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ static t_token	*create_token(char **input, int *pos)
 	if (!new)
 		return (ft_free_ptr(value), NULL);
 	ft_free_ptr(value);
+	new->hd_delim_into_quotes = 0;
 	*input += token_size;
 	*pos += 1;
 	return (new);

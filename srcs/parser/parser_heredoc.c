@@ -18,7 +18,8 @@ static int	delim_in_quotes(t_token *lst)
 	return (delim_in_quotes);
 }
 
-int	heredoc_first_analyzer(t_shell *g_shell)
+int	heredoc_first_analyzer(t_shell *g_shell)//A REVOIR le pb viendrait du fait que qd on trouve un " on va jusquau 
+//suivant mais apres on revient en arriere pour recommencer a avancer jusqua celui de la fin
 {
 	t_token	*lst;
 
@@ -29,7 +30,7 @@ int	heredoc_first_analyzer(t_shell *g_shell)
 		{
 			g_shell->io->heredoc = 1;
 			if (delim_in_quotes(lst))
-				g_shell->io->delim_in_quotes = 1;
+				lst->hd_delim_into_quotes = 1;
 		}
 		lst = lst->next;
 	}
@@ -140,14 +141,14 @@ char	*heredoc_var_xpanser(char *input)
 /* 
 	for each input of the heredoc
  */
-char	*heredoc_expanser(char *input, t_io *std_io, int i, int y)
+char	*heredoc_expanser(char *input, t_cmd *c, int i, int y)
 {
 	char	*inp;
 	char	*imbrecated_cmd;
 	char	*cmd_output;
 
 	inp = input;
-	if (std_io->delim_in_quotes)
+	if (c->hd_delim_into_quotes)//il ne faut pas expanser
 		return (inp);
 	while (inp[++i] != '\0')//on est encore sur la str original
 	{
@@ -163,10 +164,7 @@ char	*heredoc_expanser(char *input, t_io *std_io, int i, int y)
 				imbrecated_cmd = ft_free_ptr(imbrecated_cmd);
 			}
 			else
-			{
-				std_io->var_expanser = 1;
 				inp = heredoc_var_xpanser(input);
-			}
 			input = ft_free_ptr(input);
 		}
 	}

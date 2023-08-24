@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/23 22:20:38 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/24 06:10:06 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "builtins.h"
 # include "pipes.h"
 # include "signal_sh.h"
+# include "heredoc.h"
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
@@ -76,19 +77,5 @@ int		right_redirections(t_cmd *cmds, int split_lght);
 
 //simple_left.c < input redir
 int		left_redirections(t_cmd *cmds, int split_lght, t_shell *g_shell);
-
-//heredoc.c
-int		heredoc(char *delim, t_io *io);
-
-//heredoc_parser.c
-int		heredoc_first_analyzer(t_shell *g_shell);
-char	*var_xpanser(char *input);
-
-//exec/exec_heredoc.c
-char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read);
-
-//parser/parser_heredoc.c
-char	*heredoc_expanser(char *input, t_io *std_io, int i, int y);
-
 
 #endif

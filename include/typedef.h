@@ -49,6 +49,7 @@ typedef struct s_token
 {
 	char			*value;
 	int				pos;
+	int				hd_delim_into_quotes;
 	int				type;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -60,12 +61,17 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 	char			*full_cmd_path;
+	char			*heredoc_delim;
+	int				idx_cmd;
 	int				nb_of_cmd;
-	int				*pipes_fd;
-	int				fd_in;
+	int				pipes_fd[2];
+	int				fd_in;//ce heredoc correspondera au fd en lecture seule fdcpy
 	int				fd_out;
 	int				output_backup;
 	int				input_backup;
+	int				heredoc;
+	int				fd_heredoc;//sera utilise pour l'ecriture sur fichier temp
+	int				hd_delim_into_quotes;
 }				t_cmd;
 
 typedef struct s_io
@@ -85,10 +91,10 @@ typedef struct s_shell
 	t_token	*start_token;
 	t_cmd	*cmds;
 	t_cmd	*start_cmd;
-	int		nb_cmds;//nb pipes + 1
+	int		nb_cmds;
 	int		output_backup;
-	int		input_backup;
 	t_io	*io;
+	int		input_backup;
 	int		**pipes_fd;
 	pid_t	*pids;
 	int		nb_pipes;
