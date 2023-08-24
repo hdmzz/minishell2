@@ -52,7 +52,9 @@ static int	init_pipes(t_cmd *c)
 void	redir_io(t_cmd *c)//il ne faut pas tout fermer de suite le in et le out  car en cas de commande seule on en a besoin apres
 {
 	if (c->heredoc != 0)
+	{
 		heredoc(c);
+	}
 	else if (c->fd_in != -1)
 	{
 		c->input_backup = dup(STDIN_FILENO);
@@ -189,6 +191,7 @@ int	handle_cmd(t_shell *g_shell)
 	c = g_shell->cmds;
 	redir_io(c);
 	ret = dispatcher_builtin(g_shell, c);
+	restore_io(c);
 	if (ret == 0)
 	{
 		pid = fork();
@@ -197,7 +200,6 @@ int	handle_cmd(t_shell *g_shell)
 		if (pid == 0)
 			child(c, g_shell);
 	}
-	restore_io(c);
 	waitpid(pid, &g_last_exit_code, 0);
 	return (ret);
 }
