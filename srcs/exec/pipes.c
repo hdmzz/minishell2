@@ -93,6 +93,7 @@ static void	child(t_cmd *c, t_shell *g_shell)
 {
 	set_pipes(c, g_shell);
 	redir_io(c);
+	dispatcher_builtin(g_shell, c);
 	exec_cmd(c->cmd, c, g_shell);
 }
 
@@ -145,6 +146,7 @@ int	handle_pipes_cmd(t_shell *g_shell)
 {
 	t_cmd	*cmds;
 	int		i;
+	int		ret;
 
 	i = 0;
 	cmds = g_shell->cmds;
