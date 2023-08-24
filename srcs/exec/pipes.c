@@ -91,10 +91,12 @@ int	set_pipes(t_cmd *c, t_shell *g)
 //in order we need to set pip[es, redirect close fds of the redirections
 static void	child(t_cmd *c, t_shell *g_shell)
 {
-	set_pipes(c, g_shell);
+	if (g_shell->nb_cmds > 1)
+		set_pipes(c, g_shell);
 	redir_io(c);
-	dispatcher_builtin(g_shell, c);
-	exec_cmd(c->cmd, c, g_shell);
+	if (dispatcher_builtin(g_shell, c) == 0)
+		exec_cmd(c->cmd, c, g_shell);
+	exit_builtin(g_shell, 0);
 }
 
 static void	free_pipes(t_shell *g_shell)
@@ -142,32 +144,6 @@ void	close_cmds_fds(t_cmd *c)
 	}
 }
 
-int	handle_pipes_cmd(t_shell *g_shell)
-{
-	t_cmd	*cmds;
-	int		i;
-	int		ret;
-
-	i = 0;
-	cmds = g_shell->cmds;
-	while (i < g_shell->nb_cmds)
-	{
-		g_shell->pids[i] = fork();
-		if (g_shell->pids[i] < 0)
-			return (0);
-		if (g_shell->pids[i] == 0)
-			child(cmds, g_shell);
-		i++;
-		cmds = cmds->next;
-	}
-	//process oparents doit fermer tout les fd apres execution de toutes les cmds
-	close_cmds_fds(g_shell->cmds);
-	i = -1;
-	while (++i < g_shell->nb_cmds)
-		waitpid(g_shell->pids[i], &g_last_exit_code, 0);
-	free_pipes(g_shell);
-	return (1);
-}
 
 //For each command determine the input and output
 int	prepare_pipes_for_exec(t_shell *g_shell)
@@ -183,6 +159,38 @@ int	prepare_pipes_for_exec(t_shell *g_shell)
 	return (1);
 }
 
+int	handle_pipes_cmd(t_shell *g_shell)
+{
+	t_cmd	*cmds;
+	int		i;
+	int		ret;
+
+	i = 0;
+	cmds = g_shell->cmds;
+	while (i < g_shell->nb_cmds)
+	{
+		redir_io(cmds);
+		ret = dispatcher_builtin(g_shell, cmds);
+		restore_io(cmds);
+		if (ret == 0)
+		{
+			g_shell->pids[i] = fork();
+			if (g_shell->pids[i] < 0)
+				return (0);
+			if (g_shell->pids[i] == 0)
+				child(cmds, g_shell);
+		}
+		i++;
+		cmds = cmds->next;
+	}
+	//process oparents doit fermer tout les fd apres execution de toutes les cmds
+	close_cmds_fds(g_shell->cmds);
+	i = -1;
+	while (++i < g_shell->nb_cmds)
+		waitpid(g_shell->pids[i], &g_last_exit_code, 0);
+	free_pipes(g_shell);
+	return (1);
+}
 
 int	handle_cmd(t_shell *g_shell)
 {

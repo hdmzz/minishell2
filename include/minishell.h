@@ -27,7 +27,7 @@ void	dollar_rule(t_shell *g_shell, t_token *lst, int quote_count);
 void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
-int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
+void	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
 char	*get_cmd_path(char **to_search);
 
 //srcs/lexer/lexer.c
@@ -70,7 +70,6 @@ void	print_cmd(char **cmds);
 void	clean_cmd_tab(char **cmd, int first_redir, int end);
 int		recover_fd(t_shell *g_shelll);
 void	recover_or_io(t_cmd *cmd);
-int		redirections(t_shell *g_shell);
 
 //simple_right.c > output redir
 int		right_redirections(t_cmd *cmds, int split_lght);

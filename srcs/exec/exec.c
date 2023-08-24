@@ -83,7 +83,7 @@ char	*get_cmd_path(char **to_search)
 	return (NULL);
 }
 
-int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
+void	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 {
 	char	*full_cmd_path;
 
@@ -94,5 +94,5 @@ int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 		exit_builtin(g_shell, 2);
 	}
 	execve(full_cmd_path, cmd, NULL);
-	return(0);
+	exit_builtin(g_shell, 2);
 }
