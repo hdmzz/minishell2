@@ -10,7 +10,7 @@ void	clean_cmd_tab(char **cmd, int first_redir, int end)
 	}
 }
 
-void	recover_or_io(t_cmd *cmd)
+void	recover_or_io(t_cmd *cmd)//pourquoi faire ca tout le temps ?
 {
 	if (cmd->output_backup != -1)
 		dup2(cmd->output_backup, STDOUT_FILENO);

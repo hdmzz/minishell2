@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 22:57:46 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 22:05:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	del_cmds(t_cmd *cmds)
 	cmds = NULL;
 }
 
-void	free_lst_cmd(t_cmd *cmds)
+static void	*free_lst_cmd(t_cmd *cmds)
 {
 	t_cmd	*tmp;
 
@@ -48,10 +48,10 @@ void	free_lst_cmd(t_cmd *cmds)
 		del_cmds(cmds);
 		cmds = tmp;
 	}
-	
+	return (NULL);
 }
 
-void	free_lst_token(t_token *tokens)
+static void	*free_lst_token(t_token *tokens)
 {
 	t_token	*tmp;
 	
@@ -66,27 +66,30 @@ void	free_lst_token(t_token *tokens)
 		}
 		tokens = tmp;
 	}
+	return (NULL);
 }
 
-static void	free_all(t_shell *g_shell, int last_exit)
+static void	free_all(t_shell *g_shell)
 {
 	if (g_shell->list_token != NULL)
 	{
-		free_lst_token(g_shell->list_token);
-		g_shell->list_token = NULL;
+		g_shell->list_token = free_lst_token(g_shell->list_token);
 		g_shell->start_token->next = NULL;
 	}
 	if (g_shell->cmds != NULL)
 	{
-		free_lst_cmd(g_shell->cmds);
-		g_shell->cmds = NULL;
+		g_shell->cmds = free_lst_cmd(g_shell->cmds);
 		g_shell->start_cmd->next = NULL;
 	}
 	if (g_shell->pids != NULL)
-	{
-		ft_free_ptr(g_shell->pids);
-		g_shell->pids = NULL;
-	}
+		g_shell->pids = ft_free_ptr(g_shell->pids);
+	if (g_shell->io != NULL)
+		g_shell->io = ft_free_ptr(g_shell->io);
+}
+
+void	ft_free_shell(t_shell *g_shell, int last_exit)
+{
+	free_all(g_shell);
 	if (last_exit)
 	{
 		ft_free_split(g_shell->split_env);
@@ -94,14 +97,4 @@ static void	free_all(t_shell *g_shell, int last_exit)
 		free_lst_token(g_shell->start_token);
 		g_shell->start_token = NULL;
 	}
-	if (g_shell->io != NULL)
-	{
-		ft_free_ptr(g_shell->io);
-		g_shell->io = NULL;
-	}
-}
-
-void	ft_free_shell(t_shell *g_shell, int last_exit)
-{
-	free_all(g_shell, last_exit);
 }

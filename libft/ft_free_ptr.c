@@ -6,17 +6,18 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 19:26:06 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/19 22:05:59 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 22:01:05 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_ptr(void *ptr)
+void	*ft_free_ptr(void *ptr)
 {
 	if (ptr != NULL)
 	{
 		free(ptr);
 		ptr = NULL;
 	}
+	return (NULL);
 }

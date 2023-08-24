@@ -11,7 +11,7 @@ int	env_builtin(char **cmd, t_shell *g_shell)
 		return (0);
 	while (g_shell->split_env[i])
 	{
-		ft_putendl_fd(g_shell->split_env[i], STDOUT_FILENO);
+		printf("%s\n", g_shell->split_env[i]);
 		i++;
 	}
 	return (1);

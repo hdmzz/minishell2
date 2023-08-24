@@ -43,7 +43,7 @@ int	heredoc(char *delim, t_io *io)
  		input = readline("> ");
 		if (ft_strcmp(delim, input) == 0)
 			break ;
-		tmp = heredoc_expanser(input, io);
+		tmp = heredoc_expanser(input, io, -1, 0);
 		if (!tmp)
 			return (ft_free_ptr(input), 0);
 		ft_putendl_fd(tmp, fd);

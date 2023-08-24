@@ -40,27 +40,23 @@ int	count_split_size(t_token *token)
 	split_size = 0;
 	if (lst && lst->type == pipeline)
 		lst = lst->next;
-	while (lst && lst->type != pipeline)//tant que l'on est pas sur un pipe
+	while (lst && lst->type != pipeline)
 	{
-		if (!(lst->type & 33))//si le token N'EST PAS un pipeline ou un whitespace
+		if (!(lst->type & 33))
 			split_size++;
 		lst = lst->next;
 	}
 	return (split_size);
 }
 
-t_cmd	*create_new_cmd(t_token *token)
+t_cmd	*create_new_cmd(t_token *token, int i, int split_size)
 {
 	t_cmd	*new;
-	int		split_size;
-	int		i;
 
-	i = -1;
-	split_size = count_split_size(token) + 1;///+1 pour le null a la fin
 	new = ft_calloc(1, sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->cmd = ft_calloc(split_size, sizeof(char *));//leaks ici
+	new->cmd = ft_calloc(split_size, sizeof(char *));
 	if (!new->cmd)
 		return (NULL);
 	if (token && token->type == pipeline)
@@ -71,6 +67,7 @@ t_cmd	*create_new_cmd(t_token *token)
 			new->cmd[++i] = ft_strdup(token->value);
 		token = token->next;
 	}
+	new->full_cmd_path = get_cmd_path(new->cmd);
 	new->fd_in = -1;
 	new->fd_out = -1;
 	new->input_backup = -1;
@@ -95,7 +92,7 @@ void	compose_cmd(t_shell *g_shell)
 	nb_cmds = nb_pipes + 1;
 	while (nb_cmds--)
 	{
-		add_cmd_back(g_shell, create_new_cmd(lst));
+		add_cmd_back(g_shell, create_new_cmd(lst, -1, count_split_size(lst) + 1));
 		if (lst->type == pipeline)
 			lst = lst->next;
 		while (lst && lst->type != pipeline)

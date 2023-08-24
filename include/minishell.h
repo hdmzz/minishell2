@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/23 20:44:43 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 22:20:38 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);
-void	dollar_rule(t_shell *g_shell);
+void	dollar_rule(t_shell *g_shell, t_token *lst, int quote_count);
 
 //parser_utils.c
 void	compose_cmd(t_shell *g_shell);
@@ -88,7 +88,7 @@ char	*var_xpanser(char *input);
 char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read);
 
 //parser/parser_heredoc.c
-char	*heredoc_expanser(char *input, t_io *std_io);
+char	*heredoc_expanser(char *input, t_io *std_io, int i, int y);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:52:54 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/17 19:28:14 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/23 22:01:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,6 @@ char				*ft_strndup(const char *str, size_t n);
 int					ft_vsprintf(char *str, const char *format, ...);
 char				*ft_recompose_split(char **strs, char sep);
 int					ft_str_is_alnum(char *str);
-void				ft_free_ptr(void *ptr);
+void				*ft_free_ptr(void *ptr);
 
 #endif

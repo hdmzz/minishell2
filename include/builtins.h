@@ -3,7 +3,7 @@
 # include "typedef.h"
 
 int	cd_builtin(t_cmd *c, t_shell *g_shell);
-int	dispatcher_builtin(t_shell *g_shell, t_cmd *c);
+int	dispatcher_builtin(t_shell *g_shell, t_cmd *c, int i);
 int	exit_builtin(t_shell *g_shell, int last_exit);
 int	export_builtin(t_cmd *c, t_shell *g_shell);
 int	pwd_builtin(void);

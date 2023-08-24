@@ -61,6 +61,7 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	char			*full_cmd_path;
 	int				nb_of_cmd;
+	int				*pipes_fd;
 	int				fd_in;
 	int				fd_out;
 	int				output_backup;

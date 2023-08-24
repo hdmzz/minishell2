@@ -140,20 +140,16 @@ char	*heredoc_var_xpanser(char *input)
 /* 
 	for each input of the heredoc
  */
-char	*heredoc_expanser(char *input, t_io *std_io)
+char	*heredoc_expanser(char *input, t_io *std_io, int i, int y)
 {
 	char	*inp;
 	char	*imbrecated_cmd;
 	char	*cmd_output;
-	int		i;
-	int		y;
 
-	i = 0;
-	y = 0;
 	inp = input;
 	if (std_io->delim_in_quotes)
 		return (inp);
-	while (inp[i] != '\0')//on est encore sur la str original
+	while (inp[++i] != '\0')//on est encore sur la str original
 	{
 		if (inp[i] == '$')// si je suis sur un $ signe soit jexecute une commande soit j'expanse une variable
 		{
@@ -162,16 +158,17 @@ char	*heredoc_expanser(char *input, t_io *std_io)
 			{
 				imbrecated_cmd = ft_substr(input, i, y - i);
 				cmd_output = exec_imbricated_cmd(imbrecated_cmd, 0);
-				inp = substitute_input_wth_output(input, cmd_output);//free input original ici
+				if (cmd_output)
+					inp = substitute_input_wth_output(input, cmd_output);
+				imbrecated_cmd = ft_free_ptr(imbrecated_cmd);
 			}
 			else
 			{
 				std_io->var_expanser = 1;
 				inp = heredoc_var_xpanser(input);
 			}
-			ft_free_ptr(input);
+			input = ft_free_ptr(input);
 		}
-		i++;
 	}
 	return (inp);
 }
