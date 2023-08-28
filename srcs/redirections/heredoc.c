@@ -29,6 +29,8 @@ int	heredoc(t_cmd *c)
 		if (c->hd_delim_into_quotes)
 			tmp = ft_free_ptr(tmp);
 	}
+	if (c->heredoc_delim != NULL)
+		c->heredoc_delim = ft_free_ptr(c->heredoc_delim);
 	close(c->fd_heredoc);
 	c->heredoc = 0;
 	return (1);

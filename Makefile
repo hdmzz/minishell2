@@ -41,7 +41,8 @@ SRC = $Smain.c \
 		$S$Bcd_builtins.c \
 		$S$Bunset_builtins.c \
 		$S$Rredir2.c \
-		$S$Bdispatch_builtins.c
+		$S$Bdispatch_builtins.c \
+		srcs/cleanup/cleanup.c
 
 
 OBJ = $(SRC:$S%=$O%.o)
@@ -64,6 +65,7 @@ $O:
 	@mkdir -p $@$R
 	@mkdir -p $@$B
 	@mkdir -p $@$(SIG)
+	@mkdir -p $@cleanup
 
 $(OBJ): | $O
 

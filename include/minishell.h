@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 06:10:06 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/28 02:00:06 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "pipes.h"
 # include "signal_sh.h"
 # include "heredoc.h"
+# include "cleanup.h"
 
 //srcs/parser/parser.c
 int		parser(t_shell *g_shell);

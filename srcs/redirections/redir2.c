@@ -46,7 +46,7 @@ void	prep_heredoc(t_cmd *c, char *delim)
 	if (c->fd_heredoc == -1)
 		return (perror("too many temporary files"));
 	c->fd_in = open(tmpfile, O_RDONLY, NULL);
-	c->heredoc_delim = delim;
+	c->heredoc_delim = ft_strdup(delim);
 	unlink(tmpfile);
 }
 
@@ -89,8 +89,8 @@ static int	left_redir(t_cmd *c)
 				c->fd_in = open(cmd[i + 1], O_RDONLY, NULL);
 			if (c->fd_in == -1)
 				return (0);
-			cmd[i] = NULL;
-			cmd[i + 1] = NULL;
+			cmd[i] = ft_free_ptr(cmd[i]);
+			cmd[i + 1] = ft_free_ptr(cmd[i + 1]);
 			i++;
 		}
 	}

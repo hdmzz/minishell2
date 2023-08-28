@@ -65,12 +65,12 @@ typedef struct s_cmd
 	int				idx_cmd;
 	int				nb_of_cmd;
 	int				pipes_fd[2];
-	int				fd_in;//ce heredoc correspondera au fd en lecture seule fdcpy
+	int				fd_in;
 	int				fd_out;
 	int				output_backup;
 	int				input_backup;
 	int				heredoc;
-	int				fd_heredoc;//sera utilise pour l'ecriture sur fichier temp
+	int				fd_heredoc;
 	int				hd_delim_into_quotes;
 }				t_cmd;
 

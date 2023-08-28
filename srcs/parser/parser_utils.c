@@ -65,7 +65,8 @@ t_cmd	*create_new_cmd(t_token *token, int i, int split_size, int idx)
 	{
 		if (token->type != white_space)
 			new->cmd[++i] = ft_strdup(token->value);
-		new->hd_delim_into_quotes = token->hd_delim_into_quotes;
+		if (token->hd_delim_into_quotes == 1)
+			new->hd_delim_into_quotes = token->hd_delim_into_quotes;
 		token = token->next;
 	}
 	new->full_cmd_path = get_cmd_path(new->cmd);
@@ -97,6 +98,7 @@ void	compose_cmd(t_shell *g_shell)
 	while (nb_cmds--)
 	{
 		add_cmd_back(g_shell, create_new_cmd(lst, -1, count_split_size(lst) + 1, idx));
+
 		if (lst->type == pipeline)
 			lst = lst->next;
 		while (lst && lst->type != pipeline)
@@ -104,6 +106,5 @@ void	compose_cmd(t_shell *g_shell)
 		idx++;
 	}
 	g_shell->cmds = g_shell->start_cmd->next;
-	//une fois qu'on a les commandes il faut preparer les io
 	prepare_io(g_shell->cmds);
 }
