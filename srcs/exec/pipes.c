@@ -24,20 +24,6 @@ void	create_pipe(int *pipefd)
 	}
 }
 
-//static void	error_free_pipes(t_cmd *c, int i)
-//{
-//	int	j;
-
-//	j = 0;
-//	while (j < i)
-//	{
-//		c->pipes_fd = ft_free_ptr(c->pipes_fd);
-//		j++;
-//		c = c->next;
-//	}
-//}
-
-
 static int	init_pipes(t_cmd *c)
 {
 	while (c)
@@ -45,11 +31,10 @@ static int	init_pipes(t_cmd *c)
 		create_pipe(c->pipes_fd);
 		c = c->next;
 	}
-	//each command knows the next and the previous command and has access to the pipe
 	return (1);
 }
 
-void	redir_io(t_cmd *c)//il ne faut pas tout fermer de suite le in et le out  car en cas de commande seule on en a besoin apres
+void	redir_io(t_cmd *c)
 {
 	if (c->heredoc != 0)
 	{
@@ -59,11 +44,13 @@ void	redir_io(t_cmd *c)//il ne faut pas tout fermer de suite le in et le out  ca
 	{
 		c->input_backup = dup(STDIN_FILENO);
 		dup2(c->fd_in, STDIN_FILENO);
+		close(c->fd_in);
 	}
 	if (c->fd_out != -1)
 	{
 		c->output_backup = dup(STDOUT_FILENO);
 		dup2(c->fd_out, STDOUT_FILENO);
+		close(c->fd_out);
 	}
 }
 
@@ -87,8 +74,6 @@ int	set_pipes(t_cmd *c, t_shell *g)
 	return (1);
 }
 
-
-//in order we need to set pip[es, redirect close fds of the redirections
 static void	child(t_cmd *c, t_shell *g_shell)
 {
 	if (g_shell->nb_cmds > 1)
