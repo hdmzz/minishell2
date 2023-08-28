@@ -102,13 +102,13 @@ void	restore_io(t_cmd *cmds)
 	if (cmds->output_backup != -1)
 	{
 		dup2(cmds->output_backup, STDOUT_FILENO);
-		//close(cmds->output_backup);
+		close(cmds->output_backup);
 		cmds->output_backup = -1;
 	}
 	if (cmds->input_backup != -1)
 	{
 		dup2(cmds->input_backup, STDIN_FILENO);
-		//close(cmds->input_backup);
+		close(cmds->input_backup);
 		cmds->output_backup = -1;
 	}
 }
@@ -152,11 +152,12 @@ int	handle_pipes_cmd(t_shell *g_shell)
 
 	i = 0;
 	cmds = g_shell->cmds;
+	ret = 0;
 	while (i < g_shell->nb_cmds)
 	{
-		redir_io(cmds);
-		ret = dispatcher_builtin(g_shell, cmds);
-		restore_io(cmds);
+		//redir_io(cmds);
+		//ret = dispatcher_builtin(g_shell, cmds);
+		//restore_io(cmds);
 		if (ret == 0)
 		{
 			g_shell->pids[i] = fork();
