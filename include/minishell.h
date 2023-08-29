@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 06:10:06 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/28 19:23:29 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	cln_whitespace_btw_ctrl_tok(t_shell *g_shell);
 int		check_redirection_rules(t_shell *g_shell);
 
 //src/error/error.c
-void	error_handler(char *error);
+int		error_handler(char *cmd, char *detail, char *err_msg, int err_nb);
 
 //pipes_conformity.c
 bool	pipes_conformity(t_shell *g_shell);
