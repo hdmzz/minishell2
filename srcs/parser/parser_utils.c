@@ -65,7 +65,7 @@ t_cmd	*create_new_cmd(t_token *token, int i, int split_size, int idx)
 	{
 		if (token->type != white_space)
 			new->cmd[++i] = ft_strdup(token->value);
-		if (token->hd_delim_into_quotes == 1)
+		if (token->hd_delim_into_quotes)
 			new->hd_delim_into_quotes = token->hd_delim_into_quotes;
 		token = token->next;
 	}

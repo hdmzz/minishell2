@@ -14,6 +14,14 @@
 # include <stdbool.h>
 
 extern int	g_last_exit_code;
+
+enum e_erro
+{
+	syntax_error,
+	parsing_erro,
+	exec_error
+};
+
 enum e_type
 {
 	new_line,

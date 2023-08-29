@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:11:11 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/29 09:44:01 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	quotes_rules(t_token *token)
 {
 	if (!check_quote(token))
 	{
-		error_handler("Syntax error");
+		error_handler(NULL, NULL, "Syntax", syntax_error);
 		return (false);
 	}
 	return (true);
