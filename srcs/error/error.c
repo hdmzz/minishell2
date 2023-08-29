@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:16:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 12:24:22 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/29 13:47:06 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	error_handler(char *cmd, char *detail, char *err_msg, int err_nb)
 	char	*msg;
 	int		detail_quotes;
 
-	detail_quotes = export_or_unset(cmd);
+	if (cmd != NULL)
+		detail_quotes = export_or_unset(cmd);
 	msg = ft_strdup("");
 	if (cmd != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 12:03:47 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/29 13:45:59 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,42 @@
 
 //wile we are in between two same type quotes we neutralize the other quotes met
 //but if there is no matching quotes there is a syntax problem
-static bool	check_quote(t_token *token)
+static t_token	*quotes_appared(t_token *first_quote)
 {
-	int		type;
-	bool	found_matching_quote;
-	t_token	*tmp;
+	t_token	*current;
+	t_token	*last_same_quote;
+	int		quote_type;
 
-	tmp = token;
-	type = tmp->type;
-	tmp = token->next;
-	found_matching_quote = false;
-	while (tmp && tmp->type != type)
+	current = first_quote;
+	quote_type = current->type;
+	current = current->next;
+	while (current && current->type != quote_type)
+		current = current->next;
+	if (!current)
+		return (NULL);
+	last_same_quote = current;
+	current = first_quote->next;
+	while (current != last_same_quote)
 	{
-		if (type == double_quote && tmp->type == single_quote)
-			tmp->type = literal;
-		if (type == single_quote && tmp->type == double_quote)
-			tmp->type = literal;
-		tmp = tmp->next;
+		if ((current->type == single_quote && quote_type == double_quote)
+			|| (current->type == double_quote && quote_type == single_quote))
+			current->type = literal;
+		current = current->next;
 	}
-	if (tmp && tmp->type == type)
-		found_matching_quote = true;
-	return (found_matching_quote);
+	return (last_same_quote);
 }
 
-//quotes works by two if one is open there must be another quote of the same
-//type to close th opening if we count the number of quotes and the modulo
-//by 2 of this number is not 0 the we have a syntax problem or imbricated quotes
-//of different types the the inbetween quotes must be neutralized
 bool	quotes_rules(t_token *token)
 {
-	if (!check_quote(token))
+	while (token)
 	{
-		error_handler(NULL, NULL, "Syntax", syntax_error);
-		return (false);
+		while (token && !(token->type & 192))
+			token = token->next;
+		if (token->type & 192)
+			token = quotes_appared(token);
+		if (token == NULL)
+			return (false);
+		token = token->next;
 	}
 	return (true);
 }
@@ -80,7 +83,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		{
 			type = tmp->type;
 			if (!quotes_rules(tmp))
-				return (0);
+				return (error_handler(NULL, NULL, "unexpected EOF with quote", 0));
 			tmp = tmp->next;
 			while (tmp->type != type)
 				tmp = tmp->next;

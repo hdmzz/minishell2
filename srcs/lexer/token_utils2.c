@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:28:19 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/29 14:24:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ t_token	*concat_token(t_token *start)
 	{
 		buff = value;
 		value = ft_strjoin(value, tmp->value);
-		ft_free_ptr(buff);
-		buff = NULL;
+		buff = ft_free_ptr(buff);
 		tmp = tmp->next;
 	}
 	new = new_token(value, literal, start->pos);
@@ -103,7 +102,6 @@ void	delfew(t_token *start, t_token *end)
 	if (start == end)
 		return (delone(start));
 	temp = start->next;
-	//fonction qui doit free une list chainee de tokens
 	while (temp && temp != end)
 	{
 		delone(start);
