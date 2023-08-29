@@ -197,7 +197,7 @@ int	handle_cmd(t_shell *g_shell)
 			child(c, g_shell);
 	}
 	waitpid(pid, &g_last_exit_code, 0);
-	return (ret);
+	return (1);
 }
 
 /* 

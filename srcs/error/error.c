@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:16:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/28 19:22:17 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:24:22 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	error_handler(char *cmd, char *detail, char *err_msg, int err_nb)
 	int		detail_quotes;
 
 	detail_quotes = export_or_unset(cmd);
-	msg = ft_strdup("minishell: ");
+	msg = ft_strdup("");
 	if (cmd != NULL)
 	{
 		msg = ft_join_shell(msg, cmd);

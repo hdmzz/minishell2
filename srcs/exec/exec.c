@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/23 20:50:07 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:16:31 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 	full_cmd_path = c->full_cmd_path;
 	if (full_cmd_path == NULL)
 	{
-		perror("Getenv");
+		error_handler(cmd[0], NULL, strerror(errno), command_not_found);
 		exit_builtin(g_shell, 2);
 	}
 	execve(full_cmd_path, cmd, NULL);

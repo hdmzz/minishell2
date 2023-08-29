@@ -23,15 +23,18 @@ int	recover_fd(t_shell *g_shell)
 	int	ret;
 
 	ret = 1;
-	if (g_shell->output_backup != -1)
+	//avant de faire ca il faut verifier
+	if (g_shell->output_backup != -1 && g_shell->output_backup != STDOUT_FILENO)
 	{
 		if (dup2(g_shell->output_backup, STDOUT_FILENO) == -1)
 			ret = 0;
+		close(g_shell->output_backup);
 	}
-	if (g_shell->input_backup != -1)
+	if (g_shell->input_backup != -1 && g_shell->input_backup != STDIN_FILENO)
 	{
 		if (dup2(g_shell->input_backup, STDIN_FILENO) == -1)
 			ret = 0;
+		close(g_shell->input_backup);
 	}
 	return (ret);
 }

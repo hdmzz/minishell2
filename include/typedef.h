@@ -12,6 +12,12 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <stdbool.h>
+# include <errno.h>
+
+
+# ifndef PATH_MAX
+#  define PATH_MAX 4096
+# endif
 
 extern int	g_last_exit_code;
 
@@ -19,7 +25,8 @@ enum e_erro
 {
 	syntax_error,
 	parsing_erro,
-	exec_error
+	exec_error,
+	command_not_found
 };
 
 enum e_type
