@@ -1,7 +1,7 @@
 #ifndef SIGNAL_SH_H
 #define SIGNALSH_H
 
-# include "../../include/signal.h"
+# include "signal.h"
 # include "../libft/libft.h"
 # include <readline/readline.h>
 
