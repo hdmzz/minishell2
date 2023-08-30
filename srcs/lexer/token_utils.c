@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 13:23:11 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:31:16 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,62 @@ t_token	*replace_token(t_token *start, t_token *end, t_token *new)
 	return (new);
 }
 
+//il faut une fonction qui concatene tout les tokens de type literal qui se suivent
+//parfois il faut savoir faire plusieurs fonction ca simplifie bcp de chose il fauut absolument diviser les taches sinon cest le crash assurer
+t_token *concat_literals(t_token *start, t_token *current, char *tmp)
+{
+	t_token	*new;
+	t_token	*buff;
+	char	*concat_value;
+
+	current = start;
+	concat_value = NULL;
+	buff = NULL;
+	while (current && current->type == literal)
+	{
+		if (buff)
+			delone(buff);
+		if (!concat_value)
+			concat_value = ft_strdup(current->value);
+		else
+		{
+			concat_value = ft_strjoin(concat_value, current->value);
+			buff = current;
+			free(tmp);
+		}
+		tmp = concat_value;
+		current = current->next;
+	}
+	if (concat_value)
+	{
+		new = new_token(concat_value, literal, start->pos);
+		new->next = current;
+		return (free(concat_value), delone(start), new);
+	}
+	return (start);
+}
+
+void	last_quote_passage(t_token *lst)
+{
+	t_token	*prev;
+	t_token	*current;
+	char	*tmp;
+
+	current = NULL;
+	tmp = NULL;
+	while (lst)
+	{
+		if (lst && lst->type == literal)
+		{
+			prev = lst->prev;
+			lst = concat_literals(lst, current, tmp);
+			lst->prev = prev;
+			prev->next = lst;
+		}
+		lst = lst->next;
+	}
+}
+
 void	quotes_neutralizer(t_shell *g_shell)
 {
 	t_token	*prev;
@@ -75,4 +131,6 @@ void	quotes_neutralizer(t_shell *g_shell)
 		lst = lst->next;
 	}
 	lst = g_shell->start_token->next;
+	last_quote_passage(lst);
+	g_shell->list_token = g_shell->start_token->next;
 }

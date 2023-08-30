@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 13:45:59 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:52:09 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,33 @@ static t_token	*quotes_appared(t_token *first_quote)
 	return (last_same_quote);
 }
 
+size_t	list_size(t_token *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}
+
 bool	quotes_rules(t_token *token)
 {
 	while (token)
 	{
 		while (token && !(token->type & 192))
 			token = token->next;
-		if (token->type & 192)
+		if (token && token->type & 192)
+		{
 			token = quotes_appared(token);
-		if (token == NULL)
-			return (false);
-		token = token->next;
+			if (token == NULL)
+				return (false);
+		}
+		if (token)
+			token = token->next;
 	}
 	return (true);
 }
@@ -82,6 +98,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		if (tmp->type == double_quote || tmp->type == single_quote)
 		{
 			type = tmp->type;
+
 			if (!quotes_rules(tmp))
 				return (error_handler(NULL, NULL, "unexpected EOF with quote", 0));
 			tmp = tmp->next;

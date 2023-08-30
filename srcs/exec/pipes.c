@@ -185,6 +185,7 @@ int	handle_cmd(t_shell *g_shell)
 	int		pid;
 
 	c = g_shell->cmds;
+	pid = -1;
 	redir_io(c);
 	ret = dispatcher_builtin(g_shell, c);
 	restore_io(c);

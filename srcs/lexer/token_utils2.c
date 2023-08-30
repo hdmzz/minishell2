@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 14:24:27 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/30 11:16:17 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_token	*concat_token(t_token *start)
 	new->next = tmp->next;
 	new->hd_delim_into_quotes = start->hd_delim_into_quotes;
 	delfew(start, tmp);
-	ft_free_ptr(value);
+	value = ft_free_ptr(value);
 	return (new);
 }
 
@@ -90,8 +90,8 @@ void	delone(t_token *to_del)
 			to_del->prev->next = to_del->next;
 		if (to_del->next)
 			to_del->next->prev = to_del->prev;
-		ft_free_ptr(to_del->value);
-		ft_free_ptr(to_del);
+		to_del->value = ft_free_ptr(to_del->value);
+		to_del= ft_free_ptr(to_del);
 	}
 }
 
