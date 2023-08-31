@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 10:16:16 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/30 12:36:52 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 	if (g_shell->split_env == NULL)
 		return (0);
 	while (env[++i])
-		g_shell->split_env[i] = ft_strdup(env[i]);//
+		g_shell->split_env[i] = ft_strdup(env[i]);
 	return (1);
 }
 

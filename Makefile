@@ -5,6 +5,7 @@ X = exec/
 L = lexer/
 U = utils/
 R = redirections/
+C = cleanup/
 SIG = signal/
 B = builtins/
 
@@ -41,7 +42,9 @@ SRC = $Smain.c \
 		$S$Bcd_builtins.c \
 		$S$Bunset_builtins.c \
 		$S$Rredir2.c \
-		$S$Bdispatch_builtins.c
+		$S$Bdispatch_builtins.c \
+		$S$Ccleanup.c \
+		$S$Xpipes_utils.c
 
 
 OBJ = $(SRC:$S%=$O%.o)

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/28 19:23:29 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:17:40 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,27 @@ void	print_cmd(char **cmds);
 void	clean_cmd_tab(char **cmd, int first_redir, int end);
 int		recover_fd(t_shell *g_shelll);
 void	recover_or_io(t_cmd *cmd);
+void	redir_io(t_cmd *c);
 
 //simple_right.c > output redir
 int		right_redirections(t_cmd *cmds, int split_lght);
 
 //simple_left.c < input redir
 int		left_redirections(t_cmd *cmds, int split_lght, t_shell *g_shell);
+
+
+//cleanup.c
+void	close_fds(int *fd);
+void	close_pipes_fds(t_cmd *cmds, t_cmd *cur);
+void	free_pipes(t_shell *g_shell);
+void	close_cmds_fds(t_cmd *c);
+void	restore_io(t_cmd *cmds);
+
+
+//pipes_utils.c
+int		prepare_pipes_for_exec(t_shell *g_shell);
+int		set_pipes(t_cmd *c, t_shell *g);
+int		init_pipes(t_cmd *c);
+void	create_pipe(int *pipefd);
 
 #endif

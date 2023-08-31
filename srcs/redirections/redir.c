@@ -1,4 +1,4 @@
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	clean_cmd_tab(char **cmd, int first_redir, int end)
 {
@@ -37,4 +37,24 @@ int	recover_fd(t_shell *g_shell)
 		close(g_shell->input_backup);
 	}
 	return (ret);
+}
+
+void	redir_io(t_cmd *c)
+{
+	if (c->heredoc != 0)
+	{
+		heredoc(c);
+	}
+	else if (c->fd_in != -1)
+	{
+		c->input_backup = dup(STDIN_FILENO);
+		dup2(c->fd_in, STDIN_FILENO);
+		close(c->fd_in);
+	}
+	if (c->fd_out != -1)
+	{
+		c->output_backup = dup(STDOUT_FILENO);
+		dup2(c->fd_out, STDOUT_FILENO);
+		close(c->fd_out);
+	}
 }
