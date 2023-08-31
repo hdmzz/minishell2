@@ -44,7 +44,8 @@ SRC = $Smain.c \
 		$S$Rredir2.c \
 		$S$Bdispatch_builtins.c \
 		$S$Ccleanup.c \
-		$S$Xpipes_utils.c
+		$S$Xpipes_utils.c \
+		$S$Pquotes_utils.c
 
 
 OBJ = $(SRC:$S%=$O%.o)

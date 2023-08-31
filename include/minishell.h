@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/31 11:17:40 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:55:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,9 @@ int		prepare_pipes_for_exec(t_shell *g_shell);
 int		set_pipes(t_cmd *c, t_shell *g);
 int		init_pipes(t_cmd *c);
 void	create_pipe(int *pipefd);
+
+//quotes_utils.c
+t_token	*quotes_appared(t_token *first_quote);
+bool	quotes_rules(t_token *token);
 
 #endif

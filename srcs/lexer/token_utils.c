@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/30 11:31:16 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:11:26 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_token	*replace_token(t_token *start, t_token *end, t_token *new)
 	return (new);
 }
 
-//il faut une fonction qui concatene tout les tokens de type literal qui se suivent
-//parfois il faut savoir faire plusieurs fonction ca simplifie bcp de chose il fauut absolument diviser les taches sinon cest le crash assurer
+
+
 t_token *concat_literals(t_token *start, t_token *current, char *tmp)
 {
 	t_token	*new;

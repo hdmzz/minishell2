@@ -88,7 +88,6 @@ void	compose_cmd(t_shell *g_shell)
 	int		nb_cmds;
 	int		idx;
 	t_token	*lst;
-
 	lst = g_shell->list_token;
 	nb_pipes = count_pipes(g_shell->list_token);
 	g_shell->nb_pipes = nb_pipes;

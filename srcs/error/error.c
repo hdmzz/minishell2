@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:16:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 13:47:06 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:03:32 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ int	error_handler(char *cmd, char *detail, char *err_msg, int err_nb)
 	msg = ft_free_ptr(msg);
 	return (err_nb);
 }
-

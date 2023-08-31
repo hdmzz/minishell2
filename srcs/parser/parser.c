@@ -6,69 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/30 11:52:09 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:00:18 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//wile we are in between two same type quotes we neutralize the other quotes met
-//but if there is no matching quotes there is a syntax problem
-static t_token	*quotes_appared(t_token *first_quote)
-{
-	t_token	*current;
-	t_token	*last_same_quote;
-	int		quote_type;
-
-	current = first_quote;
-	quote_type = current->type;
-	current = current->next;
-	while (current && current->type != quote_type)
-		current = current->next;
-	if (!current)
-		return (NULL);
-	last_same_quote = current;
-	current = first_quote->next;
-	while (current != last_same_quote)
-	{
-		if ((current->type == single_quote && quote_type == double_quote)
-			|| (current->type == double_quote && quote_type == single_quote))
-			current->type = literal;
-		current = current->next;
-	}
-	return (last_same_quote);
-}
-
-size_t	list_size(t_token *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
-bool	quotes_rules(t_token *token)
-{
-	while (token)
-	{
-		while (token && !(token->type & 192))
-			token = token->next;
-		if (token && token->type & 192)
-		{
-			token = quotes_appared(token);
-			if (token == NULL)
-				return (false);
-		}
-		if (token)
-			token = token->next;
-	}
-	return (true);
-}
 
 int	check_last_token(t_token *last)
 {
@@ -98,7 +40,6 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		if (tmp->type == double_quote || tmp->type == single_quote)
 		{
 			type = tmp->type;
-
 			if (!quotes_rules(tmp))
 				return (error_handler(NULL, NULL, "unexpected EOF with quote", 0));
 			tmp = tmp->next;
@@ -115,7 +56,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 	dollar_rule(g_shell, g_shell->start_token->next, 0);
 	heredoc_first_analyzer(g_shell);
 	quotes_neutralizer(g_shell);
-	return (1);
+	return (quotes_neutralizer(g_shell), 1);
 }
 
 char	*var_xpanser(char *input)
