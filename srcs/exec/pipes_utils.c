@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 11:09:20 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/31 11:16:47 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/02 23:29:32 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ int	prepare_pipes_for_exec(t_shell *g_shell)
 	cmds = g_shell->cmds;
 	if (g_shell->nb_cmds > 1)
 		init_pipes(cmds);
-	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));
-	if (g_shell->pids == NULL)
-		return (0);
 	return (1);
 }
 

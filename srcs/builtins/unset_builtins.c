@@ -11,7 +11,7 @@ static int	remove_var(int idx, t_shell *g_shell)
 	j = 0;
 	new_env = ft_calloc(split_lenght(g_shell->split_env), sizeof(char *));
 	if (new_env == NULL)
-		return (0);
+		return (EXIT_FAILURE);
 	while (g_shell->split_env[i])
 	{
 		if (i != idx)
@@ -25,7 +25,7 @@ static int	remove_var(int idx, t_shell *g_shell)
 	ft_free_split(g_shell->split_env);
 	g_shell->split_env = NULL;
 	g_shell->split_env = new_env;
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 
@@ -39,7 +39,7 @@ int	unset_builtin(t_cmd *c, t_shell *g_shell)
 	cmd = c->cmd;
 	i = 1;
 	idx = get_env_idx(cmd[1], g_shell);
-	ret = 0;
+	ret = EXIT_FAILURE;
 	while (cmd[i])
 	{
 		if (is_valid_env_var_key(cmd[i]) == 0 || ft_strchr(cmd[i], '=') != NULL)

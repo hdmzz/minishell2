@@ -92,7 +92,7 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 	while (user_input[i])
 	{
 		if (!is_valid_env_var_key(user_input[i]))
-			return(perror("Not a valid env var key value"), -1);
+			return(perror("Not a valid env var key value"), EXIT_FAILURE);
 		else if (ft_strchr(user_input[i], '=') != NULL)
 			name_value_key = get_name_value(user_input[i]);
 		i++;
@@ -100,5 +100,5 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 	my_set_env(name_value_key[0], name_value_key[1], g_shell);
 	ft_free_split(name_value_key);
 	name_value_key = NULL;
-	return (1);
+	return (EXIT_SUCCESS);
 }

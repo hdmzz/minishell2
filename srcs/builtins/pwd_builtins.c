@@ -9,7 +9,7 @@ int	pwd_builtin(void)
 	if (cwd)
 	{
 		ft_putendl_fd(cwd, STDOUT_FILENO);
-		return (1);
+		return (EXIT_SUCCESS);
 	}
-	return (0);
+	return (EXIT_FAILURE);
 }

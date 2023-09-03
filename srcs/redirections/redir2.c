@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:51:58 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 11:08:24 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/03 12:35:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,30 +50,11 @@ void	prep_heredoc(t_cmd *c, char *delim)
 	unlink(tmpfile);
 }
 
-//quel est le but 
-//on recup la commande si << il ya il faut extraire le delim
-//creer un fichier temp
-//puis ouvrir un fd pour ecrire sur un fichier temp
-//stocker ca ds le c->fd-in
-//et un autre fd qui pointe vers le meme fichier 
-
-//donc 2 fds a ouvrir un pour l'exec de la fction heredoc
-//et un pour l'execution de la commande en elle meme
-
-//indiqer a la commande qu'il y a un heredoc
-//cmd->heredoc == 1 alors --:>lancement boucle infini ecriture
-//sur premier fd puis close
-//et redir sur fdcpy
-
-//puis lors de l'execution la fonction heredoc fer
-
-static int	left_redir(t_cmd *c)
+static int	left_redir(t_cmd *c, int i)
 {
-	int		i;
 	char	**cmd;
 	int		split_len;
 
-	i = -1;
 	c->heredoc = 0;
 	cmd = c->cmd;
 	split_len = split_lenght(cmd);
@@ -97,19 +78,17 @@ static int	left_redir(t_cmd *c)
 	return (1);
 }
 
-static int	right_redir(t_cmd *c)
+static int	right_redir(t_cmd *c, int i)
 {
-	int		i;
 	int		fd;
 	int		oflag;
 	char	**cmd;
 	int		split_len;
 
-	i = 0;
 	oflag = O_WRONLY | O_CREAT | O_TRUNC;
 	cmd = c->cmd;
 	split_len = split_lenght(c->cmd);
-	while (i < split_len)
+	while (++i < split_len)
 	{
 		if (cmd[i][0] == '>' && ft_strlen(cmd[i]) <= 2)
 		{
@@ -123,7 +102,6 @@ static int	right_redir(t_cmd *c)
 			cmd[i + 1] = NULL;
 			i++;
 		}
-		i++;
 	}
 	return (1);
 }
@@ -135,8 +113,8 @@ int	prepare_io(t_cmd *c)
 	tmp = c;
 	while (tmp)
 	{
-		left_redir(tmp);
-		right_redir(tmp);
+		left_redir(tmp, -1);
+		right_redir(tmp, -1);
 		tmp = tmp->next;
 	}
 	return (1);

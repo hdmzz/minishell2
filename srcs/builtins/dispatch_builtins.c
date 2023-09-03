@@ -16,5 +16,5 @@ int	dispatcher_builtin(t_shell *g_shell, t_cmd *c)
 		return (unset_builtin(c, g_shell));
 	else if (ft_strcmp("pwd", c->cmd[0]) == 0)
 		return (pwd_builtin());
-	return (0);
+	return (COMMAND_NOT_FOUND);
 }

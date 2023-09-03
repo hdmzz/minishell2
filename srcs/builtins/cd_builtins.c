@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_builtins.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/31 18:18:44 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/02 23:54:24 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char	*get_env_value(char *name, t_shell *g_shell)//doit recuperer la valeur de la variaable name ds l'env contenue ds g_shell donc tout ce qu'il y aapres le =
+char	*get_env_value(char *name, t_shell *g_shell)
 {
 	char	*value;
 	int		indx;
@@ -9,7 +21,7 @@ char	*get_env_value(char *name, t_shell *g_shell)//doit recuperer la valeur de l
 	if (indx == -1)
 		return (NULL);
 	value = g_shell->split_env[indx];
-	value = ft_strchr(value, '=') + 1;//pas besoin de free buff car on ne l'a pas alloue
+	value = ft_strchr(value, '=') + 1;
 	return (value);
 }
 
@@ -38,12 +50,12 @@ static int	change_dir(char	*path, t_shell *g_shell)
 
 	cwd = getcwd(buff, PATH_MAX);
 	if (!cwd || !path)
-		return (0);
+		return (EXIT_FAILURE);
 	if (chdir(path) == -1)
-		return (0);
+		return (EXIT_FAILURE);
 	my_set_env("OLD_PWD", get_env_value("PWD", g_shell), g_shell);
 	my_set_env("PWD", cwd, g_shell);
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int	cd_builtin(t_cmd *c, t_shell *g_shell)

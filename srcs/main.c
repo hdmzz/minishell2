@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/30 12:36:52 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/03 15:00:41 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	prompt(t_shell *g_shell)
 		g_shell->start_buff = readline("$> ");
 		set_signals_noninteractive();
 		lexer(g_shell);
-		if (!parser(g_shell))
-			printf("Error parsing\n");
+		if (parser(g_shell) == EXIT_FAILURE)
+			g_last_exit_code = 1;
+		else
+			g_last_exit_code = cmd_handler(g_shell);
 		ft_free_shell(g_shell, 0);
 		free(g_shell->start_buff);
 	}
@@ -44,7 +46,7 @@ static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 	ft_memset(g_shell, 0, sizeof(t_shell));
 	ft_memset(start_cmd, 0, sizeof(t_cmd));
 	start_cmd->idx_cmd = -1;
-	g_shell->output_backup = dup(STDOUT_FILENO);
+	g_shell->output_backup = dup(STDOUT_FILENO);//on duplique le fd de sortie standard ds un backup generale il ne faut pas  toucher
 	g_shell->input_backup = dup(STDIN_FILENO);
 	g_shell->start_token = new_token("", 513, 0);
 	g_shell->split_env = ft_calloc(split_lenght(env) + 1, sizeof(char *));
@@ -61,7 +63,7 @@ int	main(int ac, char **av, char **env)
 	t_shell	g_shell;
 
 	if (!check_start(ac, av))
-		return (1);
+		return (EXIT_SUCCESS);
 	if (!init_g_shell(&g_shell, &start_cmd, env))
 		return (perror("Error init shell\n"), 1);
 	g_shell.start_cmd = &start_cmd;

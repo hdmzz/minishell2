@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/31 12:00:18 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/03 14:59:30 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		{
 			type = tmp->type;
 			if (!quotes_rules(tmp))
-				return (error_handler(NULL, NULL, "unexpected EOF with quote", 0));
+				error_parsing_handler("unexpected EOF with quote", NULL, 1, 0);
 			tmp = tmp->next;
 			while (tmp->type != type)
 				tmp = tmp->next;
@@ -55,7 +55,6 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		return (0);
 	dollar_rule(g_shell, g_shell->start_token->next, 0);
 	heredoc_first_analyzer(g_shell);
-	quotes_neutralizer(g_shell);
 	return (quotes_neutralizer(g_shell), 1);
 }
 
@@ -65,7 +64,10 @@ char	*var_xpanser(char *input)
 
 	if (*input == '$')
 		input++;
-	ev  = getenv(input);
+	if (*input == '?')
+		return (ft_itoa(g_last_exit_code));
+	else
+		ev = getenv(input);
 	return (ev);
 }
 
@@ -95,23 +97,21 @@ void	dollar_rule(t_shell *g_shell, t_token *lst, int quote_count)
 	g_shell->list_token = g_shell->start_token->next;
 }
 
-/*
-*	stock the command splitted in an array
-*	then search the binary file in the PATH
-*/
 int	parser(t_shell *g_shell)
 {
+	int	ret;
+
+	ret = 0;
 	if (ft_strlen(g_shell->start_buff) == 0)
-		return (1);
+		return (EXIT_SUCCESS);
 	add_history(g_shell->start_buff);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
-		return (0);
+		return (EXIT_FAILURE);
 	if (!pipes_conformity(g_shell))
-		return (0);
+		return (EXIT_FAILURE);
 	if (!check_redirection_rules(g_shell))
-		return (0);
+		return (EXIT_FAILURE);
 	compose_cmd(g_shell);
-	cmd_handler(g_shell);
-	recover_fd(g_shell);
-	return (1);
+	//recover_fd(g_shell);
+	return (ret);
 }

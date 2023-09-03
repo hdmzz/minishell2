@@ -1,74 +1,104 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/31 16:15:34 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/03 14:51:57 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	child(t_cmd *c, t_shell *g_shell)
 {
+	int	ret;
+
 	if (g_shell->nb_cmds > 1)
 		set_pipes(c, g_shell);
 	redir_io(c);
-	if (dispatcher_builtin(g_shell, c) == 0)
-		exec_cmd(c->cmd, c, g_shell);
-	exit_builtin(g_shell, 0);
+	ret = dispatcher_builtin(g_shell, c);
+	if (ret == COMMAND_NOT_FOUND)
+		ret = exec_cmd(c->cmd, c, g_shell);
+	exit_builtin(g_shell, ret);
 }
 
-static int	handle_pipes_cmd(t_shell *g_shell)
+int	wait_children(t_shell *g_shell)
 {
-	t_cmd	*cmds;
 	int		i;
+	int		status;
+	pid_t	ret;
+
+	i = -1;
+	status = 0;
+	ret = 0;
+	close_cmds_fds(g_shell->cmds);
+	while (++i < g_shell->nb_cmds)
+	{
+		ret = waitpid(g_shell->pids[i], &status, 0);
+		if (ret == -1)
+			break ;
+	}
+	if (WIFSIGNALED(status))
+		status = WTERMSIG(status) + 128;
+	else if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	free_pipes(g_shell);
+	return (status);
+}
+
+int	create_children(t_cmd *c, t_shell *g_shell)
+{
+	int	i;
 
 	i = 0;
-	cmds = g_shell->cmds;
 	while (i < g_shell->nb_cmds)
 	{
 		g_shell->pids[i] = fork();
 		if (g_shell->pids[i] < 0)
-			return (0);
+			return (error_handler(c->cmd[0], NULL, strerror(errno), EXIT_FAILURE));
 		if (g_shell->pids[i] == 0)
-			child(cmds, g_shell);
+			child(c, g_shell);
 		i++;
-		cmds = cmds->next;
+		c = c->next;
 	}
-	close_cmds_fds(g_shell->cmds);
-	i = -1;
-	while (++i < g_shell->nb_cmds)
-		waitpid(g_shell->pids[i], &g_last_exit_code, 0);
-	free_pipes(g_shell);
-	return (1);
+	return (wait_children(g_shell));
+}
+static int	handle_pipes_cmd(t_shell *g_shell)
+{
+	t_cmd	*cmds;
+
+	cmds = g_shell->cmds;
+	return(create_children(cmds, g_shell));
 }
 
 static int	handle_cmd(t_shell *g_shell)
 {
 	t_cmd	*c;
 	int		ret;
-	int		pid;
 
 	c = g_shell->cmds;
-	pid = -1;
 	redir_io(c);
 	ret = dispatcher_builtin(g_shell, c);
 	restore_io(c);
-	if (ret == 0)
-	{
-		pid = fork();
-		if (pid < 0)
-			return (0);
-		if (pid == 0)
-			child(c, g_shell);
-	}
-	waitpid(pid, &g_last_exit_code, 0);
-	return (1);
+	if (ret == 127)
+		return (create_children(c, g_shell));
+	return (ret);
 }
 
-/* 
-	This function takes the cmds and execute it with the pipes etc
- */
 int	cmd_handler(t_shell *g_shell)
 {
+	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));
+	if (g_shell->pids == NULL)
+		return (EXIT_FAILURE);
 	if (g_shell->nb_cmds == 1)
-		return(handle_cmd(g_shell));
+		return (handle_cmd(g_shell));
 	else
 	{
 		prepare_pipes_for_exec(g_shell);
-		return(handle_pipes_cmd(g_shell));
+		return (handle_pipes_cmd(g_shell));
 	}
 	return (1);
 }

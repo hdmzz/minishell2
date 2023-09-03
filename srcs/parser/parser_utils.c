@@ -12,6 +12,7 @@ void	add_cmd_back(t_shell *g_shell, t_cmd *to_add)
 	}
 	to_add->prev = temp;
 	temp->next = to_add;
+	ft_memset(to_add->pipes_fd, -1, sizeof(int) * 2);
 }
 
 int	count_pipes(t_token *lst)
@@ -104,6 +105,5 @@ void	compose_cmd(t_shell *g_shell)
 		idx++;
 	}
 	g_shell->cmds = g_shell->start_cmd->next;
-	//une fois qu'on a les commandes il faut preparer les io
 	prepare_io(g_shell->cmds);
 }

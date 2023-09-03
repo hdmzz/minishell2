@@ -1,10 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/31 18:33:15 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/02 23:55:36 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-/* is_n_flag:
-*	Checks whether an arg is an -n option flag.
-*	Returns true if the arg is some variation of -n, -nnnn, -nn, etc.
-*	Returns false if it contains anything other than - and n (ex. --n -nnnm -n1234)
-*/
 static bool	is_n_flag(char *arg)
 {
 	int		i;
@@ -54,5 +61,5 @@ int	echo_builtin(char **args)
 		i++;
 	}
 	echo_print_args(args, n_flag, i);
-	return (1);
+	return (EXIT_SUCCESS);
 }

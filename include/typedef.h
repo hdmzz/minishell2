@@ -2,6 +2,7 @@
 # define TYPEDEF_H
 
 # include <stdio.h>
+# include <signal.h>
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <fcntl.h>
@@ -21,12 +22,18 @@
 
 extern int	g_last_exit_code;
 
-enum e_erro
-{
-	syntax_error,
-	parsing_erro,
-	exec_error,
-	command_not_found
+enum e_error{
+	COMMAND_NOT_FOUND = 127,
+	BAD_COMMAND_USAGE = 128,
+	FILE_NOT_FOUND = 1,
+	INSUFFICIENT_PERMISSIONS = 126,
+	BAD_ARGUMENT_COUNT = 2,
+	BAD_REDIRECTION = 3,
+	COMMAND_SUBSTITUTION_FAILED = 4,
+	UNDEFINED_VARIABLE = 5,
+	BAD_QUOTE_USAGE = 6,
+	UNEXPECTED_SYNTAX_ERROR = 7,
+	BAD_OPERATOR_USAGE = 8
 };
 
 enum e_type

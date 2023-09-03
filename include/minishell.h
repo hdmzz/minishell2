@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/31 11:55:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/03 13:46:49 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	dollar_rule(t_shell *g_shell, t_token *lst, int quote_count);
 void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
-void	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
+int		exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
 char	*get_cmd_path(char **to_search);
 
 //srcs/lexer/lexer.c
@@ -58,6 +58,7 @@ int		check_redirection_rules(t_shell *g_shell);
 
 //src/error/error.c
 int		error_handler(char *cmd, char *detail, char *err_msg, int err_nb);
+int		error_parsing_handler(char *err, char *detail, int err_nb, int quotes);
 
 //pipes_conformity.c
 bool	pipes_conformity(t_shell *g_shell);
@@ -74,10 +75,6 @@ void	redir_io(t_cmd *c);
 
 //simple_right.c > output redir
 int		right_redirections(t_cmd *cmds, int split_lght);
-
-//simple_left.c < input redir
-int		left_redirections(t_cmd *cmds, int split_lght, t_shell *g_shell);
-
 
 //cleanup.c
 void	close_fds(int *fd);

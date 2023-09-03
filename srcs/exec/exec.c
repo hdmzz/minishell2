@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 12:16:31 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/02 23:21:34 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ static char	*get_cmd_util(char **split_env, char **to_search)
 	return (NULL);
 }
 
-//58 is int for : in ascii
 char	*get_cmd_path(char **to_search)
 {
 	char	**split_env;
@@ -83,16 +82,19 @@ char	*get_cmd_path(char **to_search)
 	return (NULL);
 }
 
-void	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
+int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 {
 	char	*full_cmd_path;
+	int		ret;
 
 	full_cmd_path = c->full_cmd_path;
 	if (full_cmd_path == NULL)
 	{
-		error_handler(cmd[0], NULL, strerror(errno), command_not_found);
-		exit_builtin(g_shell, 2);
+		error_handler(cmd[0], NULL, strerror(errno), COMMAND_NOT_FOUND);
+		exit_builtin(g_shell, COMMAND_NOT_FOUND);
 	}
-	execve(full_cmd_path, cmd, NULL);
-	exit_builtin(g_shell, 2);
+	ret = execve(full_cmd_path, cmd, NULL);
+	error_handler("execve", NULL, strerror(errno), ret);
+	exit_builtin(g_shell, ret);
+	return (ret);
 }
