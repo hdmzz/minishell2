@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:15:00 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:15:02 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:59:02 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	dispatcher_builtin(t_shell *g_shell, t_cmd *c)
 {
 	if (ft_strcmp("export", c->cmd[0]) == 0)
-		return(export_builtin(c, g_shell));
+		return (export_builtin(c, g_shell));
 	else if (ft_strcmp("exit", c->cmd[0]) == 0)
-		return(exit_builtin(g_shell, 1));
+		return (exit_builtin(g_shell, 1));
 	else if (ft_strcmp("echo", c->cmd[0]) == 0)
 		return (echo_builtin(c->cmd));
 	else if (ft_strcmp("env", c->cmd[0]) == 0)

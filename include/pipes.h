@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:13:38 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:13:39 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:28:52 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,7 @@
 int		cmd_handler(t_shell *g_shell);
 void	close_fds(int *fd);
 void	redir_io(t_cmd *cmds);
+
+int		wait_children(t_shell *g_shell);
+
 #endif

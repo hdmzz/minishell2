@@ -6,12 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:16:05 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:16:06 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:00:09 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	remove_var(int idx, t_shell *g_shell)
 {
@@ -40,12 +39,11 @@ static int	remove_var(int idx, t_shell *g_shell)
 	return (EXIT_SUCCESS);
 }
 
-
 int	unset_builtin(t_cmd *c, t_shell *g_shell)
 {
-	int	idx;
-	int	i;
-	int	ret;
+	int		idx;
+	int		i;
+	int		ret;
 	char	**cmd;
 
 	cmd = c->cmd;

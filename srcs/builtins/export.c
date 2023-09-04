@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:15:52 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:15:53 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:59:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	my_set_env(const char *name, char *value, t_shell *g_shell)
 	idx = get_env_idx(name, g_shell);
 	if (value == NULL)
 		value = "";
-	new_env_var = ft_calloc(ft_strlen(name) + ft_strlen(value) + 2, sizeof(char));
+	new_env_var = ft_calloc(ft_strlen(name) + \
+	ft_strlen(value) + 2, sizeof(char));
 	if (!new_env_var)
 		return (0);
 	ft_vsprintf(new_env_var, "%s=%s", name, value);
@@ -92,7 +93,6 @@ static char	**get_name_value(char *str)
 	return (name_value_key);
 }
 
-	// Si l'entrée n'a pas été trouvée, ajouter la nouvelle entrée à la fin
 int	export_builtin(t_cmd *c, t_shell *g_shell)
 {
 	char	**name_value_key;
@@ -104,7 +104,7 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 	while (user_input[i])
 	{
 		if (!is_valid_env_var_key(user_input[i]))
-			return(perror("Not a valid env var key value"), EXIT_FAILURE);
+			return (perror("Not a valid env var key value"), EXIT_FAILURE);
 		else if (ft_strchr(user_input[i], '=') != NULL)
 			name_value_key = get_name_value(user_input[i]);
 		i++;

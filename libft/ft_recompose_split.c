@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 22:30:08 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/15 23:27:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:54:19 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,20 @@ static int	split_size(char **tab)
 	return (i);
 }
 
-static char	*recompose_strings(char** strs, int num_strs, char sep)
+static char	*recompose_strings(char **strs, int num_strs, char sep, int i)
 {
 	int		total_length;
-	int		i;
 	char	*res;
 	int		pos;
 
 	total_length = 0;
-	i = -1;
 	while (++i < num_strs)
 		total_length += ft_strlen(strs[i]);
 	total_length += num_strs - 1;
-	// Allouer de la mémoire pour la chaîne recomposée
-	res = (char*)malloc(total_length + 1);  // +1 pour le caractère null de fin de chaîne
+	res = (char *)malloc(total_length + 1);
 	if (res == NULL)
-		exit(EXIT_FAILURE);
-	// Copier les chaînes individuelles dans la chaîne recomposée
+		return (NULL);
 	pos = 0;
-	i = -1;
 	while (++i < num_strs)
 	{
 		ft_strlcpy(res + pos, strs[i], total_length + 1);
@@ -60,6 +55,6 @@ char	*ft_recompose_split(char **strs, char sep)
 	char	*recomposed;
 
 	num_strs = split_size(strs);
-	recomposed = recompose_strings(strs, num_strs, sep);
+	recomposed = recompose_strings(strs, num_strs, sep, -1);
 	return (recomposed);
 }

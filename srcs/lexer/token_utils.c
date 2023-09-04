@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 23:33:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/31 12:11:26 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:24:12 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,55 +53,22 @@ t_token	*replace_token(t_token *start, t_token *end, t_token *new)
 	return (new);
 }
 
-
-
-t_token *concat_literals(t_token *start, t_token *current, char *tmp)
-{
-	t_token	*new;
-	t_token	*buff;
-	char	*concat_value;
-
-	current = start;
-	concat_value = NULL;
-	buff = NULL;
-	while (current && current->type == literal)
-	{
-		if (buff)
-			delone(buff);
-		if (!concat_value)
-			concat_value = ft_strdup(current->value);
-		else
-		{
-			concat_value = ft_strjoin(concat_value, current->value);
-			buff = current;
-			free(tmp);
-		}
-		tmp = concat_value;
-		current = current->next;
-	}
-	if (concat_value)
-	{
-		new = new_token(concat_value, literal, start->pos);
-		new->next = current;
-		return (free(concat_value), delone(start), new);
-	}
-	return (start);
-}
-
 void	last_quote_passage(t_token *lst)
 {
 	t_token	*prev;
 	t_token	*current;
+	t_token	*buff;
 	char	*tmp;
 
 	current = NULL;
 	tmp = NULL;
 	while (lst)
 	{
+		buff = NULL;
 		if (lst && lst->type == literal)
 		{
 			prev = lst->prev;
-			lst = concat_literals(lst, current, tmp);
+			lst = concat_literals(lst, current, buff, tmp);
 			lst->prev = prev;
 			prev->next = lst;
 		}

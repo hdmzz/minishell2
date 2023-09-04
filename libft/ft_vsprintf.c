@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 20:46:03 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:14:12 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:50:00 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*add_num_to_str(char *str, char *num_str, int digits, int written)
 	return (str);
 }
 
-static void add_formatted_int(char *str, int *written, va_list args, int *i)
+static void	add_formatted_int(char *str, int *written, va_list args, int *i)
 {
 	int		digits;
 	char	*num_str;
@@ -53,13 +53,13 @@ static void add_formatted_int(char *str, int *written, va_list args, int *i)
 	num = va_arg(args, int);
 	digits = num_len(num);
 	num_str = ft_itoa(num);
-	str = add_num_to_str(str, num_str, digits, *written); 
+	str = add_num_to_str(str, num_str, digits, *written);
 	*written += digits;
 	*i += 2;
 }
 
 // Fonction pour ajouter une chaîne formatée à la chaîne
-void add_formatted_string(char *str, int *written, va_list args, int *i)
+void	add_formatted_string(char *str, int *written, va_list args, int *i)
 {
 	const char	*s;
 
@@ -73,7 +73,7 @@ void add_formatted_string(char *str, int *written, va_list args, int *i)
 	*i += 2;
 }
 
-int ft_vsprintf(char *str, const char *format, ...)
+int	ft_vsprintf(char *str, const char *format, ...)
 {
 	int		written;
 	int		i;
@@ -82,7 +82,8 @@ int ft_vsprintf(char *str, const char *format, ...)
 	va_start(args, format);
 	i = 0;
 	written = 0;
-	while (format[i] != '\0') {
+	while (format[i] != '\0')
+	{
 		if (format[i] == '%' && format[i + 1] != '\0')
 		{
 			if (format[i + 1] == 'd')
@@ -99,4 +100,3 @@ int ft_vsprintf(char *str, const char *format, ...)
 	va_end(args);
 	return (written);
 }
-

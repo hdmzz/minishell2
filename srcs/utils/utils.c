@@ -6,21 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:24:34 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:58:35 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	split_lenght(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i])
-		i++;
-	return (i);
-}
 
 void	del_cmds(t_cmd *cmds)
 {
@@ -46,10 +36,10 @@ static void	*free_lst_cmd(t_cmd *cmds)
 	return (NULL);
 }
 
-static void	*free_lst_token(t_token *tokens)
+void	*free_lst_token(t_token *tokens)
 {
 	t_token	*tmp;
-	
+
 	while (tokens)
 	{
 		tmp = tokens->next;

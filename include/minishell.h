@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 10:59:55 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:31:24 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
 char	*get_cmd_path(char **to_search, t_shell *g_shell);
 
 //srcs/lexer/lexer.c
-int	lexer(t_shell *g_shell);
+int		lexer(t_shell *g_shell);
 
 //src/utils/utils.c
 void	ft_free_shell(t_shell *g_shell, int last_exit);
@@ -49,12 +49,13 @@ t_token	*replace_token(t_token *start, t_token *end, t_token *new);
 t_token	*final_concat(t_token *start);
 t_token	*concat_token(t_token *start);
 void	delfew(t_token *start, t_token *end);
-void	delone(t_token *to_del);
+void	*delone(t_token *to_del);
 int		concat_word(t_shell *g_shell);
 
 //src/lexer/token_utils3.c
 void	cln_whitespace_btw_ctrl_tok(t_shell *g_shell);
 int		check_redirection_rules(t_shell *g_shell);
+void	clean_trash(t_token *trash);
 
 //src/error/error.c
 int		error_handler(char *cmd, char *detail, char *err_msg, int err_nb);
@@ -63,18 +64,11 @@ int		error_parsing_handler(char *err, char *detail, int err_nb, int quotes);
 //pipes_conformity.c
 bool	pipes_conformity(t_shell *g_shell);
 
-//buiding function
-void	print_lst(t_token *token);
-void	print_cmd(char **cmds);
-
 //redir.c
 void	clean_cmd_tab(char **cmd, int first_redir, int end);
 int		recover_fd(t_shell *g_shelll);
 void	recover_or_io(t_cmd *cmd);
 void	redir_io(t_cmd *c);
-
-//simple_right.c > output redir
-int		right_redirections(t_cmd *cmds, int split_lght);
 
 //cleanup.c
 void	close_fds(int *fd);
@@ -82,7 +76,6 @@ void	close_pipes_fds(t_cmd *cmds, t_cmd *cur);
 void	free_pipes(t_shell *g_shell);
 void	close_cmds_fds(t_cmd *c);
 void	restore_io(t_cmd *cmds);
-
 
 //pipes_utils.c
 int		prepare_pipes_for_exec(t_shell *g_shell);
@@ -93,5 +86,14 @@ void	create_pipe(int *pipefd);
 //quotes_utils.c
 t_token	*quotes_appared(t_token *first_quote);
 bool	quotes_rules(t_token *token);
+
+t_token	*conc_lit(t_token *next, char *value, int pos);
+t_token	*concat_literals(t_token *start, t_token *cur, t_token *buff, char *tmp);
+
+char	*recompose_input(char **tab);
+char	*substitute_input_wth_output(char *input, char *cmd_output);
+
+//utils.c
+void	*free_lst_token(t_token *tokens);
 
 #endif

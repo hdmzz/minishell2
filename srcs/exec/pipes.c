@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:15:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 09:27:46 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:15:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,6 @@ static void	child(t_cmd *c, t_shell *g_shell)
 	exit_builtin(g_shell, ret);
 }
 
-int	wait_children(t_shell *g_shell)
-{
-	int		i;
-	int		status;
-	pid_t	ret;
-
-	i = -1;
-	status = 0;
-	ret = 0;
-	close_cmds_fds(g_shell->cmds);
-	while (++i < g_shell->nb_cmds)
-	{
-		ret = waitpid(g_shell->pids[i], &status, 0);
-		if (ret == -1)
-			break ;
-	}
-	if (WIFSIGNALED(status))
-		status = WTERMSIG(status) + 128;
-	else if (WIFEXITED(status))
-		status = WEXITSTATUS(status);
-	free_pipes(g_shell);
-	return (status);
-}
-
 int	create_children(t_cmd *c, t_shell *g_shell)
 {
 	int	i;
@@ -58,7 +34,8 @@ int	create_children(t_cmd *c, t_shell *g_shell)
 	{
 		g_shell->pids[i] = fork();
 		if (g_shell->pids[i] < 0)
-			return (error_handler(c->cmd[0], NULL, strerror(errno), EXIT_FAILURE));
+			return (error_handler(c->cmd[0], NULL, \
+			strerror(errno), EXIT_FAILURE));
 		if (g_shell->pids[i] == 0)
 			child(c, g_shell);
 		i++;
@@ -66,12 +43,13 @@ int	create_children(t_cmd *c, t_shell *g_shell)
 	}
 	return (wait_children(g_shell));
 }
+
 static int	handle_pipes_cmd(t_shell *g_shell)
 {
 	t_cmd	*cmds;
 
 	cmds = g_shell->cmds;
-	return(create_children(cmds, g_shell));
+	return (create_children(cmds, g_shell));
 }
 
 static int	handle_cmd(t_shell *g_shell)
@@ -90,6 +68,8 @@ static int	handle_cmd(t_shell *g_shell)
 
 int	cmd_handler(t_shell *g_shell)
 {
+	if (ft_strlen(g_shell->start_buff) == 0)
+		return (EXIT_SUCCESS);
 	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));
 	if (g_shell->pids == NULL)
 		return (EXIT_FAILURE);

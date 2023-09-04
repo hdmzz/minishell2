@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 03:15:14 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 13:25:29 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 17:08:42 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ int	heredoc(t_cmd *c)
 		input = readline("> ");
 		if (ft_strcmp(c->heredoc_delim, input) == 0)
 			break ;
-		tmp = heredoc_expanser(input, c, -1, 0);
+		if (c->hd_delim_into_quotes == 0)
+			tmp = heredoc_expanser(input, c, -1, 0);
+		else
+			tmp = input;
 		if (!tmp)
-			return (ft_free_ptr(input), 0);
+			return (input = ft_free_ptr(input), 0);
 		ft_putendl_fd(tmp, c->fd_heredoc);
-		if (c->hd_delim_into_quotes)
-			tmp = ft_free_ptr(tmp);
 	}
 	close(c->fd_heredoc);
 	c->heredoc = 0;

@@ -25,10 +25,10 @@ SRC = $Smain.c \
 		$S$P/parser_utils.c \
 		$S$P/pipes_conformity.c \
 		$S$P/parser_heredoc.c \
+		$S$P/parser_heredoc_utils.c \
 		$S$U/utils.c \
+		$S$U/utils2.c \
 		$Serror/error.c \
-		$S$Rright_redirections.c \
-		$S$Rleft_redirections.c \
 		$S$Rheredoc.c \
 		$S$Rredir.c \
 		$S$Xexec_heredoc.c \
@@ -67,6 +67,7 @@ $O:
 	@mkdir -p $@utils
 	@mkdir -p $@$R
 	@mkdir -p $@$B
+	@mkdir -p $@$C
 	@mkdir -p $@$(SIG)
 
 $(OBJ): | $O

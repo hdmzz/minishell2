@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:20:05 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:21:12 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:51:46 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static int	delim_in_quotes(t_token *lst)
 {
@@ -67,64 +67,6 @@ int	input_into_parenthesis(char *input, int *i)
 	return (0);
 }
 
-/* 
-	need a function that recompose the input from the char ** 
-	so this function calculates the total lenght of the final char *
- */
-char	*recompose_input(char **tab)
-{
-	char	*new_input;
-	int		total_len;
-	int		tab_len;
-	int		i;
-
-	total_len = 0;
-	i = -1;
-	while (tab[++i])
-		total_len += ft_strlen(tab[i]);
-	tab_len = i;
-	total_len += i - 1;
-	new_input = ft_calloc(total_len + 1, sizeof(char));
-	if (!new_input)
-		return (NULL);
-	i = 0;
-	while (tab[i])
-	{
-		ft_strlcat(new_input, tab[i], total_len + 1);
-		if (i < tab_len - 1)
-			ft_strlcat(new_input, " ", total_len + 1);
-		i++;
-	}
-	ft_free_split(tab);
-	return (new_input);
-}
-
-/* 
-	this function takes the original input str and substitute the heredoc cmd with the value
-	so to do that we
- */
-char	*substitute_input_wth_output(char *input, char *cmd_output)
-{
-	char	**tab;
-	char	**tmp;
-	char	*new_input;
-	int		i;
-
-	tab = ft_split(input, '$');
-	tmp = tab;
-	if (!tab || !cmd_output)
-		return (perror("Error substitute_input_wth_output"), NULL);
-	i = 0;
-	while (tmp[i])
-	{
-		if (tmp[i][0] == '(')
-			tmp[i] = cmd_output;
-		i++;
-	}
-	new_input = recompose_input(tmp);
-	return (new_input);
-}
-
 char	*heredoc_var_xpanser(char *input)
 {
 	char	**tab;
@@ -148,9 +90,6 @@ char	*heredoc_var_xpanser(char *input)
 	return (NULL);
 }
 
-/* 
-	for each input of the heredoc
- */
 char	*heredoc_expanser(char *input, t_cmd *c, int i, int y)
 {
 	char	*inp;
@@ -158,8 +97,6 @@ char	*heredoc_expanser(char *input, t_cmd *c, int i, int y)
 	char	*cmd_output;
 
 	inp = input;
-	if (c->hd_delim_into_quotes)
-		return (inp);
 	while (inp[++i] != '\0')
 	{
 		if (inp[i] == '$')

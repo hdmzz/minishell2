@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:11:10 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/30 11:16:17 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 00:31:07 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_token	*concat_token(t_token *start)
 	return (new);
 }
 
-void	delone(t_token *to_del)
+void	*delone(t_token *to_del)
 {
 	if (to_del)
 	{
@@ -91,8 +91,9 @@ void	delone(t_token *to_del)
 		if (to_del->next)
 			to_del->next->prev = to_del->prev;
 		to_del->value = ft_free_ptr(to_del->value);
-		to_del= ft_free_ptr(to_del);
+		to_del = ft_free_ptr(to_del);
 	}
+	return (NULL);
 }
 
 void	delfew(t_token *start, t_token *end)
@@ -100,17 +101,20 @@ void	delfew(t_token *start, t_token *end)
 	t_token	*temp;
 
 	if (start == end)
-		return (delone(start));
-	temp = start->next;
-	while (temp && temp != end)
-	{
 		delone(start);
+	else
+	{
+		temp = start->next;
+		while (temp && temp != end)
+		{
+			delone(start);
+			start = NULL;
+			start = temp;
+			temp = temp->next;
+		}
+		delone(start);
+		delone(temp);
+		temp = NULL;
 		start = NULL;
-		start = temp;
-		temp = temp->next;
 	}
-	delone(start);
-	delone(temp);
-	temp = NULL;
-	start = NULL;
 }

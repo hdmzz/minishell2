@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 11:18:04 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:22:20 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:21:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	add_cmd_back(t_shell *g_shell, t_cmd *to_add)
 {
@@ -110,7 +110,8 @@ void	compose_cmd(t_shell *g_shell)
 	idx = 0;
 	while (nb_cmds--)
 	{
-		add_cmd_back(g_shell, create_new_cmd(lst, -1, count_split_size(lst) + 1, idx));
+		add_cmd_back(g_shell, create_new_cmd(lst, -1, \
+		count_split_size(lst) + 1, idx));
 		if (lst->type == pipeline)
 			lst = lst->next;
 		while (lst && lst->type != pipeline)

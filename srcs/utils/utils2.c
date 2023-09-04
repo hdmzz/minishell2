@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_sh.h                                        :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/04 12:13:41 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 13:57:11 by hdamitzi         ###   ########.fr       */
+/*   Created: 2023/09/04 13:55:18 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 13:55:57 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_SH_H
-# define SIGNAL_SH_H
+#include "minishell.h"
 
-# include <signal.h>
-# include "../libft/libft.h"
-# include <readline/readline.h>
+int	split_lenght(char **cmds)
+{
+	int	i;
 
-void	signal_reset_prompt(int signo);
-void	set_signals_interactive(void);
-void	signal_print_newline(int signal);
-void	set_signals_noninteractive(void);
-void	ignore_sigquit(void);
-
-#endif
+	i = 0;
+	while (cmds[i])
+		i++;
+	return (i);
+}

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 11:09:20 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/02 23:29:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:02:11 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,28 @@ int	set_pipes(t_cmd *c, t_shell *g)
 		dup2(c->pipes_fd[1], STDOUT_FILENO);
 	close_pipes_fds(g->cmds, NULL);
 	return (1);
+}
+
+int	wait_children(t_shell *g_shell)
+{
+	int		i;
+	int		status;
+	pid_t	ret;
+
+	i = -1;
+	status = 0;
+	ret = 0;
+	close_cmds_fds(g_shell->cmds);
+	while (++i < g_shell->nb_cmds)
+	{
+		ret = waitpid(g_shell->pids[i], &status, 0);
+		if (ret == -1)
+			break ;
+	}
+	if (WIFSIGNALED(status))
+		status = WTERMSIG(status) + 128;
+	else if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	free_pipes(g_shell);
+	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 18:18:44 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:14:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:58:46 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_env_idx(const char *name, t_shell *g_shell)
 	while (env[i])
 	{
 		if (ft_strncmp(buff, env[i], ft_strlen(buff)) == 0)
-			return(ft_free_ptr(buff), i);
+			return (ft_free_ptr(buff), i);
 		i++;
 	}
 	return (ft_free_ptr(buff), -1);
@@ -64,7 +64,7 @@ int	cd_builtin(t_cmd *c, t_shell *g_shell)
 
 	len = split_lenght(c->cmd);
 	if (len > 2)
-		return(0);
+		return (0);
 	else if (len == 1)
 		return (change_dir(get_env_value("HOME", g_shell), g_shell));
 	else if (len == 2 && !ft_strcmp(c->cmd[1], "-"))

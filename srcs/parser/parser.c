@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/03 16:14:58 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 15:18:30 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,11 @@ void	dollar_rule(t_shell *g_shell, t_token *lst, int quote_count)
 		{
 			ev = var_xpanser(lst->next->value);
 			if (ev != NULL)
-				lst = replace_token(lst, lst->next, new_token(ev, literal, lst->pos));
+				lst = replace_token(lst, lst->next, \
+				new_token(ev, literal, lst->pos));
 			else
-				lst = replace_token(lst, lst->next, new_token("", literal, lst->pos));
+				lst = replace_token(lst, lst->next, \
+				new_token("", literal, lst->pos));
 		}
 		lst = lst->next;
 	}

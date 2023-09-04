@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:13:46 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:13:47 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:58:03 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <dirent.h>
 # include <stdbool.h>
 # include <errno.h>
-
 
 # ifndef PATH_MAX
 #  define PATH_MAX 4096
@@ -100,12 +99,12 @@ typedef struct s_cmd
 	int				idx_cmd;
 	int				nb_of_cmd;
 	int				pipes_fd[2];
-	int				fd_in;//ce heredoc correspondera au fd en lecture seule fdcpy
+	int				fd_in;
 	int				fd_out;
 	int				output_backup;
 	int				input_backup;
 	int				heredoc;
-	int				fd_heredoc;//sera utilise pour l'ecriture sur fichier temp
+	int				fd_heredoc;
 	int				hd_delim_into_quotes;
 	struct s_shell	*g_shell;
 }				t_cmd;

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:18:51 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:03:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	token_len(char *input)
 
 int	get_token_type(char *str)
 {
-	int	i;
+	int						i;
 	static t_token_trslte	tok_type[] = {
 	{"\n", new_line, "new_line"},
 	{" ", white_space, "white_space"},
@@ -55,24 +55,6 @@ int	get_token_type(char *str)
 		if (!ft_strcmp(tok_type[i].value, str))
 			return (tok_type[i].type);
 	return (0);
-}
-
-void	print_lst(t_token *token)
-{
-	while (token && token->next != NULL)
-	{
-		printf(":%s:%d:%d:\n", token->value,token->type, token->pos);
-		token = token->next;
-	}
-	if (token)
-		printf(":%s:%d:%d:\n", token->value,token->type, token->pos);
-}
-
-void print_cmd(char **cmds)
-{
-	int i = -1;
-	while (cmds[++i])
-		printf("%s\n", cmds[i]);
 }
 
 static t_token	*create_token(char **input, int *pos)

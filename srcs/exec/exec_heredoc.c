@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:16:36 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:16:37 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 14:00:43 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*recompose_output(int fd, ssize_t bytes_read)
 	return (buffer);
 }
 
-char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read, t_shell *g_shell)
+char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read, t_shell *g)
 {
 	char	**cmd_tab;
 	int		pid;
@@ -59,7 +59,7 @@ char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read, t_shell *g_shell)
 	char	*full_cmd_path;
 
 	cmd_tab = ft_split(cmd_str, 32);
-	full_cmd_path = get_cmd_path(cmd_tab, g_shell);
+	full_cmd_path = get_cmd_path(cmd_tab, g);
 	if (full_cmd_path == NULL)
 		return (printf("bash: command not found\n"), NULL);
 	if (pipe(pipe_fd) == -1)
