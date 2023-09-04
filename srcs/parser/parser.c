@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 15:18:30 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 01:33:06 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,36 @@ char	*var_xpanser(char *input)
 	return (ev);
 }
 
-void	dollar_rule(t_shell *g_shell, t_token *lst, int quote_count)
+void	dollar_rule(t_shell *g_shell, t_token *l, int quote_count)
 {
 	bool	interpretation;
 	char	*ev;
+	int		free_flag;
 
+	free_flag = 0;
 	interpretation = true;
-	while (lst)
+	while (l)
 	{
-		if (lst->type == single_quote && !(quote_count % 2))
+		if (l->type == single_quote && !(quote_count % 2))
 		{
 			quote_count += 1;
 			interpretation = false;
 		}
-		if (lst->type == dollar && lst->next->type == literal && interpretation)
+		if (l->type == dollar && l->next->type == literal && interpretation)
 		{
-			ev = var_xpanser(lst->next->value);
+			ev = var_xpanser(l->next->value);
 			if (ev != NULL)
-				lst = replace_token(lst, lst->next, \
-				new_token(ev, literal, lst->pos));
+			{
+				if (l->next->value[0] == '?')
+					free_flag = 1;
+				l = replace_token(l, l->next, new_token(ev, literal, l->pos));
+				if (free_flag)
+					ev = ft_free_ptr(ev);
+			}
 			else
-				lst = replace_token(lst, lst->next, \
-				new_token("", literal, lst->pos));
+				l = replace_token(l, l->next, new_token("", literal, l->pos));
 		}
-		lst = lst->next;
+		l = l->next;
 	}
 	g_shell->list_token = g_shell->start_token->next;
 }
@@ -108,11 +114,11 @@ int	parser(t_shell *g_shell)
 		return (EXIT_SUCCESS);
 	add_history(g_shell->start_buff);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
-		return (error_parsing_handler("syntax error", NULL, 2, 0));
+		return (error_parsing_handler("syntax error", NULL, 1, 0));
 	if (!pipes_conformity(g_shell))
-		return (error_parsing_handler("pipe error", NULL, 2, 0));
+		return (error_parsing_handler("pipe error", NULL, 1, 0));
 	if (!check_redirection_rules(g_shell))
-		return (error_parsing_handler("redirection error", NULL, 2, 0));
+		return (error_parsing_handler("redirection error", NULL, 1, 0));
 	compose_cmd(g_shell);
 	return (ret);
 }
