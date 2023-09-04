@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 03:15:14 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 11:53:57 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:25:29 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	heredoc(t_cmd *c)
 
 	while (1)
 	{
- 		input = readline("> ");
+		input = readline("> ");
 		if (ft_strcmp(c->heredoc_delim, input) == 0)
 			break ;
 		tmp = heredoc_expanser(input, c, -1, 0);
