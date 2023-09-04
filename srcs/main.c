@@ -6,11 +6,11 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:48:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/03 15:00:41 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:25:03 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	g_last_exit_code = 0;
 
@@ -46,7 +46,7 @@ static int	init_g_shell(t_shell *g_shell, t_cmd *start_cmd, char **env)
 	ft_memset(g_shell, 0, sizeof(t_shell));
 	ft_memset(start_cmd, 0, sizeof(t_cmd));
 	start_cmd->idx_cmd = -1;
-	g_shell->output_backup = dup(STDOUT_FILENO);//on duplique le fd de sortie standard ds un backup generale il ne faut pas  toucher
+	g_shell->output_backup = dup(STDOUT_FILENO);
 	g_shell->input_backup = dup(STDIN_FILENO);
 	g_shell->start_token = new_token("", 513, 0);
 	g_shell->split_env = ft_calloc(split_lenght(env) + 1, sizeof(char *));

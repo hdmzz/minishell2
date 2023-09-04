@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 12:20:05 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:21:12 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 static int	delim_in_quotes(t_token *lst)
@@ -18,8 +30,7 @@ static int	delim_in_quotes(t_token *lst)
 	return (delim_in_quotes);
 }
 
-int	heredoc_first_analyzer(t_shell *g_shell)//A REVOIR le pb viendrait du fait que qd on trouve un " on va jusquau 
-//suivant mais apres on revient en arriere pour recommencer a avancer jusqua celui de la fin
+int	heredoc_first_analyzer(t_shell *g_shell)
 {
 	t_token	*lst;
 
@@ -106,7 +117,7 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 	i = 0;
 	while (tmp[i])
 	{
-		if (tmp[i][0] == '(')//on a une commande a executer etc
+		if (tmp[i][0] == '(')
 			tmp[i] = cmd_output;
 		i++;
 	}
@@ -147,17 +158,17 @@ char	*heredoc_expanser(char *input, t_cmd *c, int i, int y)
 	char	*cmd_output;
 
 	inp = input;
-	if (c->hd_delim_into_quotes)//il ne faut pas expanser
+	if (c->hd_delim_into_quotes)
 		return (inp);
-	while (inp[++i] != '\0')//on est encore sur la str original
+	while (inp[++i] != '\0')
 	{
-		if (inp[i] == '$')// si je suis sur un $ signe soit jexecute une commande soit j'expanse une variable
+		if (inp[i] == '$')
 		{
 			y = input_into_parenthesis(input, &i);
 			if (y > i)
 			{
 				imbrecated_cmd = ft_substr(input, i, y - i);
-				cmd_output = exec_imbricated_cmd(imbrecated_cmd, 0);
+				cmd_output = exec_imbricated_cmd(imbrecated_cmd, 0, c->g_shell);
 				if (cmd_output)
 					inp = substitute_input_wth_output(input, cmd_output);
 				imbrecated_cmd = ft_free_ptr(imbrecated_cmd);

@@ -6,19 +6,12 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:07:12 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/24 05:19:00 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:18:51 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	this is where we calaculate the size of each token
-	the idea is to use th strchr function for each chararcter of input,
-	sarch an occucrence in the string composed of all the metacharcter, control
-	operators, and words
-	no need to do a simple ft_strcmp because the double quote can be glued to the next word
-*/
 int	token_len(char *input)
 {
 	int	len;
@@ -129,10 +122,6 @@ void	token_add_back(t_token **lst, t_token *to_add)
 	}
 }
 
-/*
-*	The function recovers the command then for each
-*	create a token with the value and the token type
-*/
 int	lexer(t_shell *g_shell)
 {
 	int		i;
@@ -148,6 +137,7 @@ int	lexer(t_shell *g_shell)
 		new_token = create_token(&input, &i);
 		if (new_token == NULL)
 			return (0);
+		new_token->g_shell = g_shell;
 		token_add_back(&g_shell->start_token, new_token);
 	}
 	g_shell->list_token = g_shell->start_token->next;

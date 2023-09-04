@@ -6,74 +6,43 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/02 23:21:34 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:16:54 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-*	strlcat of the dir name + / + entrypath(the command name like ls) + \0
-*/
-static char	*concat_cmd(char *dir_path, char *entry_path)
-{
-	char	*cmd;
-	int		total_lenght;
-
-	total_lenght = ft_strlen(dir_path) + ft_strlen(entry_path) + 2;
-	cmd = ft_calloc(sizeof(char), total_lenght);
-	if (!cmd)
-		return (NULL);
-	ft_strlcat(cmd, dir_path, total_lenght);
-	ft_strlcat(cmd, "/", total_lenght);
-	ft_strlcat(cmd, entry_path, total_lenght);
-	return (cmd);
-}
-
-static bool	found_cmd_path(char *cmd, char *to_comp)
-{
-	if (ft_strcmp(cmd, to_comp) == 0)
-		return (true);
-	return (false);
-}
-
 static char	*get_cmd_util(char **split_env, char **to_search)
 {
-	int				i;
-	DIR				*dir;
-	struct dirent	*entry;
-	char			*full_cmd_path;
+	int		i;
+	char	*cmd;
+	char	*full_cmd;
 
 	i = -1;
+	cmd = ft_strjoin("/", to_search[0]);
+	if (!cmd)
+		return (NULL);
 	while (split_env[++i])
 	{
-		dir = opendir(split_env[i]);
-		if (dir != NULL)
-		{
-			entry = readdir(dir);
-			while ((entry = readdir(dir)) != NULL)
-			{
-				if (found_cmd_path(to_search[0], entry->d_name) == true)
-				{
-					full_cmd_path = concat_cmd(split_env[i], entry->d_name);
-					closedir(dir);
-					return (full_cmd_path);
-				}
-			}
-		}
-		closedir(dir);
+		full_cmd = ft_strjoin(split_env[i], cmd);
+		if (!access(full_cmd, X_OK))
+			return (ft_free_ptr(cmd), full_cmd);
+		full_cmd = ft_free_ptr(full_cmd);
 	}
+	cmd = ft_free_ptr(cmd);
 	return (NULL);
 }
 
-char	*get_cmd_path(char **to_search)
+char	*get_cmd_path(char **to_search, t_shell *g_shell)
 {
 	char	**split_env;
 	char	*full_cmd_path;
+	int		path_indx;
 
+	path_indx = get_env_idx("PATH", g_shell);
 	if (!access(to_search[0], X_OK))
 		return (to_search[0]);
-	split_env = ft_split(getenv("PATH"), 58);
+	split_env = ft_split(g_shell->split_env[path_indx], ':');
 	full_cmd_path = get_cmd_util(split_env, to_search);
 	if (full_cmd_path != NULL)
 		return (ft_free_split(split_env), full_cmd_path);

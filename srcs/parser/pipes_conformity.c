@@ -1,4 +1,16 @@
-#include "../../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes_conformity.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 12:22:32 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:22:48 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
 
 static bool	pipe_then_space(t_token *token)
 {
@@ -37,9 +49,6 @@ static bool	no_cmd_btw_pipes(t_token *token)
 	return (false);
 }
 
-//normalement le token est au debut de la chaine de caractere
-//donc on vance tant qu'il y a des espaces puis si le token suivant les espaces
-//est un pipe alors erreur;
 static bool	space_then_pipe(t_token *token)
 {
 	t_token	*temp;

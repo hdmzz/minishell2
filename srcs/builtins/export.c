@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 12:15:52 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:15:53 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_valid_env_var_key(char *var)
@@ -5,8 +17,8 @@ int	is_valid_env_var_key(char *var)
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(var[i]) == 0 && var[i] != '_')//on verifie la premiere lettre n'est pas un charactere alphabetique et si c'est le cas si le charactere n'est pas un underscore
-		return (0);//on on pas un caractere alphabetique et que ce n'est pas
+	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
+		return (0);
 	i++;
 	while (var[i] && var[i] != '=')
 	{

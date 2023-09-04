@@ -6,17 +6,12 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/29 11:39:23 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:24:34 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-/* 
-	needed to count the numbers of elemnet in a command to 
-	get rid of th arrows and the nme of the file after 
-	in order to give  the execve function just thcommand
- */
 int	split_lenght(char **cmds)
 {
 	int	i;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   typedef.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 12:13:46 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:13:47 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
 
@@ -75,6 +87,7 @@ typedef struct s_token
 	int				type;
 	struct s_token	*next;
 	struct s_token	*prev;
+	struct s_shell	*g_shell;
 }				t_token;
 
 typedef struct s_cmd
@@ -94,6 +107,7 @@ typedef struct s_cmd
 	int				heredoc;
 	int				fd_heredoc;//sera utilise pour l'ecriture sur fichier temp
 	int				hd_delim_into_quotes;
+	struct s_shell	*g_shell;
 }				t_cmd;
 
 typedef struct s_io

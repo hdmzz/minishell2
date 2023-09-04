@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 20:46:03 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/01 11:30:09 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 12:14:12 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static char	*add_num_to_str(char *str, char *num_str, int digits, int written)
 	int	i;
 
 	i = digits - 1;
-
 	num_str[digits] = '\0';
 	while (i >= 0)
 	{

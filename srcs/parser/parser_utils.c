@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 11:18:04 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:22:20 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	add_cmd_back(t_shell *g_shell, t_cmd *to_add)
@@ -5,6 +17,8 @@ void	add_cmd_back(t_shell *g_shell, t_cmd *to_add)
 	t_cmd	*temp;
 
 	temp = g_shell->start_cmd;
+	to_add->full_cmd_path = get_cmd_path(to_add->cmd, g_shell);
+	to_add->g_shell = g_shell;
 	if (temp->next != NULL)
 	{
 		while (temp->next != NULL)
@@ -31,7 +45,6 @@ int	count_pipes(t_token *lst)
 	return (pipes_count);
 }
 
-//need to add 1 to the result for the NULL one
 int	count_split_size(t_token *token)
 {
 	t_token	*lst;
@@ -70,7 +83,6 @@ t_cmd	*create_new_cmd(t_token *token, int i, int split_size, int idx)
 			new->hd_delim_into_quotes = token->hd_delim_into_quotes;
 		token = token->next;
 	}
-	new->full_cmd_path = get_cmd_path(new->cmd);
 	new->fd_in = -1;
 	new->fd_out = -1;
 	new->input_backup = -1;
@@ -89,6 +101,7 @@ void	compose_cmd(t_shell *g_shell)
 	int		nb_cmds;
 	int		idx;
 	t_token	*lst;
+
 	lst = g_shell->list_token;
 	nb_pipes = count_pipes(g_shell->list_token);
 	g_shell->nb_pipes = nb_pipes;

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/03 13:46:49 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/04 10:59:55 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	compose_cmd(t_shell *g_shell);
 
 //srcs/exec/exec.c
 int		exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell);
-char	*get_cmd_path(char **to_search);
+char	*get_cmd_path(char **to_search, t_shell *g_shell);
 
 //srcs/lexer/lexer.c
 int	lexer(t_shell *g_shell);

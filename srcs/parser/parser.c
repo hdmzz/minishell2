@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/03 14:59:30 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/03 16:14:58 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 		{
 			type = tmp->type;
 			if (!quotes_rules(tmp))
-				error_parsing_handler("unexpected EOF with quote", NULL, 1, 0);
+				return (0);
 			tmp = tmp->next;
 			while (tmp->type != type)
 				tmp = tmp->next;
@@ -106,12 +106,11 @@ int	parser(t_shell *g_shell)
 		return (EXIT_SUCCESS);
 	add_history(g_shell->start_buff);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
-		return (EXIT_FAILURE);
+		return (error_parsing_handler("syntax error", NULL, 2, 0));
 	if (!pipes_conformity(g_shell))
-		return (EXIT_FAILURE);
+		return (error_parsing_handler("pipe error", NULL, 2, 0));
 	if (!check_redirection_rules(g_shell))
-		return (EXIT_FAILURE);
+		return (error_parsing_handler("redirection error", NULL, 2, 0));
 	compose_cmd(g_shell);
-	//recover_fd(g_shell);
 	return (ret);
 }

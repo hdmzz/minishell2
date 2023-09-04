@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 12:23:13 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:23:21 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	clean_cmd_tab(char **cmd, int first_redir, int end)
@@ -10,7 +22,7 @@ void	clean_cmd_tab(char **cmd, int first_redir, int end)
 	}
 }
 
-void	recover_or_io(t_cmd *cmd)//pourquoi faire ca tout le temps ?
+void	recover_or_io(t_cmd *cmd)
 {
 	if (cmd->fd_out != -1)
 		dup2(cmd->output_backup, STDOUT_FILENO);

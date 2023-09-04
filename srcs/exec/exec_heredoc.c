@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_heredoc.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/04 12:16:36 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/09/04 12:16:37 by hdamitzi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
@@ -10,7 +22,6 @@ static void	child(int pipe_fd[2], char *full_cmd_path, char **cmd_tab)
 	exit(1);
 }
 
-//une fonction qui lis une ligne apres l'autre le fd du fichier passé en parametre stock chaque ligne dans un buffer et renvoie le buffer
 static char	*recompose_output(int fd, ssize_t bytes_read)
 {
 	char	*buffer;
@@ -39,7 +50,7 @@ static char	*recompose_output(int fd, ssize_t bytes_read)
 	return (buffer);
 }
 
-char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read)
+char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read, t_shell *g_shell)
 {
 	char	**cmd_tab;
 	int		pid;
@@ -48,7 +59,7 @@ char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read)
 	char	*full_cmd_path;
 
 	cmd_tab = ft_split(cmd_str, 32);
-	full_cmd_path = get_cmd_path(cmd_tab);
+	full_cmd_path = get_cmd_path(cmd_tab, g_shell);
 	if (full_cmd_path == NULL)
 		return (printf("bash: command not found\n"), NULL);
 	if (pipe(pipe_fd) == -1)
