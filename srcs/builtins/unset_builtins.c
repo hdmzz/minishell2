@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:16:05 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 14:00:09 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 04:32:43 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,11 @@ int	unset_builtin(t_cmd *c, t_shell *g_shell)
 
 	cmd = c->cmd;
 	i = 1;
-	idx = get_env_idx(cmd[1], g_shell);
-	ret = EXIT_FAILURE;
+	ret = EXIT_SUCCESS;
 	while (cmd[i])
 	{
 		if (is_valid_env_var_key(cmd[i]) == 0 || ft_strchr(cmd[i], '=') != NULL)
-		{
-			printf("minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-			return (ret);
-		}
+			return (0);
 		else
 		{
 			idx = get_env_idx(cmd[i], g_shell);

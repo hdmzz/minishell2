@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:15:52 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 13:59:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 04:15:07 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	add_new_var(char *new_env_var, t_shell *g_shell)
 	ft_free_split(g_shell->split_env);
 	g_shell->split_env = NULL;
 	g_shell->split_env = new_env;
+	new_env_var = ft_free_ptr(new_env_var);
 	return (1);
 }
 
@@ -101,10 +102,13 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 
 	i = 1;
 	user_input = c->cmd;
+	if (!user_input[i])
+		return (env_builtin(user_input, g_shell));
 	while (user_input[i])
 	{
 		if (!is_valid_env_var_key(user_input[i]))
-			return (perror("Not a valid env var key value"), EXIT_FAILURE);
+			return (error_handler("export", user_input[i], \
+			"not a valid env var key", EXIT_FAILURE));
 		else if (ft_strchr(user_input[i], '=') != NULL)
 			name_value_key = get_name_value(user_input[i]);
 		i++;
