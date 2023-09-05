@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:16:36 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 14:00:43 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:34:50 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ char	*exec_imbricated_cmd(char *cmd_str, ssize_t bytes_read, t_shell *g)
 		return (NULL);
 	waitpid(pid, &g_last_exit_code, 0);
 	ft_free_ptr(full_cmd_path);
-	return (output);
+	return (ft_free_split(cmd_tab), output);
 }

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:22:48 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 01:26:51 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:31:46 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*recompose_input(char **tab)
 		total_len += ft_strlen(tab[i]);
 	tab_len = i;
 	total_len += i - 1;
-	new_input = ft_calloc(total_len + 1, sizeof(char));//ici leaks
+	new_input = ft_calloc(total_len + 1, sizeof(char));
 	if (!new_input)
 		return (NULL);
 	i = 0;
