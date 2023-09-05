@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:22:48 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 00:47:06 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:26:51 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 	while (tmp[i])
 	{
 		if (tmp[i][0] == '(')
-			tmp[i] = cmd_output;//ici leaks
+		{
+			tmp[i] = ft_free_ptr(tmp[i]);
+			tmp[i] = cmd_output;
+		}
 		i++;
 	}
 	new_input = recompose_input(tmp);
