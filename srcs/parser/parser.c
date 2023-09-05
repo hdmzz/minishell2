@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 23:17:25 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:39:27 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*var_xpanser(char *input)
 	if (*input == '?')
 		return (ft_itoa(g_last_exit_code));
 	else
-		ev = getenv(input);
+		ev = ft_strdup(getenv(input));
 	return (ev);
 }
 
