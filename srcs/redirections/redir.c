@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:23:13 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 23:54:40 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 00:09:40 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,9 @@ int	recover_fd(t_shell *g_shell)
 	}
 	return (ret);
 }
-//redir juste les io et sauvegarde les io dorigine
-//par la suite les io dorigin seront restaure mais les redir pas encore close
+
 void	redir_io(t_cmd *c)
 {
-	//ici etait lance le heredoc
 	if (c->fd_in != -1)
 	{
 		c->input_backup = dup(STDIN_FILENO);

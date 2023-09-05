@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 15:22:48 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 15:24:44 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 00:47:06 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*recompose_input(char **tab)
 		total_len += ft_strlen(tab[i]);
 	tab_len = i;
 	total_len += i - 1;
-	new_input = ft_calloc(total_len + 1, sizeof(char));
+	new_input = ft_calloc(total_len + 1, sizeof(char));//ici leaks
 	if (!new_input)
 		return (NULL);
 	i = 0;
@@ -55,7 +55,7 @@ char	*substitute_input_wth_output(char *input, char *cmd_output)
 	while (tmp[i])
 	{
 		if (tmp[i][0] == '(')
-			tmp[i] = cmd_output;
+			tmp[i] = cmd_output;//ici leaks
 		i++;
 	}
 	new_input = recompose_input(tmp);
