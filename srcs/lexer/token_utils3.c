@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:19:52 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 00:37:46 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 01:44:05 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,15 @@ t_token	*conc_lit(t_token *next, char *value, int pos)
 	return (new);
 }
 
+static char	*join_s(char *str, char *to_add, char *to_free)
+{
+	char	*concat_value;
+
+	concat_value = ft_strjoin(str, to_add);
+	free(to_free);
+	return (concat_value);
+}
+
 t_token	*concat_literals(t_token *start, t_token *cur, t_token *buff, char *tmp)
 {
 	char	*concat_value;
@@ -78,10 +87,7 @@ t_token	*concat_literals(t_token *start, t_token *cur, t_token *buff, char *tmp)
 		if (!concat_value)
 			concat_value = ft_strdup(cur->value);
 		else
-		{
-			concat_value = ft_strjoin(concat_value, cur->value);
-			free(tmp);
-		}
+			concat_value = join_s(concat_value, cur->value, tmp);
 		buff = cur;
 		tmp = concat_value;
 		cur = cur->next;
@@ -92,17 +98,4 @@ t_token	*concat_literals(t_token *start, t_token *cur, t_token *buff, char *tmp)
 		return (buff = delone(buff), new);
 	}
 	return (start);
-}
-
-void	clean_trash(t_token *trash)
-{
-	t_token	*tmp;
-
-	tmp = trash;
-	while (tmp && tmp->type == literal)
-	{
-		trash = trash->next;
-		tmp = ft_free_ptr(tmp);
-		tmp = trash;
-	}
 }
