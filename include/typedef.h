@@ -6,27 +6,17 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:13:46 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 13:58:03 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 23:33:14 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPEDEF_H
 # define TYPEDEF_H
 
-# include <stdio.h>
-# include <signal.h>
-# include "../libft/libft.h"
-# include <unistd.h>
-# include <fcntl.h>
-# include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
-# include <dirent.h>
 # include <stdbool.h>
 # include <errno.h>
-
 # ifndef PATH_MAX
 #  define PATH_MAX 4096
 # endif

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 01:44:21 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 23:22:08 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int		concat_word(t_shell *g_shell);
 //src/lexer/token_utils3.c
 void	cln_whitespace_btw_ctrl_tok(t_shell *g_shell);
 int		check_redirection_rules(t_shell *g_shell);
-void	clean_trash(t_token *trash);
 
 //src/error/error.c
 int		error_handler(char *cmd, char *detail, char *err_msg, int err_nb);
@@ -96,5 +95,6 @@ char	*substitute_input_wth_output(char *input, char *cmd_output);
 
 //utils.c
 void	*free_lst_token(t_token *tokens);
+char	*ev_expander(t_token *l, int *free_flag);
 
 #endif

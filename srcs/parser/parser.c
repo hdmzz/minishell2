@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 03:09:17 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 23:17:25 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,6 @@ char	*var_xpanser(char *input)
 	return (ev);
 }
 
-char	*ev_expander(t_token *l, int *free_flag)
-{
-	char	*ev;
-
-	ev = var_xpanser(l->next->value);
-	if (ev != NULL)
-	{
-		if (l->next->value[0] == '?')
-			*free_flag = 1;
-	}
-	return (ev);
-}
-
 void	dollar_rule(t_shell *g_shell, t_token *l, int quote_count)
 {
 	bool	interpretation;
@@ -116,7 +103,11 @@ int	parser(t_shell *g_shell)
 
 	ret = 0;
 	if (ft_strlen(g_shell->start_buff) == 0)
+	{
+		add_history(g_shell->start_buff);
+		free(g_shell->start_buff);
 		return (EXIT_SUCCESS);
+	}
 	add_history(g_shell->start_buff);
 	if (!grammatical_analyzer(&g_shell->list_token, g_shell))
 		return (error_parsing_handler("syntax error", NULL, 1, 0));

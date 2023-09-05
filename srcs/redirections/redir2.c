@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:51:58 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/03 12:35:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 23:57:50 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	ft_mkstemp(char *filename)
 {
-	int	i;
 	int	try_max;
 	int	fd;
+	int	i;
 
 	i = 0;
 	try_max = 0;
@@ -24,7 +24,7 @@ static int	ft_mkstemp(char *filename)
 	while (fd == -1 && try_max <= 15)
 	{
 		while (filename[i] && filename[i] != '0')
-			i++;
+			i += 1;
 		if (filename[i] && ft_isalnum(filename[i] + 1))
 			filename[i] = filename[i] + 1;
 		else
@@ -40,14 +40,22 @@ static int	ft_mkstemp(char *filename)
 void	prep_heredoc(t_cmd *c, char *delim)
 {
 	static char	tmpfile[] = "tmpfile0";
+	int			i;
 
+	i = 0;
 	c->heredoc = 1;
 	c->fd_heredoc = ft_mkstemp(tmpfile);
 	if (c->fd_heredoc == -1)
 		return (perror("too many temporary files"));
 	c->fd_in = open(tmpfile, O_RDONLY, NULL);
-	c->heredoc_delim = delim;
 	unlink(tmpfile);
+	c->heredoc_delim = delim;
+	heredoc(c);
+	while (tmpfile[i] && !ft_isdigit(tmpfile[i]))
+		i++;
+	if (tmpfile[i] == '9')
+		tmpfile[i] = '0';
+	tmpfile[i] = tmpfile[i] + 1;
 }
 
 static int	left_redir(t_cmd *c, int i)
@@ -70,8 +78,8 @@ static int	left_redir(t_cmd *c, int i)
 				c->fd_in = open(cmd[i + 1], O_RDONLY, NULL);
 			if (c->fd_in == -1)
 				return (0);
-			cmd[i] = NULL;
-			cmd[i + 1] = NULL;
+			cmd[i] = ft_free_ptr(cmd[i]);
+			cmd[i + 1] = ft_free_ptr(cmd[i + 1]);
 			i++;
 		}
 	}

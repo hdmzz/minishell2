@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 11:00:14 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 13:33:42 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 23:48:48 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	close_cmds_fds(t_cmd *c)
 		tmp = tmp->next;
 	}
 }
-
+//remet les io dorogine ne close que les dup des STDIN et OUT et rien dautre
 void	restore_io(t_cmd *cmds)
 {
 	if (cmds->output_backup != -1)

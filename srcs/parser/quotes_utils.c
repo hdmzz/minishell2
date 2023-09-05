@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 11:53:19 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/08/31 11:55:21 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 23:17:34 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ bool	quotes_rules(t_token *token)
 			token = token->next;
 	}
 	return (true);
+}
+
+char	*ev_expander(t_token *l, int *free_flag)
+{
+	char	*ev;
+
+	ev = var_xpanser(l->next->value);
+	if (ev != NULL)
+	{
+		if (l->next->value[0] == '?')
+			*free_flag = 1;
+	}
+	return (ev);
 }
