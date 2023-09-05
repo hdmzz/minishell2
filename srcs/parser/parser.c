@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 13:09:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/05 03:02:01 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ char	*var_xpanser(char *input)
 		ev = getenv(input);
 	return (ev);
 }
+
 char	*ev_expander(t_token *l, int *free_flag)
 {
 	char	*ev;
@@ -79,8 +80,8 @@ char	*ev_expander(t_token *l, int *free_flag)
 	{
 		if (l->next->value[0] == '?')
 			*free_flag = 1;
-		l = replace_token(l, l->next, new_token(ev, literal, l->pos));
 	}
+	return (ev);
 }
 
 void	dollar_rule(t_shell *g_shell, t_token *l, int quote_count)
@@ -100,7 +101,7 @@ void	dollar_rule(t_shell *g_shell, t_token *l, int quote_count)
 		if (l->type == dollar && l->next->type == literal && interpretation)
 		{
 			ev = ev_expander(l, &free_flag);
-			l = replace_token(ev, literal, 1);
+			l = replace_token(l, l->next, new_token(ev, literal, 1));
 			if (free_flag == 1)
 				ev = ft_free_ptr(ev);
 		}
