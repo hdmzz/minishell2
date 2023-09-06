@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 13:41:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:02:21 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ char	*get_cmd_path(char **to_search, t_shell *g_shell)
 	path_indx = get_env_idx("PATH", g_shell);
 	if (!access(to_search[0], X_OK))
 		return (to_search[0]);
+	if (path_indx == -1)
+	{
+		//error_handler(to_search[0], "command not found", NULL, 0);
+		return (NULL);
+	}
 	split_env = ft_split(g_shell->split_env[path_indx], ':');
 	full_cmd_path = get_cmd_util(split_env, to_search);
 	if (full_cmd_path != NULL)
