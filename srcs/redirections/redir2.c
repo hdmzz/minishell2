@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 02:51:58 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 23:57:50 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:18:38 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ static int	right_redir(t_cmd *c, int i)
 			if (fd == -1)
 				return (-1);
 			c->fd_out = fd;
-			cmd[i] = NULL;
-			cmd[i + 1] = NULL;
+			cmd[i] = ft_free_ptr(cmd[i]);
+			cmd[i + 1] = ft_free_ptr(cmd[i + 1]);
 			i++;
 		}
 	}
