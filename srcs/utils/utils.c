@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 13:38:17 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 04:00:36 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:51:50 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	del_cmds(t_cmd *cmds)
 {
 	if (cmds != NULL)
 	{
+		if (cmds->full_cmd_path != cmds->cmd[0])
+			cmds->full_cmd_path = ft_free_ptr(cmds->full_cmd_path);
 		ft_free_split(cmds->cmd);
-		cmds->full_cmd_path = ft_free_ptr(cmds->full_cmd_path);
 		cmds = ft_free_ptr(cmds);
 	}
 	cmds = NULL;

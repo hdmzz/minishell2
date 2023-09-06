@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:20:05 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 01:40:14 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:36:53 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	input_into_parenthesis(char *input, int *i)
 	return (0);
 }
 
-char	*heredoc_var_xpanser(char *input)
+char	*heredoc_var_xpanser(char *input, t_shell *g)
 {
 	char	**tab;
 	char	*temp;
@@ -81,7 +81,7 @@ char	*heredoc_var_xpanser(char *input)
 		if (tab[i][0] == '$')
 		{
 			buff = tab[i];
-			temp = var_xpanser(buff);
+			temp = var_xpanser(buff, g);
 			ft_free_split(tab);
 			return (temp);
 		}
@@ -111,7 +111,7 @@ char	*heredoc_expanser(char *input, t_cmd *c, int i, int y)
 				imbrecated_cmd = ft_free_ptr(imbrecated_cmd);
 			}
 			else
-				inp = heredoc_var_xpanser(input);
+				inp = heredoc_var_xpanser(input, c->g_shell);
 			input = ft_free_ptr(input);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 23:45:59 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 23:22:08 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:33:23 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ char	*substitute_input_wth_output(char *input, char *cmd_output);
 
 //utils.c
 void	*free_lst_token(t_token *tokens);
-char	*ev_expander(t_token *l, int *free_flag);
+char	*ev_expander(t_token *l);
 
 #endif

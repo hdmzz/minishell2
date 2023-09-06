@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/04 12:16:54 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 13:41:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 	full_cmd_path = c->full_cmd_path;
 	if (full_cmd_path == NULL)
 	{
-		error_handler(cmd[0], NULL, strerror(errno), COMMAND_NOT_FOUND);
-		exit_builtin(g_shell, COMMAND_NOT_FOUND);
+		return (error_handler(cmd[0], NULL, "command not found", COMMAND_NOT_FOUND));
 	}
 	ret = execve(full_cmd_path, cmd, NULL);
 	error_handler("execve", NULL, strerror(errno), ret);

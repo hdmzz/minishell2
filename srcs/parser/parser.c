@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 01:39:27 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:32:47 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	grammatical_analyzer(t_token **tokens, t_shell *g_shell)
 	return (quotes_neutralizer(g_shell), 1);
 }
 
-char	*var_xpanser(char *input)
+char	*var_xpanser(char *input, t_shell *g_shell)
 {
 	char	*ev;
 
@@ -67,7 +67,7 @@ char	*var_xpanser(char *input)
 	if (*input == '?')
 		return (ft_itoa(g_last_exit_code));
 	else
-		ev = ft_strdup(getenv(input));
+		ev = ft_strdup(get_env_value(input, g_shell));
 	return (ev);
 }
 
@@ -75,7 +75,6 @@ void	dollar_rule(t_shell *g_shell, t_token *l, int quote_count)
 {
 	bool	interpretation;
 	char	*ev;
-	int		free_flag;
 
 	interpretation = true;
 	while (l)
@@ -87,10 +86,9 @@ void	dollar_rule(t_shell *g_shell, t_token *l, int quote_count)
 		}
 		if (l->type == dollar && l->next->type == literal && interpretation)
 		{
-			ev = ev_expander(l, &free_flag);
+			ev = ev_expander(l);
 			l = replace_token(l, l->next, new_token(ev, literal, 1));
-			if (free_flag == 1)
-				ev = ft_free_ptr(ev);
+			ev = ft_free_ptr(ev);
 		}
 		l = l->next;
 	}
