@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 16:16:11 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/03 15:59:01 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 16:49:01 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ char	*ft_join_shell(char *s, char *to_add)
 
 static int	export_or_unset(char *cmd)
 {
-	if (ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0)
-		return (1);
+	if (cmd != NULL)
+	{
+		if (ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0)
+			return (1);
+	}
 	return (0);
 }
 

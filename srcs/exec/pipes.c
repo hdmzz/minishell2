@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 16:15:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 23:52:53 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:32:35 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,12 @@ static int	handle_cmd(t_shell *g_shell)
 
 int	cmd_handler(t_shell *g_shell)
 {
-	if (ft_strlen(g_shell->start_buff) == 0)
+	if (g_shell->start_buff != NULL)
+	{
+		if (ft_strlen(g_shell->start_buff) == 0)
+			return (EXIT_SUCCESS);
 		return (EXIT_SUCCESS);
+	}
 	g_shell->start_buff = ft_free_ptr(g_shell->start_buff);
 	g_shell->pids = ft_calloc(g_shell->nb_cmds, sizeof(pid_t));
 	if (g_shell->pids == NULL)

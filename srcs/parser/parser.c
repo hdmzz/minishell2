@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 13:47:34 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 14:32:47 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:28:52 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	parser(t_shell *g_shell)
 	if (ft_strlen(g_shell->start_buff) == 0)
 	{
 		add_history(g_shell->start_buff);
-		free(g_shell->start_buff);
+		g_shell->start_buff = ft_free_ptr(g_shell->start_buff);
 		return (EXIT_SUCCESS);
 	}
 	add_history(g_shell->start_buff);
