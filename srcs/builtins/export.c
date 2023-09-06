@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:15:52 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/05 04:15:07 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 02:47:16 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,13 @@ int	export_builtin(t_cmd *c, t_shell *g_shell)
 			return (error_handler("export", user_input[i], \
 			"not a valid env var key", EXIT_FAILURE));
 		else if (ft_strchr(user_input[i], '=') != NULL)
+		{
 			name_value_key = get_name_value(user_input[i]);
+			my_set_env(name_value_key[0], name_value_key[1], g_shell);
+			ft_free_split(name_value_key);
+			name_value_key = NULL;
+		}
 		i++;
 	}
-	my_set_env(name_value_key[0], name_value_key[1], g_shell);
-	ft_free_split(name_value_key);
-	name_value_key = NULL;
 	return (EXIT_SUCCESS);
 }
