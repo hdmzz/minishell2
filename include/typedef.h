@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:13:46 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 12:21:15 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 04:07:33 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <errno.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 # ifndef PATH_MAX
 #  define PATH_MAX 4096
 # endif

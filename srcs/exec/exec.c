@@ -6,11 +6,32 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:43:43 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 16:28:38 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/06 04:25:10 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	cmd_is_dir(char **cmd)
+{
+	struct stat	buf;
+
+	ft_bzero(&buf, sizeof(struct stat));
+	if (stat(cmd[0], &buf) == -1)
+		return (error_handler("stat", NULL, strerror(errno), 1));
+	if (S_ISDIR(buf.st_mode))
+		return (error_handler("is a directory", cmd[0], NULL, 126));
+	return (EXIT_FAILURE);
+}
+
+static int	get_err_num(char **cmd)
+{
+	if (access(cmd[0], F_OK) == -1)
+		return (error_handler("command not found", cmd[0], NULL, 127));
+	else if (access(cmd[0], X_OK) == -1)
+		return (error_handler("permission denied", cmd[0], NULL, 126));
+	return (EXIT_FAILURE);
+}
 
 static char	*get_cmd_util(char **split_env, char **to_search)
 {
@@ -61,10 +82,12 @@ int	exec_cmd(char **cmd, t_cmd *c, t_shell *g_shell)
 	full_cmd_path = c->full_cmd_path;
 	if (full_cmd_path == NULL)
 	{
-		return (error_handler(cmd[0], NULL, "command not found", COMMAND_NOT_FOUND));
+		return (get_err_num(c->cmd));
 	}
-	ret = execve(full_cmd_path, cmd, NULL);
-	error_handler("execve", NULL, strerror(errno), ret);
-	exit_builtin(g_shell, ret);
-	return (ret);
+	if (execve(full_cmd_path, cmd, NULL) == -1)
+	{
+		error_handler("execve", NULL, strerror(errno), ret);
+		exit_builtin(g_shell, ret);
+	}
+	return (EXIT_FAILURE);
 }
