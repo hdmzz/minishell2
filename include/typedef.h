@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 12:13:46 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 04:07:33 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/07 13:34:52 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ extern int	g_last_exit_code;
 enum e_error{
 	COMMAND_NOT_FOUND = 127,
 	BAD_COMMAND_USAGE = 128,
-	FILE_NOT_FOUND = 1,
 	INSUFFICIENT_PERMISSIONS = 126,
 	BAD_ARGUMENT_COUNT = 2,
 	BAD_REDIRECTION = 3,
