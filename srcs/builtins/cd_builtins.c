@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: hsilverb <hsilverb@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 18:18:44 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/09/06 14:29:32 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/09/07 16:50:03 by hsilverb         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
